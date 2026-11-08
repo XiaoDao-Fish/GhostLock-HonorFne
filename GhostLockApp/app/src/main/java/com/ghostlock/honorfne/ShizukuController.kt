@@ -91,6 +91,16 @@ object ShizukuController {
     }
 
     /**
+     * Real command-channel probe. pingBinder() can still return true while
+     * Shizuku.newProcess() silently fails — observed in the field as every
+     * shell command (even `getenforce`) returning an empty stdout, while the
+     * app kept treating stale w1.log content as a running exploit.
+     */
+    suspend fun shellProbe(): ExecResult = exec("echo GL_SHELL_OK", 10_000)
+
+    fun probeOk(r: ExecResult): Boolean = r.code == 0 && r.out.contains("GL_SHELL_OK")
+
+    /**
      * Run a shell command as `shell` and capture stdout/stderr/exit code.
      * Equivalent to `adb shell <cmd>`.
      *

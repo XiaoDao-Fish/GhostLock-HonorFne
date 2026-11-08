@@ -86,13 +86,15 @@ object LogStore {
     /** 每条日志即时落盘，不需要 Shizuku、不需要协程。 */
     @Synchronized
     fun append(line: String) {
-        lines.appendLine(line)
+        // 统一在落盘口过滤 NUL：w1.log 稀疏空洞曾让一份日志里出现 6300 个 NUL
+        val safe = line.replace("\u0000", "")
+        lines.appendLine(safe)
         try {
-            privateFile?.appendText(line + "\n")
+            privateFile?.appendText(safe + "\n")
         } catch (_: Throwable) {
         }
         try {
-            publicFile?.appendText(line + "\n")
+            publicFile?.appendText(safe + "\n")
         } catch (_: Throwable) {
         }
     }
@@ -186,26 +188,50 @@ object LogStore {
         }
     }
 
-    /** 设备侧线索；Shizuku 不可用时跳过，不影响日志主体。 */
+    /** w1.log 被截断后旧进程在原偏移写入会形成 NUL 稀疏空洞，必须过滤。 */
+    private fun cleanOut(s: String): String = s.replace("\u0000", "")
+
+    /**
+     * 设备侧线索。旧版把 11 条命令塞进一条超长 `sh -c`：实测 echo 的标题都在，
+     * 但所有外部命令输出全空，整份快照变成空壳；且 tail 把 NUL 带进了日志。
+     * 改为逐条独立执行，每条单独超时并打印 code / stderr，互不影响。
+     */
     private suspend fun captureDeviceState(reason: String) {
-        if (!runCatching { ShizukuController.hasPermission() }.getOrDefault(false)) return
-        val dev = ShizukuController.exec(
-            "echo '=== getenforce'; getenforce; " +
-                "echo '=== kernelsu_modules'; grep -c kernelsu /proc/modules; " +
-                "echo '=== boot_id'; cat /proc/sys/kernel/random/boot_id; " +
-                "echo '=== boot_completed'; getprop sys.boot_completed; " +
-                "echo '=== w1.log tail'; tail -c 3000 /data/local/tmp/w1.log 2>/dev/null; " +
-                "echo '=== w2.log tail'; tail -c 3000 /data/local/tmp/w2.log 2>/dev/null; " +
-                "echo '=== chain_status'; cat /data/local/tmp/ksu_fne/chain_status 2>/dev/null; " +
-                "echo '=== chain.log tail'; tail -c 3000 /data/local/tmp/ksu_fne/chain.log 2>/dev/null; " +
-                "echo '=== pstore'; ls /sys/fs/pstore/ 2>&1; " +
-                "echo '=== dmesg tail'; dmesg 2>&1 | tail -n 30; " +
-                "echo '=== logcat tail'; logcat -d -t 150 2>&1 | tail -n 150",
-            45_000
+        append("----- 设备状态快照（$reason） -----")
+        if (!runCatching { ShizukuController.hasPermission() }.getOrDefault(false)) {
+            append("[snapshot] Shizuku 未授权，跳过设备侧采集")
+            append("----- END -----")
+            return
+        }
+        val shell = ShizukuController.shellProbe()
+        if (!ShizukuController.probeOk(shell)) {
+            append("[snapshot] Shizuku 命令通道不可用（code=${shell.code} ${cleanOut(shell.err).trim()}）")
+            append("[snapshot] 请重新通过无线调试启动 Shizuku 并授权本应用")
+            append("----- END -----")
+            return
+        }
+
+        val probes = listOf(
+            "getenforce" to "getenforce",
+            "kernelsu_modules" to "grep -c kernelsu /proc/modules",
+            "boot_id" to "cat /proc/sys/kernel/random/boot_id",
+            "boot_completed" to "getprop sys.boot_completed",
+            "w1.log tail" to "tail -c 3000 /data/local/tmp/w1.log 2>/dev/null",
+            "w2.log tail" to "tail -c 3000 /data/local/tmp/w2.log 2>/dev/null",
+            "chain_status" to "cat /data/local/tmp/ksu_fne/chain_status 2>/dev/null",
+            "chain.log tail" to "tail -c 3000 /data/local/tmp/ksu_fne/chain.log 2>/dev/null",
+            "pstore" to "ls /sys/fs/pstore/ 2>&1",
+            "dmesg tail" to "dmesg 2>&1 | tail -n 30",
+            "logcat tail" to "logcat -d -t 150 2>&1 | tail -n 150"
         )
-        append("----- 设备状态快照（$reason） code=${dev.code} -----")
-        append(dev.out.trimEnd())
-        if (dev.err.isNotBlank()) append("[stderr] ${dev.err.trim()}")
+        for ((name, cmd) in probes) {
+            val r = ShizukuController.exec(cmd, 12_000)
+            append("=== $name (code=${r.code})")
+            val out = cleanOut(r.out).trimEnd()
+            if (out.isNotEmpty()) append(out.takeLast(4000))
+            val err = cleanOut(r.err).trim()
+            if (err.isNotEmpty()) append("[stderr] ${err.takeLast(500)}")
+        }
         append("----- END -----")
     }
 }

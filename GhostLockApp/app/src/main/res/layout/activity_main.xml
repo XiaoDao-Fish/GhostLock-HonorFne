@@ -1,98 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Miuix-inspired layout, implemented with the platform View system.
+  All view IDs are unchanged so MainActivity.kt needs no modification.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/miuix_bg"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingStart="20dp"
+    android:paddingTop="28dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp">
 
+    <!-- Miuix title1 / footnote1 hierarchy -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:letterSpacing="0.01"
         android:text="@string/app_name"
-        android:textSize="22sp"
+        android:textColor="@color/miuix_text"
+        android:textSize="32sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="20dp"
+        android:lineSpacingExtra="3dp"
         android:text="@string/subtitle"
+        android:textColor="@color/miuix_text_secondary"
         android:textSize="13sp" />
 
-    <GridLayout
+    <!-- Status card -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="3">
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/miuix_status"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="14dp">
 
-        <Button
-            android:id="@+id/btnConnect"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:text="@string/btn_connect" />
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/miuix_dot" />
 
-        <Button
-            android:id="@+id/btnDeploy"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:text="@string/btn_deploy" />
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_waiting"
+            android:textColor="@color/miuix_primary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-        <Button
+    <!-- Action card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/miuix_card"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/section_actions"
+            android:textColor="@color/miuix_text_secondary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/btnConnect"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/miuix_button_primary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_connect"
+                android:textAllCaps="false"
+                android:textColor="@color/miuix_on_primary"
+                android:textSize="15sp" />
+
+            <android.widget.Button
+                android:id="@+id/btnDeploy"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/miuix_button_secondary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_deploy"
+                android:textAllCaps="false"
+                android:textColor="@color/miuix_primary"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- Primary action spans the full card width -->
+        <android.widget.Button
             android:id="@+id/btnRoot"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:text="@string/btn_root" />
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/miuix_button_primary"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:stateListAnimator="@null"
+            android:text="@string/btn_root"
+            android:textAllCaps="false"
+            android:textColor="@color/miuix_on_primary"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnStatus"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:text="@string/btn_status" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnManagers"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:text="@string/btn_managers" />
+            <android.widget.Button
+                android:id="@+id/btnStatus"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/miuix_button_secondary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_status"
+                android:textAllCaps="false"
+                android:textColor="@color/miuix_primary"
+                android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:text="@string/btn_clear" />
-    </GridLayout>
+            <android.widget.Button
+                android:id="@+id/btnManagers"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/miuix_button_secondary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_managers"
+                android:textAllCaps="false"
+                android:textColor="@color/miuix_primary"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
-        android:text="@string/hint_waiting"
-        android:textSize="13sp"
-        android:textStyle="bold" />
-
-    <ScrollView
+    <!-- Log card: fills the remaining space -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#111111"
-        android:padding="8dp">
+        android:background="@drawable/miuix_log"
+        android:orientation="vertical"
+        android:padding="12dp">
 
-        <TextView
-            android:id="@+id/tvLog"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="@string/log_placeholder"
-            android:textColor="#33DD66"
-            android:textSize="11sp" />
-    </ScrollView>
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/section_log"
+                android:textColor="@color/miuix_log_title"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <android.widget.Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/miuix_button_ghost"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:stateListAnimator="@null"
+                android:text="@string/btn_clear"
+                android:textAllCaps="false"
+                android:textColor="@color/miuix_log_hint"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:id="@+id/tvLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="3dp"
+                android:text="@string/log_placeholder"
+                android:textColor="@color/miuix_log_text"
+                android:textIsSelectable="true"
+                android:textSize="11sp" />
+        </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

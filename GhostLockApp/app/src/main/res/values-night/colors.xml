@@ -1,0 +1,18 @@
+<resources>
+    <!-- Miuix-inspired dark palette. Names mirror values/colors.xml. -->
+    <color name="miuix_primary">#FF277AF7</color>
+    <color name="miuix_primary_pressed">#FF1B5FC4</color>
+    <color name="miuix_on_primary">#FFFFFFFF</color>
+    <color name="miuix_bg">#FF242424</color>
+    <color name="miuix_card">#FF2C2C2E</color>
+    <color name="miuix_tertiary">#FF2B3B54</color>
+    <color name="miuix_tertiary_pressed">#FF35507A</color>
+    <color name="miuix_text">#FFF2F2F2</color>
+    <color name="miuix_text_secondary">#80FFFFFF</color>
+    <color name="miuix_divider">#1FFFFFFF</color>
+    <color name="miuix_log_bg">#FF0E1013</color>
+    <color name="miuix_log_text">#FF7BE38B</color>
+    <color name="miuix_log_title">#FFE8EAED</color>
+    <color name="miuix_log_hint">#FFB9C0C8</color>
+    <color name="miuix_error">#FFF12522</color>
+</resources>

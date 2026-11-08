@@ -22,7 +22,7 @@ object AssetDeployer {
 
     private val KSU_EXECUTABLES = setOf("chain_hook.sh", "magiskpolicy", "ksud", "load_ko", "kmsg_dumper")
 
-    suspend fun deploy(context: Context, log: (String) -> Unit) = withContext(Dispatchers.IO) {
+    suspend fun deploy(context: Context, log: (String) -> Unit): Boolean = withContext(Dispatchers.IO) {
         log("[deploy] 开始推送物料到 $TMP ...")
 
         // 1) exploit binary (renamed to `e`)
@@ -44,7 +44,21 @@ object AssetDeployer {
         ShizukuController.exec("mkdir -p $TMP/managers", 15_000)
         deployDir(context, "managers", "$TMP/managers", log)
 
-        log("[deploy] 完成。设备端路径：$TMP/e + $TMP/ksu_fne + $TMP/netfix_packet + $TMP/managers")
+        // `cat` 退出码为 0 不等于文件真的落地：Shizuku.newProcess 静默失效时
+        // 所有命令都会返回空，旧版会谎报「全部部署成功」，随后 W1 却报
+        // "No such file or directory"。这里对关键文件做真实存在性复检。
+        val chk = ShizukuController.exec(
+            "test -s $TMP/e && test -s $TMP/ksu_fne/kernelsu.ko && echo DEPLOY_OK",
+            20_000
+        )
+        val ok = chk.code == 0 && chk.out.contains("DEPLOY_OK")
+        if (ok) {
+            log("[deploy] 完成并校验通过 ✔ 路径：$TMP/e + $TMP/ksu_fne + $TMP/netfix_packet + $TMP/managers")
+        } else {
+            log("[deploy][错误] 关键文件写入后校验失败（code=${chk.code} ${chk.err.trim()}）")
+            log("[deploy][错误] 多为 Shizuku 命令通道失效，请重新连接 Shizuku 后重试")
+        }
+        ok
     }
 
     private suspend fun deployDir(

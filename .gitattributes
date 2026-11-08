@@ -14,17 +14,6 @@
 *.xml text eol=lf
 *.gradle text eol=lf
 *.properties text eol=lf
-*.toml text eol=lf
-*.py text eol=lf
-*.c text eol=lf
-*.h text eol=lf
-*.patch text eol=lf
-*.rule text eol=lf
-*.prop text eol=lf
-# Extension-less / GNU make / wrapper scripts: must stay LF on Windows too
-gradlew text eol=lf
-Makefile text eol=lf
-mkbootimg text eol=lf
 
 # Binaries: never touch
 *.ko binary

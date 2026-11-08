@@ -3,4 +3,21 @@
     <color name="white">#FFFFFFFF</color>
     <!-- 取自「爱发电.png」的主色，用作自适应图标背景 -->
     <color name="ic_launcher_background">#FF946FDE</color>
+
+    <!-- Miuix-inspired palette (light). Dark values live in values-night/colors.xml -->
+    <color name="miuix_primary">#FF3482FF</color>
+    <color name="miuix_primary_pressed">#FF277AF7</color>
+    <color name="miuix_on_primary">#FFFFFFFF</color>
+    <color name="miuix_bg">#FFFFFFFF</color>
+    <color name="miuix_card">#FFF7F7F7</color>
+    <color name="miuix_tertiary">#FFEAF2FF</color>
+    <color name="miuix_tertiary_pressed">#FFDCEBFF</color>
+    <color name="miuix_text">#FF000000</color>
+    <color name="miuix_text_secondary">#99000000</color>
+    <color name="miuix_divider">#1F000000</color>
+    <color name="miuix_log_bg">#FF121417</color>
+    <color name="miuix_log_text">#FF66D97F</color>
+    <color name="miuix_log_title">#FFE8EAED</color>
+    <color name="miuix_log_hint">#FFB9C0C8</color>
+    <color name="miuix_error">#FFE94634</color>
 </resources>

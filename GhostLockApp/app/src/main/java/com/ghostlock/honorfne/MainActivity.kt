@@ -91,15 +91,44 @@ class MainActivity : AppCompatActivity() {
     private fun onDeploy() {
         if (!ShizukuController.hasPermission()) { toast("请先连接并授权 Shizuku"); return }
         lifecycleScope.launch(Dispatchers.IO) {
-            AssetDeployer.deploy(this@MainActivity, ::log)
-            toast("物料部署完成")
+            val ok = AssetDeployer.deploy(this@MainActivity, ::log)
+            toast(if (ok) "物料部署完成（校验通过）" else "部署失败，请看日志")
         }
     }
 
+    /**
+     * 「一键临时 Root」前必须确认设备端物料齐全。旧版没有这一步：用户若没点
+     * 「部署物料」或重启后 /data/local/tmp 被清，w1.log 只会留下
+     * "No such file or directory"，app 却白等 420s 后误判失败并 reboot。
+     * 这里缺失即自动重新部署并复检，用户无需手动点「部署物料」。
+     */
+    private suspend fun ensurePayloads(): Boolean {
+        // pingBinder 正常但 newProcess 失效时，test -x 会返回空并被误判为
+        // 「物料缺失」，从而反复重新部署。先确认命令通道真的能用。
+        val shell = ShizukuController.shellProbe()
+        if (!ShizukuController.probeOk(shell)) {
+            log("[deploy][错误] Shizuku 命令通道不可用（code=${shell.code} ${shell.err.trim()}）")
+            log("[deploy][错误] 请重新通过无线调试启动 Shizuku 并授权本应用")
+            return false
+        }
+        val probe = "test -x /data/local/tmp/e && " +
+            "test -f /data/local/tmp/ksu_fne/kernelsu.ko && echo READY"
+        val before = ShizukuController.exec(probe, 15_000)
+        if (before.code == 0 && before.out.contains("READY")) return true
+
+        log("[deploy] 检测到设备端物料缺失（e / kernelsu.ko），自动重新部署…")
+        if (!AssetDeployer.deploy(this@MainActivity, ::log)) return false
+        val after = ShizukuController.exec(probe, 15_000)
+        val ok = after.code == 0 && after.out.contains("READY")
+        if (ok) log("[deploy] 自动部署完成并校验通过 ✔")
+        else log("[deploy][错误] 自动部署后仍缺关键物料，请检查 /data/local/tmp 可写性")
+        return ok
+    }
+
     private fun onRoot() {
-        if (!ShizukuController.hasPermission()) { toast("请先连接 Shizuku 并部署物料"); return }
+        if (!ShizukuController.hasPermission()) { toast("请先连接 Shizuku 并授权"); return }
         lifecycleScope.launch(Dispatchers.IO) {
-            GrindRunner(::log, ::status).run()
+            GrindRunner(::log, ::status, { ensurePayloads() }).run()
         }
     }
 

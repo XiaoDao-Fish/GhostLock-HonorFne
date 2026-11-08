@@ -20,7 +20,9 @@ import kotlin.math.max
  */
 class GrindRunner(
     private val log: (String) -> Unit,
-    private val status: (String) -> Unit
+    private val status: (String) -> Unit,
+    /** Ensures /data/local/tmp/e + KSU material exist; auto-deploys if missing. */
+    private val ensurePayloads: suspend () -> Boolean
 ) {
 
     private val tmpE = "/data/local/tmp/e"
@@ -42,6 +44,14 @@ class GrindRunner(
             log("[error] Shizuku 未授权，请先连接并授权 Shizuku。")
             return
         }
+        // pingBinder() 活着不代表 newProcess 还能用。实测出现过 binder 正常、
+        // 但所有 shell 命令返回空（连 getenforce 都空），app 却把 w1.log 里的
+        // 旧错误文本当成当前输出，白等 420s 再 reboot。先做真实命令探针。
+        if (!ensureShell("开始临时 Root")) {
+            log("[error] 已停止，避免无意义的 420s 等待与重启")
+            status("Shizuku 命令通道失效，请重新连接")
+            return
+        }
         status("开始 per-boot root (W1 -> W2 -> KSU 晚加载)")
         log("=== 外循环：最多 8 轮，失败自动重启/重跑 ===")
         LogStore.sync(force = true, reason = "开始临时 Root（归档上次会话）")
@@ -50,6 +60,17 @@ class GrindRunner(
         val lastW1 = readFileTail(W1_LOG)
         if (lastW1.isNotBlank()) {
             log("[取证] 上次 W1 日志尾部：${lastW1.replace('\n', ' ').takeLast(300).trim()}")
+            if (isFatalStart(lastW1)) {
+                log("[取证] 上次是「物料缺失 / exploit 未启动」，不是内核崩溃；本次会自动重新部署")
+            }
+        }
+        // 关键修复：若 /data/local/tmp/e 不存在（用户没点「部署物料」、设备重启后
+        // 被系统清理等），旧版会照样启动 W1，w1.log 只有 "No such file or directory"，
+        // app 却当成 exploit 在跑，白等 420s 再误判失败并 reboot。实测连续 3 轮白等。
+        if (!ensurePayloads()) {
+            log("[error] 设备端物料不可用，已停止：避免无意义的 420s 等待与重启")
+            status("物料部署失败，请检查 Shizuku 授权后重试")
+            return
         }
         // 抓完现场立刻清残留：W1 进程 parking forever，不清理会与新一轮并发。
         // 清不干净就绝不开跑，否则必然两个 grind 并发触发保护性重启。
@@ -65,6 +86,11 @@ class GrindRunner(
         // 「跳过本次迭代」(continue 语义)，嵌套时还有标签歧义。上一版因此命中
         // ROOTED 后仍连跑 3 次 W2，并发 fork 风暴把刚拿到的 root 又搞崩了。
         for (tryIndex in 1..8) {
+            // 部署/等待期间 Shizuku 服务端可能被系统回收，每轮重新确认命令通道
+            if (!ensureShell("第 $tryIndex 轮")) {
+                status("Shizuku 命令通道失效，请重新连接")
+                return
+            }
             if (!ShizukuController.isAvailable()) {
                 log("[warn] Shizuku 失联，等待重连…")
                 if (!waitForBootAndShizuku()) return
@@ -78,6 +104,14 @@ class GrindRunner(
                 return
             }
 
+            // 上一轮若 reboot 过，厂商可能清掉 /data/local/tmp；每轮都复检一次。
+            // 放在 settle 之前，避免物料缺失还白等 60s 静默 + CPU 空闲检测。
+            if (!ensurePayloads()) {
+                log("[error] 第 $tryIndex 轮物料自检失败，停止（不会重启设备）")
+                status("物料部署失败，请检查 Shizuku 授权")
+                return
+            }
+
             settle()
 
             val boot0 = bootId()
@@ -86,7 +120,22 @@ class GrindRunner(
 
             if (en != "Permissive") {
                 status("TRY $tryIndex [W1] 关闭 SELinux")
-                runW1(boot0)
+                val w1 = runW1(boot0)
+                if (w1 == W1Outcome.START_FAILED) {
+                    // 若命令通道已挂，重新部署也写不进去，先让用户重连 Shizuku
+                    if (!ensureShell("W1 启动失败后")) {
+                        status("Shizuku 命令通道失效，请重新连接")
+                        return
+                    }
+                    // 物料/权限问题：重启设备解决不了，反而会让 Shizuku 掉线。
+                    // 重新部署后直接重跑本轮，绝不发 reboot。
+                    log("[W1] 启动失败 → 重新部署物料后重跑本轮（不重启设备）")
+                    if (!ensurePayloads()) {
+                        status("物料部署失败，请检查 Shizuku 授权")
+                        return
+                    }
+                    continue
+                }
                 en = getEnforce()
                 if (en != "Permissive") {
                     handleRebootIfNeeded(boot0, "W1 未落地")
@@ -97,6 +146,7 @@ class GrindRunner(
             // Permissive：跑 W2（最多 3 次干净重试）
             var adj = 0
             var done = false
+            var w2StartFailure = false
             for (w2n in 1..3) {
                 // 同 boot 内 KSU 若已加载，绝不再跑 W2
                 if (ksuLoaded()) {
@@ -105,9 +155,10 @@ class GrindRunner(
                     break
                 }
                 status("TRY $tryIndex [W2] cred 写入 ADJ=$adj 第 $w2n/3")
-                // 清场失败就别再起新 W2，避免并发 fork 风暴
-                if (!launchW2(adj)) break
+                // 清场失败 / 物料缺失就别再起新 W2，避免并发 fork 风暴或空转
+                if (!launchW2(adj)) { w2StartFailure = true; break }
                 val res = pollW2()
+                if (res == W2Result.START_FAILED) { w2StartFailure = true; break }
                 if (res == W2Result.ROOTED || res == W2Result.KSU) {
                     done = true
                     break
@@ -125,6 +176,14 @@ class GrindRunner(
                 status("KernelSU 已就绪，临时 root 成功！")
                 return
             }
+            if (w2StartFailure) {
+                log("[W2] 启动失败 → 重新部署物料后重跑本轮（不重启设备）")
+                if (!ensurePayloads()) {
+                    status("物料部署失败，请检查 Shizuku 授权")
+                    return
+                }
+                continue
+            }
             handleRebootIfNeeded(boot0, "W2 用尽")
         }
 
@@ -133,6 +192,15 @@ class GrindRunner(
     }
 
     // ---------------------------------------------------------------- steps
+
+    /** 真实 shell 命令探针：binder 活着但 newProcess 失效时立刻停止，不再白等。 */
+    private suspend fun ensureShell(reason: String): Boolean {
+        val p = ShizukuController.shellProbe()
+        if (ShizukuController.probeOk(p)) return true
+        log("[error][$reason] Shizuku 命令通道不可用（code=${p.code} ${p.err.trim()}）")
+        log("[error] 请重新通过无线调试启动 Shizuku 并授权本应用，然后重试")
+        return false
+    }
 
     private suspend fun ksuLoaded(): Boolean {
         repeat(2) { i ->
@@ -213,6 +281,12 @@ class GrindRunner(
     }
 
     private suspend fun launchW1(): Boolean {
+        // 双保险：启动前再确认 exploit 真的存在且可执行
+        val chk = ShizukuController.exec("test -x $tmpE && echo OK", 10_000)
+        if (!chk.out.contains("OK")) {
+            log("[W1][中止] $tmpE 不存在或不可执行，本轮不启动 exploit")
+            return false
+        }
         if (!logCleanup("W1 启动前")) {
             log("[W1][中止] 残留进程清不干净，本轮不启动 exploit")
             return false
@@ -237,10 +311,12 @@ class GrindRunner(
      * 原脚本的 6 次 getenforce 确认是在 W1 同步结束之后做的（防 adbd 瞬断）；
      * 之前误把它放在后台启动之后，导致 10s 就误判失败并主动 reboot。
      */
-    private suspend fun runW1(boot0: String?): Boolean {
+    private enum class W1Outcome { LANDED, MISS, START_FAILED }
+
+    private suspend fun runW1(boot0: String?): W1Outcome {
         log("[W1] 即将运行 exploit：设备很可能黑屏并自动重启（成功率约 8%），属正常现象，不是工具坏了")
         log("[W1] 若 1-2 分钟未自动开机请手动开机；重启后需重新用无线调试启动 Shizuku 并授权")
-        if (!launchW1()) return false
+        if (!launchW1()) return W1Outcome.START_FAILED
         // 原 PC 脚本 W1 前台同步运行期间，主机只 tail 本地文件、不向设备发任何命令。
         // 这里若每 5s 发 3 条 shell 命令，会在竞态窗口制造大量调度噪声。
         // 改为：每 5s 仅做本地 binder 存活检查（零 shell），每 30s 才发 1 条合并查询。
@@ -255,30 +331,51 @@ class GrindRunner(
             // 本地 binder ping，不启动任何远端进程
             if (!ShizukuController.isAvailable()) {
                 log("[W1] Shizuku 掉线 → 设备很可能已在 W1 崩溃后自重启")
-                return false
+                return W1Outcome.MISS
             }
             if (ticks % 6 != 0) continue
 
             val p = w1Probe()
+            // 合并查询全部为空 = Shizuku 命令通道已失效，w1.log 里只是旧内容
+            if (p.shellLost) {
+                log("[W1][错误] 设备查询全部为空 → Shizuku 命令通道在 W1 期间失效")
+                log("[W1] 停止轮询；请重新连接 Shizuku，不会重启设备")
+                return W1Outcome.START_FAILED
+            }
+            // 关键修复：w1.log 出现 "No such file or directory" 等说明 exploit
+            // 根本没启动，等满 420s 毫无意义，更不能因此 reboot。
+            if (p.fatal) {
+                log("[W1][错误] exploit 未能启动：${p.tail.takeLast(160).trim()}")
+                log("[W1] 这是物料/权限问题，不是内核崩溃；不会重启设备")
+                return W1Outcome.START_FAILED
+            }
             if (p.enforce == "Permissive" || p.landed > 0) {
                 log("[W1] SELinux 已 Permissive ✔ (约 ${ticks * 5}s)")
-                return true
+                return W1Outcome.LANDED
             }
             if (p.boot.isNotEmpty() && boot0 != null && p.boot != boot0) {
                 log("[W1] boot_id 变化 → 设备已自重启，本轮作废")
-                return false
+                return W1Outcome.MISS
             }
             log("[W1] 运行中 ${ticks * 5}s / 420s | getenforce=${p.enforce} | ${p.tail.takeLast(120)}")
         }
         log("[W1] 420s 内未落地（干净 miss 或崩溃）")
-        return false
+        return W1Outcome.MISS
     }
+
+    /** 区分「exploit 没跑起来」与「跑了但没打中」——前者绝不能触发 reboot。 */
+    private fun isFatalStart(text: String): Boolean = listOf(
+        "No such file or directory", "env: exec", "cannot execute",
+        "Exec format error", "Permission denied", "not found", "not executable"
+    ).any { text.contains(it, ignoreCase = true) }
 
     private data class W1Probe(
         val enforce: String,
         val boot: String,
         val landed: Int,
-        val tail: String
+        val tail: String,
+        val fatal: Boolean,
+        val shellLost: Boolean
     )
 
     /** 用单条 shell 命令一次拿全所需信息，把轮询干扰降到最低。 */
@@ -289,15 +386,26 @@ class GrindRunner(
             15_000
         )
         val l = r.out.lines()
+        val tail = l.drop(3).joinToString(" ").trim()
+        val enforce = l.getOrNull(0)?.trim() ?: ""
+        val boot = l.getOrNull(1)?.trim() ?: ""
         return W1Probe(
-            enforce = l.getOrNull(0)?.trim() ?: "",
-            boot = l.getOrNull(1)?.trim() ?: "",
+            enforce = enforce,
+            boot = boot,
             landed = (l.getOrNull(2)?.trim() ?: "0").toIntOrNull() ?: 0,
-            tail = l.drop(3).joinToString(" ").trim()
+            tail = tail,
+            fatal = isFatalStart(tail),
+            // getenforce 与 boot_id 同时为空 = 这条合并命令压根没执行
+            shellLost = enforce.isEmpty() && boot.isEmpty()
         )
     }
 
     private suspend fun launchW2(adj: Int): Boolean {
+        val chk = ShizukuController.exec("test -x $tmpE && echo OK", 10_000)
+        if (!chk.out.contains("OK")) {
+            log("[W2][中止] $tmpE 不存在或不可执行，本轮不启动 W2")
+            return false
+        }
         // W1 成功后其进程可能仍 parking forever，必须先杀掉再跑 W2，
         // 否则两个 exploit 并发 → slab_drain 二次 fork 风暴 → 内核保护性重启
         if (!logCleanup("W2 启动前")) {
@@ -314,7 +422,7 @@ class GrindRunner(
         return true
     }
 
-    private enum class W2Result { ROOTED, KSU, LADDER, MISS }
+    private enum class W2Result { ROOTED, KSU, LADDER, MISS, START_FAILED }
 
     private suspend fun pollW2(): W2Result {
         // 同样降低轮询频率：W2 也是时序敏感的竞态，原脚本期间主机零设备命令
@@ -324,16 +432,21 @@ class GrindRunner(
                 log("[W2] Shizuku 掉线 → 设备很可能已崩溃重启，停止本轮轮询")
                 return W2Result.MISS
             }
-            val log = readFileTail(W2_LOG, 8000)
-            if (log.contains("child is root")) {
+            val w2log = readFileTail(W2_LOG, 8000)
+            // 与 W1 同理：exploit 没启动就别空转 900s，更不能因此 reboot
+            if (isFatalStart(w2log)) {
+                log("[W2][错误] exploit 未能启动：${w2log.takeLast(160).trim()}")
+                return W2Result.START_FAILED
+            }
+            if (w2log.contains("child is root")) {
                 log("[W2] 命中 child is root → ROOTED")
                 return W2Result.ROOTED
             }
-            if (log.contains("KernelSU helper reports ready") || log.contains("KSU LOADED")) {
+            if (w2log.contains("KernelSU helper reports ready") || w2log.contains("KSU LOADED")) {
                 log("[W2] 命中 KSU READY")
                 return W2Result.KSU
             }
-            if (log.contains("erase_ran=1") && log.contains("child uid = 2000")) {
+            if (w2log.contains("erase_ran=1") && w2log.contains("child uid = 2000")) {
                 log("[W2] 命中 ladder（erase 触发但 uid 仍 2000）")
                 return W2Result.LADDER
             }
@@ -397,14 +510,18 @@ class GrindRunner(
         return false
     }
 
+    // w1.log 被 `: >` 截断后，旧进程仍持有 fd 在原偏移写入，会形成 NUL 稀疏空洞。
+    // 不过滤的话这些 NUL 会被原样写进 XiaoDao 日志（实测一份日志里有 6300 个）。
+    private fun cleanOut(s: String): String = s.replace("\u0000", "")
+
     private suspend fun readFile(path: String): String {
         val r = ShizukuController.exec("cat '$path' 2>/dev/null", 15_000)
-        return if (r.code == 0) r.out else ""
+        return if (r.code == 0) cleanOut(r.out) else ""
     }
 
     /** 只取尾部，避免 exploit 日志变大后每 5s 把整个文件读进内存。 */
     private suspend fun readFileTail(path: String, bytes: Int = 2000): String {
         val r = ShizukuController.exec("tail -c $bytes '$path' 2>/dev/null", 15_000)
-        return if (r.code == 0) r.out else ""
+        return if (r.code == 0) cleanOut(r.out) else ""
     }
 }
