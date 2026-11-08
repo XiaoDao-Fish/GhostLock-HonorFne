@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FNE-AN00</string>
+    <string name="subtitle">荣耀 70 (FNE-AN00) 锁 bootloader 临时 Root · Shizuku 启动</string>
+
+    <string name="btn_connect">连接 Shizuku</string>
+    <string name="btn_deploy">部署物料</string>
+    <string name="btn_root">一键临时 Root</string>
+    <string name="btn_status">查看状态</string>
+    <string name="btn_managers">安装管理器</string>
+    <string name="btn_clear">清空日志</string>
+
+    <string name="hint_shizuku_missing">未检测到 Shizuku。请在设备上安装 Shizuku 并通过「无线调试」启动它，再返回本应用授权。</string>
+    <string name="hint_waiting">等待操作…</string>
+    <string name="log_placeholder">— 日志将显示在此 —</string>
+</resources>
