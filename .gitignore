@@ -1,0 +1,69 @@
+# ============================================================
+# GhostLock-HonorFne — GitHub upload filter
+# Keep: project source, host scripts, exploit, KSU chain, app,
+#       LSPosed module, docs, deploy payloads (or move to Releases)
+# Exclude: local toolchain, upstream source snapshots, local state
+# ============================================================
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+*.iml
+.idea/
+
+# ---- Local build toolchain (downloaded, ~400 MB, never commit) ----
+cmdline-tools/
+gradle-8.6/
+gradle-8.7/
+jdk-*/
+gradle-*-bin.zip
+android-sdk/
+jdk-17*/
+
+# ---- Upstream third-party source snapshots (link as submodule instead) ----
+KernelSU-main/
+Shizuku-API-master/
+
+# ---- Local agent / session state ----
+.workbuddy/
+.write_test
+
+# ---- Gradle / Android build output ----
+.gradle/
+build/
+app/build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ---- Compiled APKs (publish via GitHub Releases instead) ----
+app-debug.apk
+app-release.apk
+# NOTE: APK/ZIP files under deploy/, GhostLockApp/app/src/main/assets/ and
+# hooks/launcher/out/ are PROJECT PAYLOADS, not build output. Keep them tracked,
+# otherwise a fresh clone cannot build a working app.
+
+# ---- Grind / diagnostic logs ----
+*.log
+root/host-scripts/*.log
+root/host-scripts/w1_try*.log
+root/host-scripts/w2_try*.log
+grind_*.log
+ghostlock_latest.log
+ghostlock_clean*.log
+run_w2_driver.log
+
+# ---- hooks/launcher (Gradle) intermediates ----
+hooks/launcher/.gradle/
+hooks/launcher/.idea/
+hooks/launcher/build/
+hooks/launcher/app/build/
+hooks/launcher/xposed-api/build/
+hooks/launcher/out/*
+!hooks/launcher/out/HnLauncherPort.apk
+
+# ---- Python / temp ----
+__pycache__/
+*.pyc
+*.tmp
