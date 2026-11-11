@@ -8,11 +8,14 @@ import kotlin.math.max
  * on-device execution driven through Shizuku.
  *
  * Per boot:
- *   settle -> W1 (--write1, SELinux off) -> W2 (cred write -> root) -> KSU late-load
+ *   settle -> W1 (--write1, SELinux off) -> W2 (cred write -> root)
+ *   -> chain_hook.sh 建立常驻 root FIFO 通道 (S2)
+ *   -> App 通过通道投递 ksud insmod (S3) -> 恢复 Enforcing + 验证 (S4)
  *
- * The exploit, once it achieves root, runs chain_hook.sh itself. This class only
- * launches `e` (detached) and monitors device-side log files, exactly like the
- * original scripts that backgrounded the process and tailed its logs.
+ * S2-S4 来自「HONOR50-KernelSU晚加载提权实现记录」在 NTH-AN00 上实测成功
+ * 的方案：旧的 load_ko + fake kallsyms 链路在该机型上必然 slide mismatch，
+ * 因此 chain_hook.sh 见到 handoff 标记后只建通道就退出，后续全部由 App 驱动。
+ * 若通道未建立（旧物料 / 异常），仍回退等待 chain_hook 自行完成晚加载。
  *
  * IMPORTANT reboot limitation: a failed W1/W2 can reboot the device, and Shizuku
  * drops across reboot. [waitForBootAndShizuku] blocks until the user re-enables
@@ -55,13 +58,42 @@ class GrindRunner(
         status("开始 per-boot root (W1 -> W2 -> KSU 晚加载)")
         log("=== 外循环：最多 8 轮，失败自动重启/重跑 ===")
         LogStore.sync(force = true, reason = "开始临时 Root（归档上次会话）")
-        // 设备崩溃重启后 app 进程被杀、内存日志清空；/data/local/tmp 跨重启保留，
-        // 把上一轮 W1 尾部捞回来，便于判断崩在 KS / prepare / route 哪一段。
+        // 设备崩溃重启后 app 进程被杀、内存日志清空；/data/local/tmp 跨重启保留。
+        // W1 / W2 / chain 三份尾部都捞回来：此前只取 W1，导致反复崩在 W2 时
+        // 完全看不到现场，无法判断是 slab_drain、punch 还是 KSU 晚加载阶段。
         val lastW1 = readFileTail(W1_LOG)
         if (lastW1.isNotBlank()) {
             log("[取证] 上次 W1 日志尾部：${lastW1.replace('\n', ' ').takeLast(300).trim()}")
             if (isFatalStart(lastW1)) {
                 log("[取证] 上次是「物料缺失 / exploit 未启动」，不是内核崩溃；本次会自动重新部署")
+            }
+            if (lastW1.contains("SIG_ENFORCE DISABLED") || lastW1.contains("SELinux DISABLED")) {
+                log("[取证][结论] 上次 W1 已成功关闭 SELinux，瓶颈在 W2，不在 W1")
+            }
+        }
+        val lastW2 = readFileTail(W2_LOG, 4000)
+        if (lastW2.isNotBlank()) {
+            log("[取证] 上次 W2 日志尾部：${lastW2.replace('\n', ' ').takeLast(420).trim()}")
+            val stage = when {
+                lastW2.contains("child is root") -> "已拿到 root（后续可能崩在 KSU 晚加载）"
+                lastW2.contains("KSU LOADED") ||
+                    lastW2.contains("KernelSU helper reports ready") -> "KSU 晚加载阶段"
+                lastW2.contains("slab_drain") -> "slab_drain fork 风暴阶段"
+                lastW2.contains("punch") -> "punch 阶段"
+                lastW2.contains("route") -> "route 阶段"
+                else -> "早期 prepare / 未归类"
+            }
+            log("[取证] 上次 W2 大致停在：$stage")
+            if (stage == "slab_drain fork 风暴阶段") {
+                log("[取证][结论] slab_drain 是 exploit 内置的 5 波 x 400 fork（源码按开机时长硬编码，无 GL_* 可调）")
+                log("[取证][结论] 由此触发的内核保护性重启属固有失败，不是 app 故障；重连 Shizuku 后重跑即可")
+            }
+        }
+        val lastChain = readFileTail("$tmpKsu/chain.log", 1200)
+        if (lastChain.isNotBlank()) {
+            log("[取证] chain.log 尾部：${lastChain.replace('\n', ' ').takeLast(240).trim()}")
+            if (lastChain.contains("flipping SELinux enforcing")) {
+                log("[取证][结论] KSU 晚加载链曾跑完收尾步骤，说明这套物料与内核配套可用")
             }
         }
         // 关键修复：若 /data/local/tmp/e 不存在（用户没点「部署物料」、设备重启后
@@ -172,8 +204,15 @@ class GrindRunner(
                 log("    W2 干净 miss，设备仍 Permissive，重试")
             }
             if (done) {
-                waitKsu()
-                status("KernelSU 已就绪，临时 root 成功！")
+                if (ksuLoaded()) {
+                    log("=== KSU READY（chain_hook 已自行完成加载）===")
+                    waitKsu()
+                    status("KernelSU 已就绪，临时 root 成功！")
+                    return
+                }
+                // HONOR 50 验证链路：常驻 root 通道 -> ksud insmod -> 恢复 Enforcing
+                val ok = finishViaRootChannel()
+                status(if (ok) "KernelSU 已就绪，临时 root 成功！" else "KSU 晚加载未确认，请查看日志")
                 return
             }
             if (w2StartFailure) {
@@ -228,16 +267,10 @@ class GrindRunner(
         ShizukuController.exec("am kill-all", 15_000)
         ShizukuController.exec("pm trim-caches 999999999999", 30_000)
 
-        // 原脚本要求开机后静默一段时间才开跑（竞态利用需要 CPU 安静）。
-        // 分段打印进度，避免界面看起来像死机。
-        log("[settle] 静默等待 60s（期间请勿操作手机）…")
-        repeat(12) { i ->
-            delay(5_000)
-            log("[settle] 静默 ${(i + 1) * 5}s / 60s")
-        }
-
-        log("[settle] 开始检测 CPU 空闲度…")
-        repeat(30) { i -> // 最多 150s
+        // 用户要求：不要静默 60 秒，直接开始。去掉固定 60s 静默等待，
+        // 直接进入 CPU 空闲度检测（带进度日志，非静默）；空闲即开跑 W1。
+        log("[settle] 跳过长静默，直接开始（检测 CPU 空闲度）…")
+        repeat(12) { i -> // 最多 60s，空闲即返回，不阻断 W1
             val a = cpuSnapshot()
             delay(5_000)
             val b = cpuSnapshot()
@@ -413,7 +446,9 @@ class GrindRunner(
             return false
         }
         ShizukuController.exec("sh -c ': > $W2_LOG'", 15_000)
-        val env = "$SYNC GL_W2_ROUNDS=2 GL_W2_CRED_ADJ=$adj"
+        // 文档 fne_local.sh 明确只跑 1 轮：W2 拿到 root 后其 park 的 waiter
+        // 不能被二次 PI 操作打扰，否则踢到 ghost 触发 panic。
+        val env = "$SYNC GL_W2_ROUNDS=1 GL_W2_CRED_ADJ=$adj"
         log("[W2] 准备启动 cred 写入 …")
         val cmd = "( env $env $tmpE > $W2_LOG 2>&1 </dev/null ) >/dev/null 2>&1 &"
         val r = ShizukuController.exec(cmd, 15_000)
@@ -456,17 +491,100 @@ class GrindRunner(
         return W2Result.MISS
     }
 
+    // ------------------------------------------- HONOR 50 root channel (S2-S4)
+
+    private val RS_IN = "/data/local/tmp/rs.in"
+    private val RS_OUT = "/data/local/tmp/rs.out"
+
+    /** chain_hook.sh 在 handoff 模式下把 root 搬进 FIFO 后写入此标志。 */
+    private suspend fun waitRootChannel(): Boolean {
+        log("[chan] 等待常驻 root shell 通道 (最长 90s)…")
+        repeat(30) {
+            val r = ShizukuController.exec(
+                "grep -c 'ROOT SHELL CHANNEL UP' $RS_OUT 2>/dev/null", 15_000
+            )
+            if ((r.out.trim().toIntOrNull() ?: 0) > 0) {
+                log("[chan] ROOT SHELL CHANNEL UP ✔")
+                return true
+            }
+            delay(3_000)
+        }
+        log("[chan][错误] 未建立 root 通道（chain_hook 未运行或走了旧链路）")
+        return false
+    }
+
+    /** 向 FIFO 投递一条命令，然后轮询 rs.out 里的完成标记。 */
+    private suspend fun deliver(script: String, marker: String, timeoutSec: Int): Boolean {
+        log("[chan] 投递：$script")
+        val w = ShizukuController.exec("echo 'sh $script' > $RS_IN", 20_000)
+        if (w.code != 0) {
+            log("[chan][错误] 写入 rs.in 失败 code=${w.code} ${w.err.trim()}")
+            return false
+        }
+        repeat(timeoutSec / 3) { i ->
+            delay(3_000)
+            val r = ShizukuController.exec("grep -c '$marker' $RS_OUT 2>/dev/null", 15_000)
+            if ((r.out.trim().toIntOrNull() ?: 0) > 0) {
+                log("[chan] $marker ✔ (${(i + 1) * 3}s)")
+                return true
+            }
+            if (i % 5 == 0) log("[chan] 等待 $marker … ${(i + 1) * 3}s")
+        }
+        log("[chan][错误] 超时未见 $marker")
+        return false
+    }
+
+    /** S2-S4 主流程；失败时明确提示设备可能仍停留在 Permissive。 */
+    private suspend fun finishViaRootChannel(): Boolean {
+        log("=== S2/S3/S4：HONOR 50 验证链路（root 通道 → ksud insmod → Enforcing）===")
+        if (!waitRootChannel()) {
+            log("[chan] 回退：等待旧 chain_hook 自行完成 KSU 晚加载")
+            waitKsu()
+            return ksuLoaded()
+        }
+        if (!ksuLoaded()) {
+            val done = deliver("$tmpKsu/ksu_lateload.sh", "KSUTRY_DONE", 120)
+            log("[chan] rs.out 尾部：${readFileTail(RS_OUT, 2400).replace('\n', ' ').takeLast(500).trim()}")
+            if (!done && !ksuLoaded()) {
+                log("[chan][错误] ksud insmod 未确认成功，设备可能仍为 Permissive")
+                log("[chan][提示] 请勿在此状态长时间使用；重启设备可恢复 Enforcing")
+                return false
+            }
+        } else {
+            log("[chan] 模块已 Live，跳过 insmod")
+        }
+
+        // 恢复 Enforcing 必须是最后一步：flip 会杀掉 kernel:s0 的通道 shell，
+        // 所以不强等 RESTORE_ENFORCE_DONE，直接投递后验证最终状态。
+        ShizukuController.exec("echo 'sh $tmpKsu/restore_enforce.sh' > $RS_IN", 20_000)
+        delay(4_000)
+
+        val v = ShizukuController.exec(
+            "getenforce; /system/bin/su -c id 2>/dev/null; grep kernelsu /proc/modules",
+            20_000
+        )
+        log("[verify] ${v.out.replace("\n", " | ").trim()}")
+        val ok = ksuLoaded() && v.out.contains("uid=0")
+        if (ok) log("[verify] ✔ Enforcing 下 root 仍可用，KSU 模块 Live")
+        else log("[verify][警告] 未同时确认 KSU Live 与 uid=0，请点「查看状态」复核")
+        return ok
+    }
+
     private suspend fun waitKsu() {
         log("[wait] 等待 KSU 晚加载 (最长 180s)…")
         repeat(36) {
             delay(5_000)
-            val status = readFile("$tmpKsu/chain_status").trim()
-            val log = readFile("$tmpKsu/chain.log")
-            if (status == "ok" || log.contains("KSU READY")) {
-                log("[wait] KSU 就绪：$status")
+            val st = readFile("$tmpKsu/chain_status").trim()
+            val chainLog = readFile("$tmpKsu/chain.log")
+            if (st == "handoff") {
+                log("[wait] chain 已交接给 App 的 root 通道，跳过等待")
                 return
             }
-            if (it % 6 == 0) log("[wait] chain_status=$status")
+            if (st == "ok" || chainLog.contains("KSU READY")) {
+                log("[wait] KSU 就绪：$st")
+                return
+            }
+            if (it % 6 == 0) log("[wait] chain_status=$st")
         }
         log("[wait] 超时：KSU 可能仍在加载，稍后在「查看状态」确认。")
     }

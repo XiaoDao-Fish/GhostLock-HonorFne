@@ -34,6 +34,36 @@ if grep -q kernelsu /proc/modules 2>/dev/null; then
   fi
 fi
 
+# --- [HONOR 50] persistent root shell channel -------------------------------
+# 漏洞拉起的这个 shell 是 uid=0 / u:r:kernel:s0，SELinux 恢复 Enforcing 时
+# 会被内核杀掉，root 随之消失。必须在它被杀之前把 root 权限搬进一条 FIFO
+# 通道；666 权限让普通 shell(uid 2000，即 Shizuku) 也能投递命令。
+# 依据：HONOR50-KernelSU晚加载提权实现记录 S2（实测成功）。
+rm -f /data/local/tmp/rs.in /data/local/tmp/rs.out
+mkfifo /data/local/tmp/rs.in 2>/dev/null
+chmod 666 /data/local/tmp/rs.in 2>/dev/null
+: > /data/local/tmp/rs.out
+chmod 666 /data/local/tmp/rs.out 2>/dev/null
+echo "ROOT SHELL CHANNEL UP uid=$(id -u) ctx=$(cat /proc/self/attr/current 2>/dev/null)" >> /data/local/tmp/rs.out
+setsid /system/bin/sh -c 'while true; do /system/bin/sh </data/local/tmp/rs.in >>/data/local/tmp/rs.out 2>&1; done' </dev/null >/dev/null 2>&1 &
+echo "root shell channel pid=$!"
+echo 0 > /proc/sys/kernel/kptr_restrict 2>/dev/null
+cat /proc/kallsyms > /data/local/tmp/real_kallsyms.txt 2>/dev/null
+chmod 644 /data/local/tmp/real_kallsyms.txt 2>/dev/null
+echo "kallsyms snapshot done ($(wc -l < /data/local/tmp/real_kallsyms.txt 2>/dev/null) lines)"
+# --- [HONOR 50] end ---------------------------------------------------------
+
+# 交接给 App：由 App 通过 root 通道用官方 ksud insmod 完成晚加载，再恢复
+# Enforcing。旧的 load_ko + fake kallsyms 链路在 NTH-AN00 上实测必然
+# slide mismatch（静态表差 0x30 / 0x180、敏感符号被厂商过滤），继续走只会
+# panic。删除 $D/handoff 即可恢复旧链路（回退开关）。
+if [ -f $D/handoff ] && [ "$DRY" != "1" ]; then
+  echo "HANDOFF: root channel ready; app will drive ksud insmod + restore_enforce"
+  echo handoff > $ST
+  sync
+  exit 0
+fi
+
 # --- gate 1: W1b result (sig_enforce must be N) ---
 sv=$(cat /sys/module/module/parameters/sig_enforce 2>/dev/null)
 echo "sig_enforce=$sv"

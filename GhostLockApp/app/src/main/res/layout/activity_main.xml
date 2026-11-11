@@ -1,240 +1,637 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Miuix-inspired layout, implemented with the platform View system.
-  All view IDs are unchanged so MainActivity.kt needs no modification.
--->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Liquid Glass stage rebuilt on the HonorRoot design system.
+     Every legacy view id is preserved so MainActivity keeps working. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/miuix_bg"
-    android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingTop="28dp"
-    android:paddingEnd="20dp"
-    android:paddingBottom="20dp">
+    android:background="@drawable/glass_bg"
+    android:clipChildren="false">
 
-    <!-- Miuix title1 / footnote1 hierarchy -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:letterSpacing="0.01"
-        android:text="@string/app_name"
-        android:textColor="@color/miuix_text"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+    <!-- Diffuse colour orbs, softly blurred at runtime on API 31 and above. -->
+    <View
+        android:id="@+id/orbBlue"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-110dp"
+        android:layout_marginEnd="-110dp"
+        android:background="@drawable/glass_orb_blue" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="20dp"
-        android:lineSpacingExtra="3dp"
-        android:text="@string/subtitle"
-        android:textColor="@color/miuix_text_secondary"
-        android:textSize="13sp" />
+    <View
+        android:id="@+id/orbPurple"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="-120dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/glass_orb_purple" />
 
-    <!-- Status card -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/miuix_status"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="14dp">
-
-        <View
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/miuix_dot" />
-
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hint_waiting"
-            android:textColor="@color/miuix_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- Action card -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/miuix_card"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:clipChildren="false"
+        android:paddingStart="@dimen/ds_page_pad"
+        android:paddingTop="@dimen/ds_space_8"
+        android:paddingEnd="@dimen/ds_page_pad"
+        android:paddingBottom="@dimen/ds_space_4">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_actions"
-            android:textColor="@color/miuix_text_secondary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <android.widget.Button
-                android:id="@+id/btnConnect"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/miuix_button_primary"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                android:stateListAnimator="@null"
-                android:text="@string/btn_connect"
-                android:textAllCaps="false"
-                android:textColor="@color/miuix_on_primary"
-                android:textSize="15sp" />
-
-            <android.widget.Button
-                android:id="@+id/btnDeploy"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/miuix_button_secondary"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                android:stateListAnimator="@null"
-                android:text="@string/btn_deploy"
-                android:textAllCaps="false"
-                android:textColor="@color/miuix_primary"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <!-- Primary action spans the full card width -->
-        <android.widget.Button
-            android:id="@+id/btnRoot"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/miuix_button_primary"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="0dp"
-            android:stateListAnimator="@null"
-            android:text="@string/btn_root"
-            android:textAllCaps="false"
-            android:textColor="@color/miuix_on_primary"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <android.widget.Button
-                android:id="@+id/btnStatus"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/miuix_button_secondary"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                android:stateListAnimator="@null"
-                android:text="@string/btn_status"
-                android:textAllCaps="false"
-                android:textColor="@color/miuix_primary"
-                android:textSize="15sp" />
-
-            <android.widget.Button
-                android:id="@+id/btnManagers"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/miuix_button_secondary"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                android:stateListAnimator="@null"
-                android:text="@string/btn_managers"
-                android:textAllCaps="false"
-                android:textColor="@color/miuix_primary"
-                android:textSize="15sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Log card: fills the remaining space -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/miuix_log"
-        android:orientation="vertical"
-        android:padding="12dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/section_log"
-                android:textColor="@color/miuix_log_title"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <android.widget.Button
-                android:id="@+id/btnClear"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:background="@drawable/miuix_button_ghost"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:stateListAnimator="@null"
-                android:text="@string/btn_clear"
-                android:textAllCaps="false"
-                android:textColor="@color/miuix_log_hint"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <ScrollView
+        <FrameLayout
+            android:id="@+id/pageHost"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true"
-            android:scrollbars="vertical">
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
-            <TextView
-                android:id="@+id/tvLog"
+            <!-- HOME. One focal point: the clock. Everything else steps back. -->
+            <ScrollView
+                android:id="@+id/pageHome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:lineSpacingExtra="3dp"
-                android:text="@string/log_placeholder"
-                android:textColor="@color/miuix_log_text"
-                android:textIsSelectable="true"
-                android:textSize="11sp" />
-        </ScrollView>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
-</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/ds_space_6">
+
+                    <TextView
+                        android:id="@+id/homeClockCaption"
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_clock_caption" />
+
+                    <TextView
+                        android:id="@+id/tvClock"
+                        style="@style/HonorRoot.Text.Display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_1"
+                        android:text="00:00:00" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        style="@style/HonorRoot.Text.Body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2" />
+
+                    <TextView
+                        android:id="@+id/tvGreeting"
+                        style="@style/HonorRoot.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_8"
+                        android:text="@string/home_greeting_morning" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_8"
+                        android:background="@drawable/glass_card"
+                        android:orientation="vertical"
+                        android:padding="@dimen/ds_card_pad">
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_device_caption" />
+
+                        <TextView
+                            android:id="@+id/tvDeviceModel"
+                            style="@style/HonorRoot.Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_4"
+                            android:text="@string/home_device_model" />
+
+                        <TextView
+                            android:id="@+id/tvKernel"
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_2"
+                            android:letterSpacing="0"
+                            android:text="@string/home_kernel" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/ds_space_5"
+                            android:layout_marginBottom="@dimen/ds_space_5"
+                            android:background="@color/ds_outline_variant" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/rootStateDot"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/ds_status_dot"
+                                android:backgroundTint="@color/glass_warn" />
+
+                            <TextView
+                                style="@style/HonorRoot.Text.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ds_space_3"
+                                android:text="@string/home_label_root" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/tvRootState"
+                                style="@style/HonorRoot.Text.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="@string/home_root_pending"
+                                android:textColor="@color/glass_warn"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_marginTop="@dimen/ds_space_2"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/shizukuStateDot"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/ds_status_dot"
+                                android:backgroundTint="@color/glass_warn" />
+
+                            <TextView
+                                style="@style/HonorRoot.Text.Label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ds_space_3"
+                                android:text="@string/home_label_shizuku" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/tvShizukuState"
+                                style="@style/HonorRoot.Text.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end|center_vertical"
+                                android:minHeight="@dimen/ds_touch_min"
+                                android:paddingStart="@dimen/ds_space_2"
+                                android:text="@string/home_shizuku_no"
+                                android:textColor="@color/glass_warn"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ds_space_5"
+                            android:letterSpacing="0"
+                            android:text="@string/home_shizuku_hint" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <!-- ROOT -->
+            <LinearLayout
+                android:id="@+id/pageRoot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/rootIntro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nav_root" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_1"
+                        android:layout_marginBottom="@dimen/ds_space_8"
+                        android:letterSpacing="0"
+                        android:text="@string/root_intro_subtitle" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/glass_card"
+                        android:orientation="vertical"
+                        android:padding="@dimen/ds_card_pad">
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/root_check_caption" />
+
+                        <TextView
+                            android:id="@+id/tvCompat"
+                            style="@style/HonorRoot.Text.Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_4"
+                            android:text="@string/root_check_pending"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvCompatDetail"
+                            style="@style/HonorRoot.Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_3"
+                            android:textColor="@color/ds_on_surface_muted" />
+
+                        <android.widget.Button
+                            android:id="@+id/btnRefreshCompat"
+                            style="@style/HonorRoot.Button.Tonal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_marginTop="@dimen/ds_space_5"
+                            android:paddingStart="@dimen/ds_space_4"
+                            android:paddingEnd="@dimen/ds_space_4"
+                            android:stateListAnimator="@null"
+                            android:text="@string/root_refresh" />
+                    </LinearLayout>
+
+                    <android.widget.Button
+                        android:id="@+id/btnStartRoot"
+                        style="@style/HonorRoot.Button.Primary"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ds_btn_primary_h"
+                        android:layout_marginTop="@dimen/ds_space_6"
+                        android:stateListAnimator="@null"
+                        android:text="@string/root_start"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rootLogPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_panel"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ds_space_4"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0"
+                        android:text="@string/hint_waiting"
+                        android:textColor="@color/glass_warn" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_3"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/root_log_caption"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <android.widget.Button
+                            android:id="@+id/btnClear"
+                            style="@style/HonorRoot.Button.Tonal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:paddingStart="@dimen/ds_space_4"
+                            android:paddingEnd="@dimen/ds_space_4"
+                            android:stateListAnimator="@null"
+                            android:text="@string/btn_clear" />
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/ds_space_3"
+                        android:layout_weight="1"
+                        android:fillViewport="true">
+
+                        <TextView
+                            android:id="@+id/tvLog"
+                            style="@style/HonorRoot.Text.Log"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/log_placeholder"
+                            android:textIsSelectable="true" />
+                    </ScrollView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_3"
+                        android:orientation="horizontal">
+
+                        <android.widget.Button
+                            android:id="@+id/btnConnect"
+                            style="@style/HonorRoot.Button.Tonal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_marginEnd="@dimen/ds_space_1"
+                            android:layout_weight="1"
+                            android:stateListAnimator="@null"
+                            android:text="@string/btn_connect" />
+
+                        <android.widget.Button
+                            android:id="@+id/btnDeploy"
+                            style="@style/HonorRoot.Button.Tonal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_marginStart="@dimen/ds_space_1"
+                            android:layout_weight="1"
+                            android:stateListAnimator="@null"
+                            android:text="@string/btn_deploy" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:orientation="horizontal">
+
+                        <android.widget.Button
+                            android:id="@+id/btnStatus"
+                            style="@style/HonorRoot.Button.Tonal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_marginEnd="@dimen/ds_space_1"
+                            android:layout_weight="1"
+                            android:stateListAnimator="@null"
+                            android:text="@string/btn_status" />
+
+                        <android.widget.Button
+                            android:id="@+id/btnManagers"
+                            style="@style/HonorRoot.Button.Tonal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_marginStart="@dimen/ds_space_1"
+                            android:layout_weight="1"
+                            android:stateListAnimator="@null"
+                            android:text="@string/btn_managers" />
+                    </LinearLayout>
+
+                    <android.widget.Button
+                        android:id="@+id/btnRoot"
+                        style="@style/HonorRoot.Button.Tonal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ds_touch_min"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:stateListAnimator="@null"
+                        android:text="@string/btn_root"
+                        android:textColor="@color/ds_primary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ABOUT -->
+            <ScrollView
+                android:id="@+id/pageAbout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_space_2"
+                    android:background="@drawable/glass_card"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ds_space_6">
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:text="@string/about_subtitle" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/ds_space_8"
+                        android:background="@color/ds_outline_variant" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_6"
+                        android:text="@string/about_version_caption" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:text="@string/about_version" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_8"
+                        android:text="@string/about_author_caption" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:text="@string/about_author" />
+
+                    <TextView
+                        android:id="@+id/tvQq"
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ds_touch_min"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0"
+                        android:text="@string/about_qq" />
+
+                    <android.widget.Button
+                        android:id="@+id/btnAuthorHome"
+                        style="@style/HonorRoot.Button.Tonal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ds_touch_min"
+                        android:layout_marginTop="@dimen/ds_space_6"
+                        android:stateListAnimator="@null"
+                        android:text="@string/about_home_btn" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/ds_space_8"
+                        android:background="@color/ds_outline_variant" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_6"
+                        android:text="@string/about_github_caption" />
+
+                    <TextView
+                        android:id="@+id/tvGithub"
+                        style="@style/HonorRoot.Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:text="@string/about_github"
+                        android:textColor="@color/glass_accent" />
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+        <!-- Floating capsule bar. Tap to switch, sliding frosted lens follows. -->
+        <FrameLayout
+            android:id="@+id/tabBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_tabbar_h"
+            android:layout_marginTop="@dimen/ds_space_4"
+            android:background="@drawable/glass_pill"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="@dimen/ds_space_1">
+
+            <View
+                android:id="@+id/tabIndicator"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/ds_lens_h"
+                android:layout_gravity="center_vertical|start"
+                android:background="@drawable/glass_lens" />
+
+            <LinearLayout
+                android:id="@+id/tabRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/tabHome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ds_space_1">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/nav_home"
+                        android:src="@drawable/ic_nav_home" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_1"
+                        android:letterSpacing="0"
+                        android:text="@string/nav_home"
+                        android:textColor="@color/glass_text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabRoot"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:alpha="0.52"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ds_space_1">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/nav_root"
+                        android:src="@drawable/ic_nav_target" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_1"
+                        android:letterSpacing="0"
+                        android:text="@string/nav_root"
+                        android:textColor="@color/glass_text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabAbout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:alpha="0.52"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ds_space_1">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/nav_about"
+                        android:src="@drawable/ic_nav_info" />
+
+                    <TextView
+                        style="@style/HonorRoot.Text.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_1"
+                        android:letterSpacing="0"
+                        android:text="@string/nav_about"
+                        android:textColor="@color/glass_text" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

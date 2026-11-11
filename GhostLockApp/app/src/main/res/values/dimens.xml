@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 4pt baseline grid (Apple HIG). All spacing comes from here. -->
+    <dimen name="ds_space_1">4dp</dimen>
+    <dimen name="ds_space_2">8dp</dimen>
+    <dimen name="ds_space_3">12dp</dimen>
+    <dimen name="ds_space_4">16dp</dimen>
+    <dimen name="ds_space_5">20dp</dimen>
+    <dimen name="ds_space_6">24dp</dimen>
+    <dimen name="ds_space_8">32dp</dimen>
+    <dimen name="ds_space_10">40dp</dimen>
+    <dimen name="ds_space_12">48dp</dimen>
+    <dimen name="ds_space_16">64dp</dimen>
+
+    <dimen name="ds_page_pad">24dp</dimen>
+    <dimen name="ds_card_pad">20dp</dimen>
+
+    <!-- One radius language: cards, buttons, chips, pills. -->
+    <dimen name="ds_radius_card">24dp</dimen>
+    <dimen name="ds_radius_btn">16dp</dimen>
+    <dimen name="ds_radius_chip">12dp</dimen>
+    <dimen name="ds_radius_pill">32dp</dimen>
+    <dimen name="ds_radius_lens">28dp</dimen>
+
+    <!-- Touch targets: nothing interactive is below 44dp. -->
+    <dimen name="ds_touch_min">44dp</dimen>
+    <dimen name="ds_btn_primary_h">56dp</dimen>
+    <dimen name="ds_tabbar_h">64dp</dimen>
+    <dimen name="ds_lens_h">56dp</dimen>
+
+    <!-- Type scale: display, headline, title, body, label, plus log mono. -->
+    <dimen name="ds_text_brand">44sp</dimen>
+    <dimen name="ds_text_display">56sp</dimen>
+    <dimen name="ds_text_headline">28sp</dimen>
+    <dimen name="ds_text_title">16sp</dimen>
+    <dimen name="ds_text_body">14sp</dimen>
+    <dimen name="ds_text_label">12sp</dimen>
+    <dimen name="ds_text_log">11sp</dimen>
+
+    <!-- Motion: micro interaction, standard transition, page spring. -->
+    <integer name="ds_dur_micro">200</integer>
+    <integer name="ds_dur_standard">300</integer>
+    <integer name="ds_dur_page">360</integer>
+</resources>

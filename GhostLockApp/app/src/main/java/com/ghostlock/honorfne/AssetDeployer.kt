@@ -20,7 +20,10 @@ object AssetDeployer {
 
     private const val TMP = "/data/local/tmp"
 
-    private val KSU_EXECUTABLES = setOf("chain_hook.sh", "magiskpolicy", "ksud", "load_ko", "kmsg_dumper")
+    private val KSU_EXECUTABLES = setOf(
+        "chain_hook.sh", "ksu_lateload.sh", "restore_enforce.sh",
+        "magiskpolicy", "ksud", "load_ko", "kmsg_dumper"
+    )
 
     suspend fun deploy(context: Context, log: (String) -> Unit): Boolean = withContext(Dispatchers.IO) {
         log("[deploy] 开始推送物料到 $TMP ...")
@@ -36,6 +39,15 @@ object AssetDeployer {
             ShizukuController.exec("chmod 755 $TMP/ksu_fne/$it", 15_000)
         }
 
+        // 启用「HONOR50-KernelSU晚加载提权实现记录」验证过的交接链路：
+        // chain_hook.sh 见到该标记后只建立常驻 root FIFO 通道就退出，
+        // 由 App 通过 rs.in 投递 ksud insmod + restore_enforce。
+        // 删掉 /data/local/tmp/ksu_fne/handoff 即可回退到旧的 load_ko 链路。
+        ShizukuController.exec(
+            "rm -f $TMP/rs.in $TMP/rs.out; : > $TMP/ksu_fne/handoff",
+            15_000
+        )
+
         // 3) netfix_packet module
         ShizukuController.exec("mkdir -p $TMP/netfix_packet", 15_000)
         deployDir(context, "netfix_packet", "$TMP/netfix_packet", log)
@@ -48,7 +60,10 @@ object AssetDeployer {
         // 所有命令都会返回空，旧版会谎报「全部部署成功」，随后 W1 却报
         // "No such file or directory"。这里对关键文件做真实存在性复检。
         val chk = ShizukuController.exec(
-            "test -s $TMP/e && test -s $TMP/ksu_fne/kernelsu.ko && echo DEPLOY_OK",
+            "test -s $TMP/e && test -s $TMP/ksu_fne/kernelsu.ko && " +
+                "test -s $TMP/ksu_fne/ksu_lateload.sh && " +
+                "test -s $TMP/ksu_fne/restore_enforce.sh && " +
+                "test -f $TMP/ksu_fne/handoff && echo DEPLOY_OK",
             20_000
         )
         val ok = chk.code == 0 && chk.out.contains("DEPLOY_OK")

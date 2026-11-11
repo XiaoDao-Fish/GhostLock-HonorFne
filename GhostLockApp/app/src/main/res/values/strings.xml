@@ -1,18 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FNE-AN00</string>
-    <string name="subtitle">荣耀 70 (FNE-AN00) 临时 Root · Shizuku 启动</string>
+    <string name="app_name">HonorRoot</string>
+    <string name="subtitle">荣耀 70 / 荣耀 50 临时 Root · Shizuku 启动</string>
 
+    <!-- legacy actions, still wired to MainActivity -->
     <string name="btn_connect">连接 Shizuku</string>
     <string name="btn_deploy">部署物料</string>
     <string name="btn_root">一键临时 Root</string>
     <string name="btn_status">查看状态</string>
     <string name="btn_managers">安装管理器</string>
     <string name="btn_clear">清空日志</string>
-
     <string name="section_actions">快捷操作</string>
     <string name="section_log">实时日志</string>
-
     <string name="hint_shizuku_missing">未检测到 Shizuku。请在设备上安装 Shizuku 并通过「无线调试」启动它，再返回本应用授权。</string>
     <string name="hint_waiting">等待操作…</string>
     <string name="log_placeholder">— 日志将显示在此 —</string>
+
+    <!-- navigation -->
+    <string name="nav_home">首页</string>
+    <string name="nav_root">提权</string>
+    <string name="nav_about">关于</string>
+
+    <!-- home -->
+    <string name="home_clock_caption">北京时间</string>
+    <string name="home_greeting_morning">早起的鸟儿临时root可以一次成功哦用户!</string>
+    <string name="home_greeting_noon">中午好啊用户 要临时root了吗 祝你成功!</string>
+    <string name="home_greeting_night">ovo好像有点晚了吧用户,早点睡呀 祝你一次成功</string>
+    <string name="home_device_caption">设备信息</string>
+    <string name="home_device_model">设备型号：检测中…</string>
+    <string name="home_kernel">内核版本：检测中…</string>
+    <string name="home_label_root">ROOT</string>
+    <string name="home_label_shizuku">SHIZUKU</string>
+    <string name="home_root_pending">检测中…</string>
+    <string name="home_root_ok">已获取临时 Root</string>
+    <string name="home_root_no">未获取 Root 权限</string>
+    <string name="home_shizuku_ok">已授权</string>
+    <string name="home_shizuku_no">未授权</string>
+    <string name="home_shizuku_hint">点击状态文字可重新发起 Shizuku 授权</string>
+
+    <!-- root page -->
+    <string name="root_intro_subtitle">HonorRoot · 临时权限提升</string>
+    <string name="root_check_caption">机型兼容性检测</string>
+    <string name="root_check_pending">正在检测机型与内核版本…</string>
+    <string name="root_check_ok">符合可临时 Root 机型</string>
+    <string name="root_check_bad">未检测到兼容机型</string>
+    <string name="root_check_kernel_bad">机型已支持 · 内核未收录</string>
+    <string name="root_refresh">重新检测</string>
+    <string name="root_start">点我进行临时Root</string>
+    <string name="root_log_caption">实时日志</string>
+
+    <!-- about page -->
+    <string name="about_subtitle">零特权提权链路</string>
+    <string name="about_version_caption">当前版本</string>
+    <string name="about_version">1.0.0</string>
+    <string name="about_author_caption">作者</string>
+    <string name="about_author">酷安\@小刀鱼鱼鱼</string>
+    <string name="about_qq">作者QQ: 2996697914</string>
+    <string name="about_github">https://github.com/XiaoDao-Fish/GhostLock-HonorFne</string>
+    <string name="about_home_btn">作者主页</string>
+    <string name="about_github_caption">GitHub 项目</string>
 </resources>

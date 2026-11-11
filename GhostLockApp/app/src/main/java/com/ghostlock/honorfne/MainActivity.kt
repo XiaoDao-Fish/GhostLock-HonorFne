@@ -1,13 +1,38 @@
 package com.ghostlock.honorfne
 
+import android.animation.ValueAnimator
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ghostlock.honorfne.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import kotlin.math.cos
+import kotlin.math.exp
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,12 +40,186 @@ class MainActivity : AppCompatActivity() {
     private val logLines = StringBuilder()
     private val MAX_LINES = 800
 
+    private enum class Page { HOME, ROOT, ABOUT }
+
+    private var compatible = false
+    private var indicatorItemWidth = 0f
+
+    /** Currently shown page; used to pick the spring-slide direction. */
+    private var currentPage = Page.HOME
+
+    /** True while exploit is running: suppress ALL shell polling to avoid
+     *  disturbing the race window (the PC script sends no device commands
+     *  during W1/W2 either). */
+    @Volatile
+    private var grinding = false
+
+    private val shanghai = TimeZone.getTimeZone("Asia/Shanghai")
+    private val clockFmt = SimpleDateFormat("HH:mm:ss", Locale.CHINA).apply { timeZone = shanghai }
+    private val dateFmt = SimpleDateFormat("yyyy年M月d日 EEEE", Locale.CHINA).apply { timeZone = shanghai }
+
+    companion object {
+        private const val AUTHOR_HOME_URL = "https://www.coolapk.com/u/45191968"
+        private const val GITHUB_URL = "https://github.com/XiaoDao-Fish/GhostLock-HonorFne"
+        private const val AUTHOR_QQ = "2996697914"
+
+        /** Exact kernel builds from root/exploit/src/devices/fne/offsets.h.
+         *  This is a KERNEL whitelist, not a device-model whitelist: the bundled
+         *  exploit binary matches uname -r with strcmp() and aborts with
+         *  "no offsets for kernel" when the build is absent from offsets.h.
+         *  A different build has different symbol offsets and will corrupt
+         *  unrelated kernel memory — never relax this to a prefix like "5.4". */
+        private val SUPPORTED_KERNELS = listOf(
+            "5.4.289-qgki-gf6cb1f712a6e",
+            "5.4.295-qgki-g6aea83b404da",
+            "5.4.295-qgki-gc4635e0ca684",
+            "5.4.295-qgki-ge32871827345",
+            "5.4.295-qgki-g0fe5dd3dbc93",
+            "5.4.295-qgki-gc26f40498717",
+            "5.4.295-qgki-g165910d83a3a",
+            "5.4.295-qgki-g58bd9508770a",
+            "5.4.295-qgki-g5e68e68ac2e2",
+            "5.4.295-qgki-g351930777161",
+            "5.4.295-qgki-g0fb2656b2b50"
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installCrashLogger()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         LogStore.init(this)
 
+        applyGlassBlur()
+        applyMicroInteractions()
+        setupTabIndicator()
+        wireLegacyButtons()
+        wireNewUi()
+
+        // Local-only info: no shell needed, so it is available even before Shizuku.
+        binding.tvDeviceModel.text = "设备型号：${Build.MANUFACTURER} ${Build.MODEL}"
+        binding.tvKernel.text = "内核版本：${System.getProperty("os.version") ?: "未知"}"
+
+        updateClock()
+        startClockLoop()
+        startStateLoop()
+        refreshShizukuState()
+
+        // ShizukuProvider 异步送达 binder，收到后刷新状态（回调在 binder 线程）
+        ShizukuController.observeBinder {
+            runOnUiThread { refreshShizukuState() }
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (!grinding) {
+                    // 归档上一次会话（很可能以内核崩溃 / 重启结束）并写完整诊断报告
+                    LogStore.sync(force = true, reason = "应用启动 / Shizuku 就绪")
+                    checkCompatibility()
+                }
+            }
+        }
+
+        log("[init] 日志即时写入：${LogStore.publicDirPath()}/ghostlock_latest.log")
+        log("[init] 另一份在 文件管理器→下载→XiaoDao→ghostlock_latest.txt")
+        log("[init] 以上两处都无需 Shizuku/电脑，崩溃重启后直接打开即可")
+        log("[init] 私有兜底：${LogStore.sessionPath()}")
+        log("[init] 闪退诊断：${filesDir}/crash_latest.txt")
+    }
+
+    /** Any uncaught exception is written to app-private storage, so a crash
+     *  can be diagnosed even when no PC / adb is connected. */
+    private fun installCrashLogger() {
+        val previous = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            runCatching {
+                val sw = java.io.StringWriter()
+                throwable.printStackTrace(java.io.PrintWriter(sw))
+                java.io.File(filesDir, "crash_latest.txt").writeText(
+                    "time=${Date()}\nthread=${thread.name}\n$sw"
+                )
+            }
+            if (previous != null) {
+                previous.uncaughtException(thread, throwable)
+            } else {
+                android.os.Process.killProcess(android.os.Process.myPid())
+                kotlin.system.exitProcess(1)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        ShizukuController.releaseBinderObserver()
+        super.onDestroy()
+    }
+
+    // ------------------------------------------------------------ glass UI
+
+    @Suppress("NewApi")
+    private fun applyGlassBlur() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val effect = RenderEffect.createBlurEffect(70f, 70f, Shader.TileMode.CLAMP)
+            binding.orbBlue.setRenderEffect(effect)
+            binding.orbPurple.setRenderEffect(effect)
+            // Barely-there soft focus on the lens rim, like a real glass bezel.
+            val soft = RenderEffect.createBlurEffect(1.2f, 1.2f, Shader.TileMode.CLAMP)
+            binding.tabIndicator.setRenderEffect(soft)
+        }
+    }
+
+    /** Design system micro interactions: a 0.97 press on every action and a
+     *  staggered fade up for the home page. Cosmetic only, never fatal. */
+    private fun applyMicroInteractions() = runCatching {
+        listOf<View>(
+            binding.btnConnect, binding.btnDeploy, binding.btnRoot,
+            binding.btnStatus, binding.btnManagers, binding.btnClear,
+            binding.btnRefreshCompat, binding.btnStartRoot, binding.btnAuthorHome
+        ).forEach { it.setOnTouchListener(pressFeedback) }
+        staggerEntrance()
+    }
+
+    private val pressFeedback = View.OnTouchListener { v, e ->
+        val d = motion(R.integer.ds_dur_micro)
+        when (e.actionMasked) {
+            MotionEvent.ACTION_DOWN ->
+                v.animate().scaleX(0.97f).scaleY(0.97f).setDuration(d).start()
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->
+                v.animate().scaleX(1f).scaleY(1f).setDuration(d).start()
+        }
+        false   // never consume the gesture, so onClick still fires
+    }
+
+    private fun staggerEntrance() {
+        listOf<View>(
+            binding.homeClockCaption, binding.tvClock, binding.tvDate,
+            binding.tvGreeting
+        ).forEachIndexed { i, v ->
+            v.alpha = 0f
+            v.translationY = dp(12).toFloat()
+            v.animate()
+                .alpha(1f).translationY(0f)
+                .setStartDelay(i * 55L)
+                .setDuration(motion(R.integer.ds_dur_standard))
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+        }
+        binding.tvDeviceModel.post {
+            val card = binding.tvDeviceModel.parent as? View ?: return@post
+            card.alpha = 0f
+            card.translationY = dp(16).toFloat()
+            card.animate()
+                .alpha(1f).translationY(0f)
+                .setStartDelay(180L)
+                .setDuration(motion(R.integer.ds_dur_standard))
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+        }
+    }
+
+    private fun motion(id: Int): Long = resources.getInteger(id).toLong()
+
+    private fun dp(value: Int): Int =
+        (value * resources.displayMetrics.density).toInt()
+
+    private fun wireLegacyButtons() {
         binding.btnConnect.setOnClickListener { onConnect() }
         binding.btnDeploy.setOnClickListener { onDeploy() }
         binding.btnRoot.setOnClickListener { onRoot() }
@@ -30,35 +229,305 @@ class MainActivity : AppCompatActivity() {
             logLines.clear()
             binding.tvLog.text = getString(R.string.log_placeholder)
         }
+    }
 
-        refreshShizukuState()
-        // ShizukuProvider 异步送达 binder，收到后刷新状态（回调在 binder 线程）
-        ShizukuController.observeBinder {
-            runOnUiThread { refreshShizukuState() }
-            // 归档上一次会话（很可能以内核崩溃 / 重启结束）并写完整诊断报告
-            lifecycleScope.launch(Dispatchers.IO) {
-                LogStore.sync(force = true, reason = "应用启动 / Shizuku 就绪")
+    private fun wireNewUi() {
+        // Plain tap-to-switch navigation (the long-press magnifier was removed).
+        binding.tabHome.setOnClickListener { switchPage(Page.HOME) }
+        binding.tabRoot.setOnClickListener { switchPage(Page.ROOT) }
+        binding.tabAbout.setOnClickListener { switchPage(Page.ABOUT) }
+
+        // Tapping the Shizuku row is the quickest way to (re)authorize.
+        binding.tvShizukuState.setOnClickListener { onConnect() }
+
+        binding.btnRefreshCompat.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) { checkCompatibility() }
+        }
+        binding.btnStartRoot.setOnClickListener { onStartRoot() }
+
+        binding.btnAuthorHome.setOnClickListener { openUrl(AUTHOR_HOME_URL) }
+        binding.tvGithub.setOnClickListener { openUrl(GITHUB_URL) }
+        binding.tvQq.setOnClickListener {
+            val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            cm.setPrimaryClip(ClipData.newPlainText("Author QQ", AUTHOR_QQ))
+            toast("已复制作者QQ：$AUTHOR_QQ")
+        }
+    }
+
+    /** Size the sliding frosted pill to exactly one third of the bar. */
+    private fun setupTabIndicator() {
+        binding.tabBar.post {
+            val inner = binding.tabBar.width -
+                binding.tabBar.paddingLeft - binding.tabBar.paddingRight
+            if (inner <= 0) return@post
+            indicatorItemWidth = inner / 3f
+            val lp = binding.tabIndicator.layoutParams as? FrameLayout.LayoutParams
+                ?: return@post
+            lp.width = indicatorItemWidth.toInt()
+            // 56dp pill centred inside the 64dp bar.
+            lp.height = binding.tabBar.height - binding.tabBar.paddingTop - binding.tabBar.paddingBottom
+            lp.gravity = Gravity.CENTER_VERTICAL or Gravity.START
+            binding.tabIndicator.layoutParams = lp
+            moveIndicator(0)
+        }
+    }
+
+    /** Damped spring travel + subtle liquid stretch while the lens moves between
+     *  tabs, mirroring MagicRoot's FloatingBottomBar (critically-damped slide). */
+    private fun moveIndicator(index: Int) {
+        if (indicatorItemWidth <= 0f) {
+            binding.tabBar.post { moveIndicator(index) }
+            return
+        }
+        val target = indicatorItemWidth * index
+        binding.tabIndicator.animate()
+            .translationX(target)
+            .setDuration(motion(R.integer.ds_dur_page))
+            .setInterpolator(DampedSpringInterpolator())
+            .start()
+        // light stretch during travel (MagicRoot stretches the lens with drag velocity)
+        ValueAnimator.ofFloat(1f, 1.15f, 1f).apply {
+            duration = motion(R.integer.ds_dur_page)
+            addUpdateListener { binding.tabIndicator.scaleX = it.animatedValue as Float }
+            start()
+        }
+        ValueAnimator.ofFloat(1f, 0.93f, 1f).apply {
+            duration = motion(R.integer.ds_dur_page)
+            addUpdateListener { binding.tabIndicator.scaleY = it.animatedValue as Float }
+            start()
+        }
+    }
+
+    /** Critically-damped spring step response (damping ratio = 1.0), matching
+     *  MagicRoot's glass/DampedDragAnimation `spring(1f, 1000f)`: fast settle,
+     *  zero overshoot. f(t) = 1 - (1 + w*t)·e^(-w*t). */
+    private class DampedSpringInterpolator : Interpolator {
+        override fun getInterpolation(input: Float): Float {
+            if (input <= 0f) return 0f
+            if (input >= 1f) return 1f
+            val w = 12.0
+            val t = input.toDouble()
+            val v = 1.0 - (1.0 + w * t) * exp(-w * t)
+            return v.toFloat().coerceIn(0f, 1f)
+        }
+    }
+
+    private fun pageView(page: Page): View = when (page) {
+        Page.HOME -> binding.pageHome
+        Page.ROOT -> binding.pageRoot
+        Page.ABOUT -> binding.pageAbout
+    }
+
+    /**
+     * Switch pages the way MagicRoot does: a horizontal spring slide. The leaving
+     * page slides out (direction follows the tab order), the entering page slides
+     * in from the opposite side, both settling with a critically-damped spring
+     * (no overshoot) — exactly `pagerState.springAnimateToPage`. The glass lens
+     * still slides via [moveIndicator].
+     */
+    private fun switchPage(page: Page) {
+        if (page == currentPage) return
+        val fromIndex = currentPage.ordinal   // HOME=0, ROOT=1, ABOUT=2
+        val toIndex = page.ordinal
+        val dir = if (toIndex > fromIndex) 1 else -1
+
+        val fromView = pageView(currentPage)
+        val toView = pageView(page)
+        fromView.animate().cancel()
+        toView.animate().cancel()
+
+        val slide = (if (binding.pageHost.width > 0) binding.pageHost.width
+                     else resources.displayMetrics.widthPixels).toFloat()
+
+        // baseline
+        fromView.translationX = 0f
+        fromView.alpha = 1f
+        toView.translationX = dir * slide
+        toView.alpha = 0f
+        toView.visibility = View.VISIBLE
+
+        fromView.animate()
+            .translationX(-dir * slide)
+            .alpha(0f)
+            .setDuration(motion(R.integer.ds_dur_page))
+            .setInterpolator(DampedSpringInterpolator())
+            .withEndAction {
+                fromView.visibility = View.GONE
+                fromView.translationX = 0f
+                fromView.alpha = 1f
+            }.start()
+
+        toView.animate()
+            .translationX(0f)
+            .alpha(1f)
+            .setDuration(motion(R.integer.ds_dur_page))
+            .setInterpolator(DampedSpringInterpolator())
+            .withEndAction {
+                toView.translationX = 0f
+                toView.alpha = 1f
+            }.start()
+
+        currentPage = page
+        moveIndicator(toIndex)
+        binding.tabHome.animate().alpha(if (page == Page.HOME) 1f else 0.52f).setDuration(motion(R.integer.ds_dur_micro)).start()
+        binding.tabRoot.animate().alpha(if (page == Page.ROOT) 1f else 0.52f).setDuration(motion(R.integer.ds_dur_micro)).start()
+        binding.tabAbout.animate().alpha(if (page == Page.ABOUT) 1f else 0.52f).setDuration(motion(R.integer.ds_dur_micro)).start()
+
+        if (page == Page.ROOT && !grinding) {
+            lifecycleScope.launch(Dispatchers.IO) { checkCompatibility() }
+        }
+    }
+
+    private fun updateClock() {
+        val now = Date()
+        binding.tvClock.text = clockFmt.format(now)
+        binding.tvDate.text = dateFmt.format(now)
+        val cal = Calendar.getInstance(shanghai, Locale.CHINA).apply { time = now }
+        val hour = cal.get(Calendar.HOUR_OF_DAY)
+        binding.tvGreeting.text = getString(
+            when (hour) {
+                in 5..10 -> R.string.home_greeting_morning
+                in 11..17 -> R.string.home_greeting_noon
+                else -> R.string.home_greeting_night
+            }
+        )
+    }
+
+    private fun startClockLoop() {
+        lifecycleScope.launch {
+            while (isActive) {
+                updateClock()
+                delay(1_000)
             }
         }
-        log("[init] 日志即时写入：${LogStore.publicDirPath()}/ghostlock_latest.log")
-        log("[init] 另一份在 文件管理器→下载→XiaoDao→ghostlock_latest.txt")
-        log("[init] 以上两处都无需 Shizuku/电脑，崩溃重启后直接打开即可")
-        log("[init] 私有兜底：${LogStore.sessionPath()}")
     }
 
-    override fun onDestroy() {
-        ShizukuController.releaseBinderObserver()
-        super.onDestroy()
+    private fun startStateLoop() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            while (isActive) {
+                // Never fire shell commands while the exploit owns the CPU.
+                if (!grinding) refreshStates()
+                delay(6_000)
+            }
+        }
     }
+
+    private suspend fun refreshStates() {
+        val granted = runCatching { ShizukuController.hasPermission() }.getOrDefault(false)
+        var rooted = false
+        var kernel = ""
+        if (granted) {
+            val su = ShizukuController.exec("su 0 id", 8_000)
+            rooted = su.out.contains("uid=0")
+            val uname = ShizukuController.exec("uname -r", 8_000)
+            if (uname.code == 0 && uname.out.isNotBlank()) kernel = uname.out.trim()
+        }
+        withContext(Dispatchers.Main) {
+            val okColor = getColor(R.color.glass_ok)
+            val badColor = getColor(R.color.glass_bad)
+            binding.tvRootState.text = getString(
+                if (rooted) R.string.home_root_ok else R.string.home_root_no
+            )
+            binding.tvRootState.setTextColor(if (rooted) okColor else badColor)
+            binding.rootStateDot.backgroundTintList =
+                ColorStateList.valueOf(if (rooted) okColor else badColor)
+            binding.tvShizukuState.text = getString(
+                if (granted) R.string.home_shizuku_ok else R.string.home_shizuku_no
+            )
+            binding.tvShizukuState.setTextColor(if (granted) okColor else badColor)
+            binding.shizukuStateDot.backgroundTintList =
+                ColorStateList.valueOf(if (granted) okColor else badColor)
+            if (kernel.isNotEmpty()) binding.tvKernel.text = "内核版本：$kernel"
+        }
+    }
+
+    /** Whitelist check: exact model + exact kernel build from fne/offsets.h. */
+    private suspend fun checkCompatibility() {
+        if (grinding) return
+        // 荣耀 70 = FNE-AN00 / device "HNFNE"；荣耀 50 = NTH-AN00 / device "HNNTH"。
+        // 荣耀 50 实测成功记录用的是 MagicOS 8.0.0.221(C00E219R5P6)
+        // / 5.4.289-qgki-gf6cb1f712a6e。同型号其它 OTA（如 8.0.0.217
+        // / g8f2019ef68d9）是另一个内核构建，没有对应符号偏移表，
+        // 所以机型能通过、内核仍需单独精确匹配。
+        val modelFields = listOf(Build.MODEL, Build.DEVICE, Build.BOARD, Build.HARDWARE)
+        val modelOk = modelFields.any {
+            it.contains("FNE", ignoreCase = true) ||
+                it.contains("NTH", ignoreCase = true) ||
+                it.contains("HNNTH", ignoreCase = true)
+        } ||
+            Build.MODEL.contains("荣耀 70", ignoreCase = true) ||
+            Build.MODEL.contains("Honor 70", ignoreCase = true) ||
+            Build.MODEL.contains("荣耀 50", ignoreCase = true) ||
+            Build.MODEL.contains("Honor 50", ignoreCase = true)
+
+        var kernel = ""
+        if (runCatching { ShizukuController.hasPermission() }.getOrDefault(false)) {
+            val r = ShizukuController.exec("uname -r", 8_000)
+            if (r.code == 0 && r.out.isNotBlank()) kernel = r.out.trim()
+        }
+        if (kernel.isBlank()) kernel = System.getProperty("os.version")?.trim().orEmpty()
+        val kernelOk = SUPPORTED_KERNELS.any { kernel.startsWith(it) }
+        val ok = modelOk && kernelOk
+
+        withContext(Dispatchers.Main) {
+            compatible = ok
+            val kernelUnknown = kernel.isBlank()
+            binding.tvCompat.text = when {
+                ok -> "✔ ${getString(R.string.root_check_ok)}"
+                !modelOk || kernelUnknown -> "✘ ${getString(R.string.root_check_bad)}"
+                else -> "⚠ ${getString(R.string.root_check_kernel_bad)}"
+            }
+            val titleColor = when {
+                ok -> R.color.glass_ok
+                !modelOk || kernelUnknown -> R.color.glass_bad
+                else -> R.color.glass_warn
+            }
+            binding.tvCompat.setTextColor(getColor(titleColor))
+            val reason = when {
+                !modelOk -> "设备型号不匹配（支持荣耀 70 / FNE-AN00、荣耀 50 / NTH-AN00）"
+                kernelUnknown -> "无法读取内核版本，请先授权 Shizuku 再重新检测"
+                !kernelOk -> "机型已支持，但当前内核构建未收录\n" +
+                    "已适配：5.4.289-qgki-gf6cb1f712a6e（荣耀 50 实测 8.0.0.221）\n" +
+                    "利用程序按精确内核偏移编写，换构建会写坏内核内存，故不放行"
+                else -> "型号与内核均已匹配，物料为 FNE 专用构建"
+            }
+            binding.tvCompatDetail.text =
+                "设备型号：${Build.MANUFACTURER} ${Build.MODEL}\n" +
+                    "内核版本：$kernel\n" +
+                    "判定：$reason"
+            binding.btnStartRoot.visibility = if (ok) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun onStartRoot() {
+        if (!compatible) {
+            toast("机型/内核不匹配，无法进行临时 Root")
+            return
+        }
+        if (!ShizukuController.hasPermission()) {
+            toast("请先授权 Shizuku，授权后再点一次")
+            onConnect()
+            return
+        }
+        // 点击后提权引导页消失，整页切换为实时日志
+        binding.rootIntro.visibility = View.GONE
+        binding.rootLogPanel.visibility = View.VISIBLE
+        onRoot()
+    }
+
+    private fun openUrl(url: String) {
+        runCatching {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }.onFailure { toast("无法打开链接：${it.message}") }
+    }
+
+    // ------------------------------------------------------------ Shizuku
 
     private fun refreshShizukuState() {
-        when {
-            !ShizukuController.isAvailable() ->
-                binding.tvStatus.text = getString(R.string.hint_shizuku_missing)
-            !ShizukuController.hasPermission() ->
-                binding.tvStatus.text = "Shizuku 已运行，但未授权，点「连接 Shizuku」授权"
-            else ->
-                binding.tvStatus.text = "就绪：Shizuku 已连接，可部署物料"
+        binding.tvStatus.text = when {
+            !ShizukuController.isAvailable() -> getString(R.string.hint_shizuku_missing)
+            !ShizukuController.hasPermission() -> "Shizuku 已运行，但未授权，点「连接 Shizuku」授权"
+            else -> "就绪：Shizuku 已连接，可部署物料"
         }
     }
 
@@ -73,6 +542,7 @@ class MainActivity : AppCompatActivity() {
         }
         if (ShizukuController.hasPermission()) {
             refreshShizukuState()
+            lifecycleScope.launch(Dispatchers.IO) { checkCompatibility() }
             return
         }
         ShizukuController.requestPermission { granted ->
@@ -84,6 +554,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
                 refreshShizukuState()
+                lifecycleScope.launch(Dispatchers.IO) { checkCompatibility() }
             }
         }
     }
@@ -112,7 +583,10 @@ class MainActivity : AppCompatActivity() {
             return false
         }
         val probe = "test -x /data/local/tmp/e && " +
-            "test -f /data/local/tmp/ksu_fne/kernelsu.ko && echo READY"
+            "test -f /data/local/tmp/ksu_fne/kernelsu.ko && " +
+            "test -f /data/local/tmp/ksu_fne/ksu_lateload.sh && " +
+            "test -f /data/local/tmp/ksu_fne/restore_enforce.sh && " +
+            "test -f /data/local/tmp/ksu_fne/handoff && echo READY"
         val before = ShizukuController.exec(probe, 15_000)
         if (before.code == 0 && before.out.contains("READY")) return true
 
@@ -127,8 +601,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun onRoot() {
         if (!ShizukuController.hasPermission()) { toast("请先连接 Shizuku 并授权"); return }
+        if (grinding) { toast("临时 Root 正在运行中"); return }
         lifecycleScope.launch(Dispatchers.IO) {
-            GrindRunner(::log, ::status, { ensurePayloads() }).run()
+            grinding = true
+            try {
+                GrindRunner(::log, ::status, { ensurePayloads() }).run()
+            } finally {
+                grinding = false
+                withContext(Dispatchers.Main) { refreshShizukuState() }
+            }
         }
     }
 

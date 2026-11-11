@@ -1,10 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <!-- 取自「爱发电.png」的主色，用作自适应图标背景 -->
     <color name="ic_launcher_background">#FF946FDE</color>
 
-    <!-- Miuix-inspired palette (light). Dark values live in values-night/colors.xml -->
+    <!-- Design DNA: deep space tech, restrained glass. Brand violet 946FDE is
+         the primary anchor, expanded into an M3 style tonal palette.
+         Dark only values, matching the pinned dark theme. -->
+    <color name="ds_primary">#FFC4A2FF</color>
+    <color name="ds_primary_pressed">#FFA884E8</color>
+    <color name="ds_primary_container">#FF3A2A5C</color>
+    <color name="ds_on_primary">#FF1A1030</color>
+    <color name="ds_secondary">#FF9DBBFF</color>
+    <color name="ds_tertiary">#FF6FE0D2</color>
+
+    <color name="ds_surface">#FF0A0D13</color>
+    <color name="ds_surface_1">#FF111823</color>
+    <color name="ds_surface_2">#FF18212E</color>
+    <color name="ds_outline">#33FFFFFF</color>
+    <color name="ds_outline_variant">#1AFFFFFF</color>
+
+    <!-- Text hierarchy. Muted still clears WCAG AA on the dark surface. -->
+    <color name="ds_on_surface">#FFF5F7FF</color>
+    <color name="ds_on_surface_variant">#FFC7CEDB</color>
+    <color name="ds_on_surface_muted">#FF9AA5B5</color>
+
+    <color name="ds_success">#FF7BE3A6</color>
+    <color name="ds_warning">#FFFFD08A</color>
+    <color name="ds_error">#FFFF958F</color>
+    <color name="ds_log">#FF9BE7AE</color>
+
+    <!-- Miuix inspired palette retained for legacy references. -->
     <color name="miuix_primary">#FF3482FF</color>
     <color name="miuix_primary_pressed">#FF277AF7</color>
     <color name="miuix_on_primary">#FFFFFFFF</color>
@@ -20,4 +46,22 @@
     <color name="miuix_log_title">#FFE8EAED</color>
     <color name="miuix_log_hint">#FFB9C0C8</color>
     <color name="miuix_error">#FFE94634</color>
+
+    <!-- Glass aliases. Names are kept because MainActivity and the theme
+         reference them; values now come from the tonal palette. -->
+    <color name="glass_window">#FF0A0D13</color>
+    <color name="glass_fill">#0DFFFFFF</color>
+    <color name="glass_panel">@color/ds_surface_1</color>
+    <color name="glass_nav">#CC141C29</color>
+    <color name="glass_tab_active">#2EFFFFFF</color>
+    <color name="glass_stroke">@color/ds_outline</color>
+    <color name="glass_stroke_soft">@color/ds_outline_variant</color>
+    <color name="glass_text">@color/ds_on_surface</color>
+    <color name="glass_text_dim">@color/ds_on_surface_variant</color>
+    <color name="glass_text_faint">@color/ds_on_surface_muted</color>
+    <color name="glass_ok">@color/ds_success</color>
+    <color name="glass_bad">@color/ds_error</color>
+    <color name="glass_warn">@color/ds_warning</color>
+    <color name="glass_accent">@color/ds_secondary</color>
+    <color name="glass_log_text">@color/ds_log</color>
 </resources>
