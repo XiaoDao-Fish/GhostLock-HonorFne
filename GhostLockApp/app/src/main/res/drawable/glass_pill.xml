@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 主体：深色半透明胶囊底 -->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/glass_nav" />
@@ -7,6 +8,23 @@
             <stroke android:width="1dp" android:color="@color/ds_outline" />
         </shape>
     </item>
+    <!-- 折射高光带：斜向冷色光，模拟 MagicRoot RuntimeShader 的双光源法线折射 -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:startColor="#14B9D4FF"
+                android:centerColor="#00000000"
+                android:endColor="#10FFFFFF"
+                android:centerX="0.32" />
+            <corners android:radius="31dp" />
+        </shape>
+    </item>
+    <!-- 顶部内侧高光：玻璃上沿受光 -->
     <item
         android:left="1dp"
         android:top="1dp"
@@ -15,7 +33,7 @@
         <shape android:shape="rectangle">
             <gradient
                 android:angle="270"
-                android:startColor="#1CFFFFFF"
+                android:startColor="#26FFFFFF"
                 android:endColor="#00000000" />
             <corners android:radius="31dp" />
         </shape>

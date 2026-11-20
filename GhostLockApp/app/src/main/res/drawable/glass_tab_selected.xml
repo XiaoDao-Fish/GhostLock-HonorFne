@@ -20,4 +20,20 @@
             <corners android:radius="35dp" />
         </shape>
     </item>
+    <!-- 斜向冷光：对应 MagicRoot 玻璃透镜第一光源法线 (0.5,-0.3,-0.05) -->
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:startColor="#2AC4A2FF"
+                android:centerColor="#00000000"
+                android:endColor="#18FFFFFF"
+                android:centerX="0.28" />
+            <corners android:radius="34dp" />
+        </shape>
+    </item>
 </layer-list>

@@ -38,6 +38,19 @@
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
+        <!-- 「分享日志」：把 ghostlock_latest.log 作为附件发给 QQ，让用户自己选群聊。
+             target 34 下 file:// 会抛 FileUriExposedException，必须经 FileProvider
+             发 content:// URI；authority 与 Shizuku 的那个分开。 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <!-- Legacy stub retained for compatibility; unused at runtime. -->
         <service
             android:name=".RootUserService"

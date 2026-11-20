@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider 白名单：让「分享日志」能把 HonorRoot-Log.log 作为附件
+  发给 QQ。LogStore 的日志可能落在三处，这里全部放行，避免某台机降级
+  到 app 私有目录后无法分享。path 是目录级白名单，与具体文件名无关：
+    files-path            -> filesDir/（私有副本）
+    external-files-path   -> getExternalFilesDir(XiaoDao)/（降级路径）
+    external-path         -> /storage/emulated/0/XiaoDao/（首选用户可见路径）
+  path="." 表示整个目录；只把这几个具体子目录/根放进来，不暴露整个外部存储。
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <files-path name="private_log" path="." />
+    <external-files-path name="external_private_log" path="." />
+    <external-path name="public_log" path="XiaoDao/" />
+</paths>

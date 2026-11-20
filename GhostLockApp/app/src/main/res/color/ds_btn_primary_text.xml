@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 主按钮文字：可用时深色（压在紫色实心上），禁用时灰色（配 ds_btn_primary_disabled 的半透明底）。 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:color="@color/glass_text_faint" />
+    <item android:color="@color/ds_on_primary" />
+</selector>

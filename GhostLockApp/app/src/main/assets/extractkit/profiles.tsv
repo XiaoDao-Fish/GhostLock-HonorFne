@@ -1,0 +1,77 @@
+0	5.10.66-gc55fd18209d0	5.10.66-android12-9-gc55fd18209d0	5.10.66-android12-9-gc55fd18209d0		5.10.66-android12-9 / BTF-less
+1	5.10.252-g839eb53a56c3	5.10.252-android12-9-g839eb53a56c3	5.10.252-android12-9-g839eb53a56c3	ALT-AN00	ALT-AN00 / 5.10.252-android12-9
+2	6.6.118-g554929766a0d	6.6.118-android15-8-g554929766a0d-abogki544555896-4k	6.6.118-android15-8-g554929766a0d	PPG-AN00	HONOR PPG-AN00 / 6.6.118-android15-8
+3	6.6.89-g082e5a98dac1	6.6.89-android15-8-g082e5a98dac1-abogki463734347-4k	6.6.89-android15-8-g082e5a98dac1	PPG-AN00	PPG-AN00 / 6.6.89-android15-8 (FW135)
+4	6.1.157-g2646292297b1	6.1.157-android14-11-g2646292297b1	6.1.157-android14-11-g2646292297b1	AMG-AN00	AMG-AN00 / 6.1.157-android14-11
+5	6.1.157-g19a495a97bff	6.1.157-android14-11-g19a495a97bff	6.1.157-android14-11-g19a495a97bff	MTN-AN00|MTN-AN80	MTN-AN00/AN80 / 6.1.157-android14-11
+6	6.6.89-g660f666ec112	6.6.89-android15-8-g660f666ec112-abogki430809029-4k	6.6.89-android15-8-g660f666ec112	PPG-AN00	PPG-AN00 / 6.6.89-android15-8
+7	6.6.118-gf17133276a57	6.6.118-android15-8-gf17133276a57-abogki518694926-4k	6.6.118-android15-8-gf17133276a57-abogki518694926-4k	SER-AN00|AAK-AN00	SER-AN00 / AAK-AN00 / 6.6.118-android15-8
+8	6.12.58-g3a7ac1674240	6.12.58-android16-6-g3a7ac1674240-abogki541502914-4k	6.12.58-android16-6-g3a7ac1674240-abogki541502914-4k	APH-AN00	APH-AN00 / 6.12.58-android16-6
+9	6.1.157-g7d3922fade43	6.1.157-android14-11-g7d3922fade43	6.1.157-android14-11-g7d3922fade43	BVL-AN00	BVL-AN00 / 6.1.157-android14-11
+10	6.1.157-gaaa383620ebf	6.1.157-android14-11-gaaa383620ebf	6.1.157-android14-11-gaaa383620ebf	CGL-W60	CGL-W60 / 6.1.157-android14-11
+11	6.1.128-gec1055c9cbb5	6.1.128-android14-11-gec1055c9cbb5	6.1.128-android14-11-gec1055c9cbb5	ELP-AN00	ELP-AN00 / 6.1.128-android14-11
+12	6.6.118-ga812a1946391	6.6.118-android15-8-ga812a1946391-abogki576098434-4k	6.6.118-android15-8-ga812a1946391-abogki576098434-4k	PTP-AN10	PTP-AN10 / 6.6.118-android15-8
+13	6.6.89-g9f1d85cc0389	6.6.89-android15-8-g9f1d85cc0389-abogki440235034-4k	6.6.89-android15-8-g9f1d85cc0389-abogki440235034-4k	PTP-AN10	PTP-AN10 / 6.6.89-android15-8
+14	6.1.157-g8d63307071ad	6.1.157-android14-11-g8d63307071ad	6.1.157-android14-11-g8d63307071ad	ROD2-W09	ROD2-W09 / 6.1.157-android14-11
+15	6.1.128-g52c266270871	6.1.128-android14-11-g52c266270871	6.1.128-android14-11-g52c266270871		6.1.128-android14-11
+16	6.12.58-g42fcf008ff5c	6.12.58-android16-6-g42fcf008ff5c-abogki504518581-4k	6.12.58-android16-6-g42fcf008ff5c-abogki504518581-4k		6.12.58-g42fcf008ff5c (offsets-only)
+17	6.12.58-g142ddad31e60	6.12.58-android16-6-g142ddad31e60-abogki576095858-4k	6.12.58-android16-6-g142ddad31e60-abogki576095858-4k		6.12.58-g142ddad31e60 (offsets-only)
+18	6.12.23-g45ea5e4bce8a	6.12.23-android16-5-g45ea5e4bce8a-abogki445100407-4k	6.12.23-android16-5-g45ea5e4bce8a-abogki445100407-4k	BKQ-AN10|MLY-AN00|BKQ-AN90	g45ea5e4bce8a (offsets-only)
+19	6.12.58-g459a4285ccf8	6.12.58-android16-6-g459a4285ccf8-abogki532718632-4k	6.12.58-android16-6-g459a4285ccf8-abogki532718632-4k	BSN-AN00	g459a4285ccf8 (offsets-only)
+20	6.12.38-gfde7767f6ef6	6.12.38-android16-5-gfde7767f6ef6-abogki481467632-4k	6.12.38-android16-5-gfde7767f6ef6-abogki481467632-4k	MLY-AN00|BKQ-AN90	gfde7767f6ef6 (offsets-only)
+21	6.12.38-g7ae8ec909e03	6.12.38-android16-5-g7ae8ec909e03-abogki471017112-4k	6.12.38-android16-5-g7ae8ec909e03-abogki471017112-4k	YLP-W00|BKQ-AN10|MLY-AN00|BKQ-AN90	g7ae8ec909e03 (offsets-only)
+22	6.12.23-gcd85666d7884	6.12.23-android16-5-gcd85666d7884-abogki452537391-4k	6.12.23-android16-5-gcd85666d7884-abogki452537391-4k		gcd85666d7884 (offsets-only)
+23	6.1.157-g3306a328b7be	6.1.157-android14-11-g3306a328b7be-abogki	6.1.157-android14-11-g3306a328b7be-abogki	DNP-AN00	g3306a328b7be (offsets-only)
+24	6.1.157-g77f76e323a02	6.1.157-android14-11-g77f76e323a02-abogki	6.1.157-android14-11-g77f76e323a02-abogki		g77f76e323a02 (offsets-only)
+25	6.1.157-g84ffa64b710b	6.1.157-android14-11-g84ffa64b710b-abogki564062290-4k	6.1.157-android14-11-g84ffa64b710b	BVL-AN16	BVL-AN16 / 6.1.157-android14-11
+26	6.1.128-g40b1fd119d9b	6.1.128-android14-11-g40b1fd119d9b-abogki	6.1.128-android14-11-g40b1fd119d9b-abogki		g40b1fd119d9b (offsets-only)
+27	6.1.99-g54d40b4fb287	6.1.99-android14-11-g54d40b4fb287-abogki	6.1.99-android14-11-g54d40b4fb287-abogki		g54d40b4fb287 (offsets-only)
+28	6.1.99-g5859fbdba8c	6.1.99-android14-11-g5859fbdba8c-abogki	6.1.99-android14-11-g5859fbdba8c-abogki		g5859fbdba8c (offsets-only)
+29	6.1.99-gce84935796c9	6.1.99-android14-11-gce84935796c9-abogki	6.1.99-android14-11-gce84935796c9-abogki		gce84935796c9 (offsets-only)
+30	6.1.99-ge9da27488f45	6.1.99-android14-11-ge9da27488f45-abogki	6.1.99-android14-11-ge9da27488f45-abogki		ge9da27488f45 (offsets-only)
+31	6.6.58-g6484937db664	6.6.58-android15-8-g6484937db664-abogki	6.6.58-android15-8-g6484937db664-abogki		g6484937db664 (offsets-only)
+32	6.6.89-g3c4937385c19	6.6.89-android15-8-g3c4937385c19-abogki455778110-4k	6.6.89-android15-8-g3c4937385c19-abogki455778110-4k	AAK-AN00	AAK-AN00 / 6.6.89-android15
+33	6.12.38-g4b3671e1f5b7	6.12.38-android16-5-g4b3671e1f5b7-abogki460618149-4k	6.12.38-android16-5-g4b3671e1f5b7-abogki460618149-4k	ABR-AN80	ABR-AN80 / 6.12.38-android16
+34	5.15.180-g9b2308ac0ad6	5.15.180-android13-8-00018-g9b2308ac0ad6-ab14563692	5.15.180-android13-8-00018-g9b2308ac0ad6	ABR-L31	ABR-L31 / 5.15.180-android13-8
+35	6.12.30-ge3b2afa06218	6.12.30-android16-5-ge3b2afa06218-ab14377253-4k	6.12.30-android16-5-ge3b2afa06218-ab14377253-4k	ABR-N33	ABR-N33 / 6.12.30-android16
+36	6.1.99-g5859fbdbad8c	6.1.99-android14-11-g5859fbdbad8c	6.1.99-android14-11-g5859fbdbad8c	AMG-AN00	AMG-AN00 / 6.1.99-android14
+37	5.15.180-g928f00c79361	5.15.180-android13-8-g928f00c79361	5.15.180-android13-8-g928f00c79361	AMM-AN00	AMM-AN00 / 5.15.180-android13 · 928f00c
+38	5.15.180-g21603b4ea1f9	5.15.180-android13-8-g21603b4ea1f9	5.15.180-android13-8-g21603b4ea1f9	AMM-AN00	AMM-AN00 / 5.15.180-android13 · 21603b4
+39	5.15.180-g4961434d9598	5.15.180-android13-8-g4961434d9598	5.15.180-android13-8-g4961434d9598	AMM-TN00	AMM-TN00 / 5.15.180-android13 · 4961434
+40	5.15.180-g09f89336e371	5.15.180-android13-8-g09f89336e371	5.15.180-android13-8-g09f89336e371	AMM-TN00	AMM-TN00 / 5.15.180-android13 · 09f8933
+41	6.1.128-g286b85f34ae5	6.1.128-android14-11-g286b85f34ae5	6.1.128-android14-11-g286b85f34ae5	AMP-AN10	AMP-AN10 / 6.1.128-android14 · 286b85f
+42	6.1.128-gbfe6fb35bc83	6.1.128-android14-11-gbfe6fb35bc83	6.1.128-android14-11-gbfe6fb35bc83	AMP-AN10	AMP-AN10 / 6.1.128-android14 · bfe6fb3
+43	6.1.128-g07410607dc1c	6.1.128-android14-11-g07410607dc1c	6.1.128-android14-11-g07410607dc1c	AMP-AN10	AMP-AN10 / 6.1.128-android14 · 0741060
+44	6.1.128-gfaedf8de5b24	6.1.128-android14-11-gfaedf8de5b24	6.1.128-android14-11-gfaedf8de5b24	AMP-AN10	AMP-AN10 / 6.1.128-android14 · faedf8d
+45	6.12.23-g52ffb60eb2fc	6.12.23-android16-5-g52ffb60eb2fc-abogki436399202-4k	6.12.23-android16-5-g52ffb60eb2fc-abogki436399202-4k	BKQ-LGRP1	BKQ-LGRP1 / 6.12.23-android16
+46	6.12.23-ga5f232d1ead0	6.12.23-android16-5-ga5f232d1ead0-ab14083253-4k	6.12.23-android16-5-ga5f232d1ead0-ab14083253-4k	BKQ-N49	BKQ-N49 / 6.12.23-android16 · a5f232d
+47	6.12.38-g0de425e73a77	6.12.38-android16-5-g0de425e73a77-ab14804637-4k	6.12.38-android16-5-g0de425e73a77-ab14804637-4k	BKQ-N49	BKQ-N49 / 6.12.38-android16 · 0de425e
+48	6.12.23-g13404bb4d51d	6.12.23-android16-5-g13404bb4d51d-ab14275538-4k	6.12.23-android16-5-g13404bb4d51d-ab14275538-4k	BKQ-N49	BKQ-N49 / 6.12.23-android16 · 13404bb
+49	6.12.38-gf69ca77783f8	6.12.38-android16-5-gf69ca77783f8-ab14605663-4k	6.12.38-android16-5-gf69ca77783f8-ab14605663-4k	BKQ-N49	BKQ-N49 / 6.12.38-android16 · f69ca77
+50	6.12.38-gd01bd4be3dda	6.12.38-android16-5-gd01bd4be3dda-ab14423277-4k	6.12.38-android16-5-gd01bd4be3dda-ab14423277-4k	BKQ-N49	BKQ-N49 / 6.12.38-android16 · d01bd4b
+51	6.18.21-ge186062ea75f	6.18.21-android17-5-ge186062ea75f-abogki564062290-4k	6.18.21-android17-5-ge186062ea75f-abogki564062290-4k	BRM-AN00	BRM-AN00 / 6.18.21-android17
+52	6.12.58-g1439620c9496	6.12.58-android16-6-g1439620c9496-abogki524512671-4k	6.12.58-android16-6-g1439620c9496-abogki524512671-4k	BSN-AN10	BSN-AN10 / 6.12.58-android16
+53	6.12.58-g50d6c2424b3a	6.12.58-android16-6-g50d6c2424b3a-ab15726793-4k	6.12.58-android16-6-g50d6c2424b3a-ab15726793-4k	BSN-N31	BSN-N31 / 6.12.58-android16
+54	6.12.58-g09eda8c8505a	6.12.58-android16-6-g09eda8c8505a-ab15950084-4k	6.12.58-android16-6-g09eda8c8505a-ab15950084-4k	BSN-N51	BSN-N51 / 6.12.58-android16
+55	6.1.128-g84f1d56830ff	6.1.128-android14-11-g84f1d56830ff	6.1.128-android14-11-g84f1d56830ff	BVL-AN20HP	BVL-AN20HP / 6.1.128-android14 · 84f1d56
+56	6.1.128-gd4936c483bc7	6.1.128-android14-11-gd4936c483bc7	6.1.128-android14-11-gd4936c483bc7	BVL-AN20HP	BVL-AN20HP / 6.1.128-android14 · d4936c4
+57	6.1.99-g7c11f5fcbcdb	6.1.99-android14-11-g7c11f5fcbcdb	6.1.99-android14-11-g7c11f5fcbcdb	BVL-AN20HP	BVL-AN20HP / 6.1.99-android14
+58	6.1.157-g3416ba8f00e3	6.1.157-android14-11-g3416ba8f00e3-ab15314546	6.1.157-android14-11-g3416ba8f00e3-ab15314546	BVL-N19	BVL-N19 / 6.1.157-android14 · 3416ba8
+59	6.1.128-g58deda01e47b	6.1.128-android14-11-g58deda01e47b-ab14263620	6.1.128-android14-11-g58deda01e47b-ab14263620	BVL-N19	BVL-N19 / 6.1.128-android14
+60	6.1.157-gc7dd3fa941b3	6.1.157-android14-11-gc7dd3fa941b3-ab15371444	6.1.157-android14-11-gc7dd3fa941b3-ab15371444	BVL-N19	BVL-N19 / 6.1.157-android14 · c7dd3fa
+61	6.1.128-ge9da27488f45	6.1.128-android14-11-ge9da27488f45	6.1.128-android14-11-ge9da27488f45	CLE-AN00	CLE-AN00 / 6.1.128-android14
+62	6.6.118-g8b54898e6705	6.6.118-android15-8-g8b54898e6705-4k	6.6.118-android15-8-g8b54898e6705-4k	JDY-L43P	JDY-L43P / 6.6.118-android15
+63	5.15.180-gb652f2620acb	5.15.180-android13-8-gb652f2620acb	5.15.180-android13-8-gb652f2620acb	MAA-AN10	MAA-AN10 / 5.15.180-android13
+64	5.15.180-g938a6e3184bd	5.15.180-android13-8-g938a6e3184bd	5.15.180-android13-8-g938a6e3184bd	MAG-AN00	MAG-AN00 / 5.15.180-android13
+65	5.15.180-g1c54d617912d	5.15.180-android13-8-g1c54d617912d	5.15.180-android13-8-g1c54d617912d	PGT-AN10	PGT-AN10 / 5.15.180-android13 · 1c54d61
+66	5.15.180-g49611f0c0136	5.15.180-android13-8-g49611f0c0136	5.15.180-android13-8-g49611f0c0136	PGT-AN10	PGT-AN10 / 5.15.180-android13 · 49611f0
+67	6.1.157-g325066eea80d	6.1.157-android14-11-g325066eea80d	6.1.157-android14-11-g325066eea80d	ROL-W00	ROL-W00 / 6.1.157-android14
+68	5.15.123-gf1f05f80aabb	5.15.123-android13-8-gf1f05f80aabb	5.15.123-android13-8-gf1f05f80aabb		5.15.123-android13
+69	6.1.157-g8ed20bdebf81	6.1.157-android14-11-g8ed20bdebf81	6.1.157-android14-11-g8ed20bdebf81		6.1.157-android14
+70	6.1.99-gd6fcc757629f	6.1.99-android14-11-gd6fcc757629f	6.1.99-android14-11-gd6fcc757629f		6.1.99-android14
+71	6.6.118-gc901ea41aa32	6.6.118-android15-8-gc901ea41aa32-ab15981388-4k	6.6.118-android15-8-gc901ea41aa32-ab15981388-4k	VKP-N39	VKP-N39 / 6.6.118-android15
+72	6.18.21-g928d1bb4f1d7	6.18.21-android17-5-g928d1bb4f1d7-abogki542339678-4k	6.18.21-android17-5-g928d1bb4f1d7-abogki542339678-4k	WKL-AN80	WKL-AN80 / 6.18.21-android17
+73	6.18.21-g52885947a517	6.18.21-android17-5-g52885947a517-ab16374447-4k	6.18.21-android17-5-g52885947a517-ab16374447-4k	WKL-N59	WKL-N59 / 6.18.21-android17
+74	5.15.180-g69dabf204ec1	5.15.180-android13-8-g69dabf204ec1	5.15.180-android13-8-g69dabf204ec1	YAG-W10	YAG-W10 / 5.15.180-android13
+75	5.15.194-gd1cdcc28f0f7	5.15.194-android13-8-gd1cdcc28f0f7	5.15.194-android13-8-gd1cdcc28f0f7	MAG-AN00	MAG-AN00 / 5.15.194-android13 (KASAN)
+76	6.18.21-gfee2325de189	6.18.21-android17-5-gfee2325de189-abogki572422516-4k	6.18.21-android17-5-gfee2325de189	WKL-AN20	WKL-AN20 / 6.18.21-android17

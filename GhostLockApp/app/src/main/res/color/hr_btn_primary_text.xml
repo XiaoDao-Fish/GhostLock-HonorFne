@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Text colour for filled primary buttons: white when enabled,
+     muted when the KSU version guard disables it. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:color="@color/ds_on_surface_muted" />
+    <item android:color="@color/ds_on_primary" />
+</selector>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 主面板底 -->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/ds_surface_1" />
@@ -7,6 +8,7 @@
             <stroke android:width="1dp" android:color="@color/ds_outline_variant" />
         </shape>
     </item>
+    <!-- 顶部玻璃高光 -->
     <item
         android:left="1dp"
         android:top="1dp"
@@ -15,8 +17,25 @@
         <shape android:shape="rectangle">
             <gradient
                 android:angle="270"
-                android:startColor="#10FFFFFF"
+                android:startColor="#18FFFFFF"
+                android:centerColor="#04FFFFFF"
                 android:endColor="#00000000" />
+            <corners android:radius="23dp" />
+        </shape>
+    </item>
+    <!-- 左上霓虹青微光 -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:startColor="#126FE0D2"
+                android:endColor="#00000000"
+                android:centerX="0.2"
+                android:centerY="0.2" />
             <corners android:radius="23dp" />
         </shape>
     </item>

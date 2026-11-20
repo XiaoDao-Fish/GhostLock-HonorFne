@@ -1,5 +1,5 @@
 # Windows checkout safety: shell scripts MUST stay LF (CRLF -> "bad interpreter").
-* text=auto eol=lf
+* text=auto
 *.sh text eol=lf
 *.command text eol=lf
 # .bat must keep CRLF in the blob itself: git archive (ZIP download) and raw

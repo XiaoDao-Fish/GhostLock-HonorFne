@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Floating capsule bar: thicker glass than the cards, with a specular
+     band across the top-left corner (dual-light model). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/glass_nav" />
+            <corners android:radius="@dimen/ds_radius_pill" />
+            <stroke android:width="1dp" android:color="@color/hr_nav_stroke" />
+        </shape>
+    </item>
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="@color/hr_nav_sheen"
+                android:centerColor="#00000000"
+                android:endColor="#00000000" />
+            <corners android:radius="31dp" />
+        </shape>
+    </item>
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:startColor="#1F8FB6FF"
+                android:centerColor="#00000000"
+                android:endColor="#0DFFFFFF"
+                android:centerX="0.35" />
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+</layer-list>

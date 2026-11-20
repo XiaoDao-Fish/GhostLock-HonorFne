@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Soft radial halo behind the disclaimer badge. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:type="radial"
+        android:centerColor="#4D5B93FF"
+        android:endColor="#005B93FF"
+        android:gradientRadius="42dp" />
+</shape>

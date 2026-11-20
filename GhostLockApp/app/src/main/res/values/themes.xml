@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Liquid Glass is a dark-only design: pin the theme to dark so a light
-         system setting cannot wash out the glass highlights. -->
-    <style name="Theme.GhostLock" parent="Theme.Material3.Dark.NoActionBar">
+    <!-- Day/Night glass. Both palettes live in colors.xml / values-night,
+         so the app follows the system theme the way Miuix and KernelSU do. -->
+    <style name="Theme.GhostLock" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/glass_window</item>
         <item name="android:statusBarColor">@color/glass_window</item>
         <item name="android:navigationBarColor">@color/glass_window</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:colorAccent">@color/ds_primary</item>
     </style>
 </resources>

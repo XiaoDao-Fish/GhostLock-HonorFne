@@ -32,6 +32,13 @@ class GrindRunner(
     private val tmpKsu = "/data/local/tmp/ksu_fne"
 
     // Env prefix used by run_w2.sh (GL_* tuning knobs).
+    // 【老版配方回归 · 2026-11-15】与老版本 GrindRunner.SYNC 逐字一致：
+    // 只有这 11 个 GL_* 旋钮，没有 DM_PAGE_OFFSET / DM_PHYS_OFFSET。
+    // 用户提供的老版成功日志里 w1.log 明确报
+    // "dm: no memstart probe result and no DM_PAGE_OFFSET - refusing dm path"，
+    // 证明老版确实没注入显式基址；成功轮靠的是探针自己凑出共识放行 DM。
+    // 之前为了让探针失败的设备也能过 util.c:1622 硬门而加的显式线性映射基址，
+    // 在这台 5.4.295 上把 dm 地址算歪，是真机反复重启的直接原因，已移除。
     private val SYNC = listOf(
         "GL_AIM_DM=1", "GL_W1_ATTEMPTS=2", "GL_ROUTE_ATTEMPTS=1",
         "GL_HOLD_CHAIN=1", "GL_HOLD_WAITER=1", "GL_PUNCH_IN_WINDOW=1",
@@ -41,6 +48,22 @@ class GrindRunner(
 
     private val W1_LOG = "/data/local/tmp/w1.log"
     private val W2_LOG = "/data/local/tmp/w2.log"
+
+    /**
+     * 【老版配方回归 · 2026-11-15】探针照常运行，不注入 GL_MEMSTART_PROBE，
+     * 也不注入显式 DM 基址。老版成功日志里 W1 就是靠探针凑出共识后由
+     * exploit 自行决定 DM 基址，约 30s 关掉 SELinux。之前为绕开假共识而加的
+     * 「禁用探针 + 显式基址」组合在真机上造成反复重启，已整体回退。
+     */
+
+    private suspend fun kernelRelease(): String? {
+        val r = ShizukuController.exec("uname -r", 10_000)
+        if (ShizukuController.channelDead(r) || r.code != 0) return null
+        return r.out.trim().takeIf { it.isNotBlank() }
+    }
+
+    /** W1/W2 共用的环境变量前缀；与老版逐字一致。 */
+    private fun envPrefix(): String = SYNC
 
     suspend fun run() {
         if (!ShizukuController.hasPermission()) {
@@ -55,9 +78,11 @@ class GrindRunner(
             status("Shizuku 命令通道失效，请重新连接")
             return
         }
-        status("开始 per-boot root (W1 -> W2 -> KSU 晚加载)")
-        log("=== 外循环：最多 8 轮，失败自动重启/重跑 ===")
-        LogStore.sync(force = true, reason = "开始临时 Root（归档上次会话）")
+        status("开始临时 Root")
+        val kernel = kernelRelease()
+        LogStore.setProgress("正在提权，结果出来后会写在这里")
+        log("[配方] 使用老版本方式：原版程序，先静默等 60 秒，系统空闲后才开始；内核=${kernel ?: "未知"}")
+        LogStore.sync(force = true, reason = "开始提权")
         // 设备崩溃重启后 app 进程被杀、内存日志清空；/data/local/tmp 跨重启保留。
         // W1 / W2 / chain 三份尾部都捞回来：此前只取 W1，导致反复崩在 W2 时
         // 完全看不到现场，无法判断是 slab_drain、punch 还是 KSU 晚加载阶段。
@@ -69,6 +94,22 @@ class GrindRunner(
             }
             if (lastW1.contains("SIG_ENFORCE DISABLED") || lastW1.contains("SELinux DISABLED")) {
                 log("[取证][结论] 上次 W1 已成功关闭 SELinux，瓶颈在 W2，不在 W1")
+            }
+            // 【老版配方回归】w1.log 跨重启保留，里面常是上一轮失败留下的
+            // no consensus / 野 slide。老版本从不做「取证中止」，只记录后照常重跑 ——
+            // 用户提供的老版日志里，成功轮的上一条取证恰恰就是
+            // "dm: no memstart probe result and no DM_PAGE_OFFSET - refusing dm path"，
+            // 重跑一次就 ROOTED。之前加的中止判断会把流程永久卡死，已全部移除。
+            if (lastW1.contains("memstart probe: no consensus")) {
+                log("[取证][说明] 上次探针没凑出共识（wins=0）；属单轮失败，按老版做法直接重跑")
+            }
+            if (lastW1.contains("memstart probe: disabled")) {
+                log("[取证][说明] 历史日志来自曾禁用探针的版本；本轮已恢复探针")
+            }
+            val badSlide = ProbeLog.impossibleSlide(lastW1)
+            if (badSlide != null) {
+                log("[取证][说明] 历史 w1.log 里的野 slide ${ProbeLog.hex(badSlide)} 来自旧探针；" +
+                        "按老版做法只记录、不中止，W1 启动前会自动清空该日志")
             }
         }
         val lastW2 = readFileTail(W2_LOG, 4000)
@@ -85,8 +126,17 @@ class GrindRunner(
             }
             log("[取证] 上次 W2 大致停在：$stage")
             if (stage == "slab_drain fork 风暴阶段") {
-                log("[取证][结论] slab_drain 是 exploit 内置的 5 波 x 400 fork（源码按开机时长硬编码，无 GL_* 可调）")
-                log("[取证][结论] 由此触发的内核保护性重启属固有失败，不是 app 故障；重连 Shizuku 后重跑即可")
+                // 老版日志实证：5 波 × 400 全部跑完（drain done）后仍继续到了
+                // dm/heap spray 阶段，说明 fork 风暴本身不是崩溃点；成功轮同样
+                // 用的是原版 5×400。不要把「wave 3/5」当成必崩证据，更不要改二进制。
+                log("[取证][说明] 原版 exploit 的 slab_drain 是 5 波 x 400 fork；老版成功轮同样使用这一档，无需改动")
+                log("[取证][说明] 若 W1 报 heap spray failed，瓶颈在 dm 基址/探针共识，不在 fork 风暴")
+            }
+            if (lastW2.contains("early SELinux policy repair failed")) {
+                // 该行来自 e 二进制的早期策略修复尝试；后续 chain_hook 的
+                // magiskpolicy --live 会成功，属可容忍事件，别让用户误判成失败。
+                log("[取证][说明] early SELinux policy repair failed 是早期尝试，"
+                        + "后续 magiskpolicy --live 成功即可；以 KSU LOADED / uid=0 为准")
             }
         }
         val lastChain = readFileTail("$tmpKsu/chain.log", 1200)
@@ -118,6 +168,9 @@ class GrindRunner(
         // 「跳过本次迭代」(continue 语义)，嵌套时还有标签歧义。上一版因此命中
         // ROOTED 后仍连跑 3 次 W2，并发 fork 风暴把刚拿到的 root 又搞崩了。
         for (tryIndex in 1..8) {
+            // 每轮开头先落一条里程碑：设备可能在下面任何一步内核崩溃重启，
+            // 14:36 那份日志里六轮全都看不到 TRY/W1，无法判断卡在哪一步。
+            log("[loop] === 第 $tryIndex 轮开始（检查命令通道 / 物料 / settle）===")
             // 部署/等待期间 Shizuku 服务端可能被系统回收，每轮重新确认命令通道
             if (!ensureShell("第 $tryIndex 轮")) {
                 status("Shizuku 命令通道失效，请重新连接")
@@ -128,11 +181,19 @@ class GrindRunner(
                 if (!waitForBootAndShizuku()) return
             }
 
-            // 本 boot 已加载则跳过（抗 adb 瞬断假阴性）
+            // 本 boot 已加载则跳过 exploit（抗 adb 瞬断假阴性），但仍要确认
+            // 用户态 su 入口已部署：模块 Live 并不等于管理器能拿到 root。
             if (ksuLoaded()) {
-                log("=== KSU READY (本 boot 已加载) ===")
-                waitKsu()
-                status("KernelSU 已就绪，临时 root 成功！")
+                log("=== 本轮开机 KernelSU 已加载，跳过提权 ===")
+                val userspaceOk = ensureKsuUserspace()
+                LogStore.setFatal(
+                    if (userspaceOk) "无（临时 Root 成功，KernelSU 已就绪）"
+                    else "KernelSU 模块已加载，但 su 入口未就绪"
+                )
+                status(
+                    if (userspaceOk) "KernelSU 已就绪，临时 root 成功！"
+                    else "KSU 模块已加载，但 su 入口未就绪，请查看日志"
+                )
                 return
             }
 
@@ -144,15 +205,29 @@ class GrindRunner(
                 return
             }
 
-            settle()
+            if (!settle()) {
+                status("Shizuku 命令通道已断开，请重新用无线调试启动 Shizuku 并授权后重试")
+                return
+            }
 
             val boot0 = bootId()
             var en = getEnforce()
             log("--- TRY $tryIndex getenforce=$en ---")
 
+            if (en == "<通道断开>") {
+                status("Shizuku 命令通道已断开，请重新用无线调试启动 Shizuku 并授权后重试")
+                return
+            }
+
             if (en != "Permissive") {
                 status("TRY $tryIndex [W1] 关闭 SELinux")
                 val w1 = runW1(boot0)
+                if (w1 == W1Outcome.NO_OFFSETS) {
+                    // 推错 exploit 资产，重推同一份物料 / reboot 都改变不了偏移表。
+                    // 结论已在 runW1 里写过，这里只更新界面并停止。
+                    status("exploit 资产与内核不匹配，已停止（未重启设备）")
+                    return
+                }
                 if (w1 == W1Outcome.START_FAILED) {
                     // 若命令通道已挂，重新部署也写不进去，先让用户重连 Shizuku
                     if (!ensureShell("W1 启动失败后")) {
@@ -179,6 +254,8 @@ class GrindRunner(
             var adj = 0
             var done = false
             var w2StartFailure = false
+            // W2 阶段失败的具体原因：写进致命问题，别让用户只看到「轮询中」。
+            var lastW2Reason = "未启动"
             for (w2n in 1..3) {
                 // 同 boot 内 KSU 若已加载，绝不再跑 W2
                 if (ksuLoaded()) {
@@ -190,28 +267,52 @@ class GrindRunner(
                 // 清场失败 / 物料缺失就别再起新 W2，避免并发 fork 风暴或空转
                 if (!launchW2(adj)) { w2StartFailure = true; break }
                 val res = pollW2()
-                if (res == W2Result.START_FAILED) { w2StartFailure = true; break }
-                if (res == W2Result.ROOTED || res == W2Result.KSU) {
-                    done = true
-                    break
-                }
-                if (res == W2Result.LADDER) {
-                    adj = (adj + 8).coerceAtMost(16)
-                    log("    ladder: erase fired, uid 2000 -> ADJ=$adj")
+                when (res) {
+                    W2Result.START_FAILED -> {
+                        w2StartFailure = true
+                        lastW2Reason = "exploit 未启动（物料缺失或 exec 失败）"
+                        break
+                    }
+                    W2Result.ROOTED, W2Result.KSU -> {
+                        done = true
+                        break
+                    }
+                    W2Result.LADDER -> {
+                        adj = (adj + 8).coerceAtMost(16)
+                        lastW2Reason = "erase 已触发但 uid 仍为 2000（ladder）"
+                        log("    ladder: erase fired, uid 2000 -> ADJ=$adj")
+                    }
+                    W2Result.EXITED -> lastW2Reason = "W2 进程已退出，未出现 root 标记"
+                    W2Result.TIMEOUT -> lastW2Reason = "W2 等满 420 秒，未出现 root 标记"
+                    W2Result.MISS -> lastW2Reason = "W2 未出现 root 标记"
                 }
                 // 设备仍 Permissive = 干净 miss，可免费重试；否则 boot 丢失
-                if (getEnforce() != "Permissive") break
+                if (getEnforce() != "Permissive") {
+                    lastW2Reason = "设备已离开 Permissive（很可能自重启）"
+                    break
+                }
                 log("    W2 干净 miss，设备仍 Permissive，重试")
             }
             if (done) {
                 if (ksuLoaded()) {
-                    log("=== KSU READY（chain_hook 已自行完成加载）===")
-                    waitKsu()
-                    status("KernelSU 已就绪，临时 root 成功！")
+                    log("=== KernelSU 已自行加载完成 ===")
+                    val userspaceOk = ensureKsuUserspace()
+                    LogStore.setFatal(
+                        if (userspaceOk) "无（临时 Root 成功，KernelSU 已就绪）"
+                        else "KernelSU 模块已加载，但 su 入口未就绪"
+                    )
+                    status(
+                        if (userspaceOk) "KernelSU 已就绪，临时 root 成功！"
+                        else "KSU 模块已加载，但 su 入口未就绪，请查看日志"
+                    )
                     return
                 }
                 // HONOR 50 验证链路：常驻 root 通道 -> ksud insmod -> 恢复 Enforcing
                 val ok = finishViaRootChannel()
+                LogStore.setFatal(
+                    if (ok) "无（临时 Root 成功，KernelSU 已就绪）"
+                    else "KernelSU 晚加载未确认，临时 Root 可能未生效"
+                )
                 status(if (ok) "KernelSU 已就绪，临时 root 成功！" else "KSU 晚加载未确认，请查看日志")
                 return
             }
@@ -223,10 +324,13 @@ class GrindRunner(
                 }
                 continue
             }
+            LogStore.setFatal("本轮未拿到 root：$lastW2Reason")
+            status("未拿到 root：$lastW2Reason；按老配方重启重掷")
             handleRebootIfNeeded(boot0, "W2 用尽")
         }
 
-        log("=== 外循环结束：本轮未落地，可重跑。===")
+        log("=== 本轮结束：未拿到临时 Root，可重新点一键 Root ===")
+        LogStore.setFatal("本轮未成功：临时 Root 未落地（详见下方记录）")
         status("未成功，点「一键临时 Root」再试")
     }
 
@@ -255,25 +359,60 @@ class GrindRunner(
         return if (r.code == 0) r.out.trim().ifEmpty { null } else null
     }
 
+    /**
+     * @return getenforce 的结果；命令通道已断时返回 "<通道断开>"，
+     *         避免和「真的不是 Permissive」混为一谈。
+     */
     private suspend fun getEnforce(): String {
         val r = ShizukuController.exec("getenforce", 15_000)
-        return if (r.code == 0) r.out.trim() else ""
+        if (ShizukuController.channelDead(r)) {
+            log("[error] Shizuku 命令通道已断开（code=${r.code}），无法读取 SELinux 状态")
+            return "<通道断开>"
+        }
+        return if (r.code == 0) r.out.trim() else "<读取失败 code=${r.code}>"
     }
 
-    private suspend fun settle() {
+    /**
+     * 【老版配方回归 · 2026-11-15】固定 60 秒静默 + CPU 空闲检测，空闲才开 W1。
+     *
+     * 老版本一次成功日志（14:43）逐条打印：
+     *   [settle] 静默等待 60s（期间请勿操作手机）… → 静默 5s/60s … 静默 60s/60s
+     *   → [settle] 开始检测 CPU 空闲度… → [settle] CPU 空闲 95%，开始 W1
+     *   → W1 约 30s 关掉 SELinux → W2 ROOTED → KSU 就绪 ok。
+     *
+     * 之前为「赶在 boot 60s 内开跑以避开 5×400 重档」加的 uptime 预算，
+     * 以及 2.2.8 的「补丁资产跳过检测立即开跑」都基于一个已被证伪的推断：
+     * 老版日志里 5 波 × 400 全部跑完（drain done）之后流程仍继续，
+     * 成功轮用的也正是这一档。等系统真正空闲下来才是关键，故整体恢复。
+     *
+     * @return true = 可以继续跑 W1；false = Shizuku 命令通道已断，本轮直接结束。
+     */
+    private suspend fun settle(): Boolean {
         log("[settle] 清理后台…")
         ShizukuController.exec("am force-stop com.hihonor.photos", 15_000)
         ShizukuController.exec("am force-stop com.hihonor.searchservice", 15_000)
         ShizukuController.exec("am kill-all", 15_000)
         ShizukuController.exec("pm trim-caches 999999999999", 30_000)
 
-        // 用户要求：不要静默 60 秒，直接开始。去掉固定 60s 静默等待，
-        // 直接进入 CPU 空闲度检测（带进度日志，非静默）；空闲即开跑 W1。
-        log("[settle] 跳过长静默，直接开始（检测 CPU 空闲度）…")
-        repeat(12) { i -> // 最多 60s，空闲即返回，不阻断 W1
-            val a = cpuSnapshot()
+        log("[settle] 静默等待 60s（期间请勿操作手机）…")
+        repeat(12) { i ->
             delay(5_000)
-            val b = cpuSnapshot()
+            log("[settle] 静默 ${(i + 1) * 5}s / 60s")
+        }
+
+        log("[settle] 开始检测 CPU 空闲度…")
+        repeat(12) { i ->
+            val (a, deadA) = cpuSnapshot()
+            if (deadA) {
+                log("[settle][中止] Shizuku 命令通道已断开，读不到 /proc/stat；不再空等，本轮直接结束")
+                return false
+            }
+            delay(5_000)
+            val (b, deadB) = cpuSnapshot()
+            if (deadB) {
+                log("[settle][中止] Shizuku 命令通道已断开，读不到 /proc/stat；不再空等，本轮直接结束")
+                return false
+            }
             if (a != null && b != null) {
                 val dTotal = b.second - a.second
                 val dIdle = b.first - a.first
@@ -281,7 +420,7 @@ class GrindRunner(
                     val pct = (100L * dIdle / dTotal).toInt()
                     if (pct >= 85) {
                         log("[settle] CPU 空闲 ${pct}%，开始 W1")
-                        return
+                        return true
                     }
                     if (i % 2 == 0) log("[settle] idle=${pct}% (<85%)，继续等 (${(i + 1) * 5}s)…")
                 }
@@ -290,19 +429,25 @@ class GrindRunner(
             }
         }
         log("[settle] 等待空闲超时，不阻断流程，继续尝试 W1")
+        return true
     }
 
-    /** 返回 (idle, total) 累计 jiffies；比例算法与 CPU 核数、内核 HZ 无关。 */
-    private suspend fun cpuSnapshot(): Pair<Long, Long>? {
+    /**
+     * 返回 (累计 jiffies, 通道是否已断)；比例算法与 CPU 核数、内核 HZ 无关。
+     * 第二个分量用来把「命令通道掉线」和「/proc/stat 解析失败」区分开，
+     * 否则会把掉线一路误报成「文件不存在 / 读不到空闲度」。
+     */
+    private suspend fun cpuSnapshot(): Pair<Pair<Long, Long>?, Boolean> {
         val r = ShizukuController.exec(
             "awk '/^cpu /{idle=\$5+\$6; t=0; for(i=2;i<=NF;i++) t+=\$i; print idle, t}' /proc/stat",
             15_000
         )
+        if (ShizukuController.channelDead(r)) return null to true
         val parts = r.out.trim().split(Regex("\\s+"))
-        if (parts.size < 2) return null
-        val idle = parts[0].toLongOrNull() ?: return null
-        val total = parts[1].toLongOrNull() ?: return null
-        return idle to total
+        if (parts.size < 2) return null to false
+        val idle = parts[0].toLongOrNull() ?: return null to false
+        val total = parts[1].toLongOrNull() ?: return null to false
+        return (idle to total) to false
     }
 
     /** 每次启动 exploit 前都必须清场；返回是否清干净。 */
@@ -317,7 +462,15 @@ class GrindRunner(
         // 双保险：启动前再确认 exploit 真的存在且可执行
         val chk = ShizukuController.exec("test -x $tmpE && echo OK", 10_000)
         if (!chk.out.contains("OK")) {
-            log("[W1][中止] $tmpE 不存在或不可执行，本轮不启动 exploit")
+            // 必须先分清「通道断了」和「文件真的不在」：exec() 把 Throwable 统一
+            // 吞成 code=-1 + 空输出，只看输出会把掉线误报成「文件不存在」，
+            // 让用户去查一个根本没问题的东西（2026-11-14 真机日志即如此）。
+            if (ShizukuController.channelDead(chk)) {
+                log("[W1][中止] Shizuku 命令通道已断开（code=${chk.code}），无法确认 $tmpE 状态；本轮不启动 exploit")
+                log("[W1][中止] 请重新用无线调试启动 Shizuku 并授权本应用后重试")
+            } else {
+                log("[W1][中止] $tmpE 不存在或不可执行（code=${chk.code} ${chk.err.trim().take(80)}），本轮不启动 exploit")
+            }
             return false
         }
         if (!logCleanup("W1 启动前")) {
@@ -329,13 +482,14 @@ class GrindRunner(
             "sh -c 'if [ -f $W1_LOG ]; then cp $W1_LOG ${W1_LOG}.prev; fi; : > $W1_LOG'",
             15_000
         )
-        log("[W1] 准备启动 --write1 …")
+        log("[W1][里程碑] 已备份并清空 $W1_LOG，下一步 exec $tmpE --write1")
         // 启动壳的 stdin/stdout/stderr 全部脱离 Shizuku 管道。否则 exec() 的
         // readText() 等不到 EOF → 20s 超时 → destroy() 可能连带杀掉刚起的 exploit。
-        val cmd = "( env $SYNC $tmpE --write1 > $W1_LOG 2>&1 </dev/null ) >/dev/null 2>&1 &"
+        val cmd = "( env ${envPrefix()} $tmpE --write1 > $W1_LOG 2>&1 </dev/null ) >/dev/null 2>&1 &"
         val r = ShizukuController.exec(cmd, 15_000)
         if (r.code != 0) log("[W1][警告] 启动壳返回 code=${r.code} ${r.err.trim()}")
-        log("[W1] 已后台启动 (--write1)，见 $W1_LOG")
+        log("[W1] 第一步已启动（关闭 SELinux），明细在 $W1_LOG")
+        LogStore.setProgress("第一步已启动，正在等待结果（设备可能黑屏重启）")
         return true
     }
 
@@ -344,7 +498,7 @@ class GrindRunner(
      * 原脚本的 6 次 getenforce 确认是在 W1 同步结束之后做的（防 adbd 瞬断）；
      * 之前误把它放在后台启动之后，导致 10s 就误判失败并主动 reboot。
      */
-    private enum class W1Outcome { LANDED, MISS, START_FAILED }
+    private enum class W1Outcome { LANDED, MISS, START_FAILED, NO_OFFSETS }
 
     private suspend fun runW1(boot0: String?): W1Outcome {
         log("[W1] 即将运行 exploit：设备很可能黑屏并自动重启（成功率约 8%），属正常现象，不是工具坏了")
@@ -382,17 +536,38 @@ class GrindRunner(
                 log("[W1] 这是物料/权限问题，不是内核崩溃；不会重启设备")
                 return W1Outcome.START_FAILED
             }
+            // exploit 自己打印 no offsets for kernel 时 strcmp 已落空、进程随即退出，
+            // 这是资产与内核不匹配（推错二进制），不是内核崩溃也不是竞态。
+            // 老版会把它当「运行中」等满 420s，再 reboot 重掷，两轮白等 14 分钟。
+            // 重推同一份物料永远修不好，必须立即收尾且不发 reboot。
+            if (p.noOffsets) {
+                log("[W1][致命] exploit 报 no offsets for kernel：当前下发的二进制没有这颗内核的偏移表")
+                log("[W1] 这是资产选择问题，不是内核崩溃；停止轮询，不重启设备")
+                val hit = Regex("""no offsets for kernel: (\S+)""").find(p.tail)
+                LogStore.setFatal(
+                    "exploit 二进制不含内核 ${hit?.groupValues?.get(1) ?: "当前构建"} 的偏移表" +
+                        "（推错 exploit 资产）；已停止，未重启设备",
+                    LogStore.RANK_RESULT
+                )
+                return W1Outcome.NO_OFFSETS
+            }
+            // 【老版配方回归】不再根据 slide 数值中止。老版成功日志开头的快照里
+            // 就有 `slide=0x1caf600000 votes=2901`（约 123 GiB），照样一次 ROOTED；
+            // 把这类 slide 当「野值」拦下是误判，会把本来能成的一轮直接掐掉。
             if (p.enforce == "Permissive" || p.landed > 0) {
-                log("[W1] SELinux 已 Permissive ✔ (约 ${ticks * 5}s)")
+                log("[W1] 第一步成功：SELinux 已关闭（约 ${ticks * 5}s）")
+                LogStore.setProgress("第一步成功，正在写入 root 权限（W2 最长 420 秒）")
                 return W1Outcome.LANDED
             }
             if (p.boot.isNotEmpty() && boot0 != null && p.boot != boot0) {
-                log("[W1] boot_id 变化 → 设备已自重启，本轮作废")
+                log("[W1] 设备自动重启，本轮作废")
+                LogStore.setFatal("第一步启动后设备自动重启，未拿到临时 Root（内核崩溃）")
                 return W1Outcome.MISS
             }
             log("[W1] 运行中 ${ticks * 5}s / 420s | getenforce=${p.enforce} | ${p.tail.takeLast(120)}")
         }
-        log("[W1] 420s 内未落地（干净 miss 或崩溃）")
+        log("[W1] 等满 420 秒仍未成功")
+        LogStore.setFatal("第一步超时（420 秒），未能关闭 SELinux")
         return W1Outcome.MISS
     }
 
@@ -408,6 +583,7 @@ class GrindRunner(
         val landed: Int,
         val tail: String,
         val fatal: Boolean,
+        val noOffsets: Boolean,
         val shellLost: Boolean
     )
 
@@ -415,7 +591,11 @@ class GrindRunner(
     private suspend fun w1Probe(): W1Probe {
         val r = ShizukuController.exec(
             "getenforce; cat /proc/sys/kernel/random/boot_id 2>/dev/null; " +
-                "grep -c 'SELinux DISABLED' $W1_LOG 2>/dev/null; tail -c 300 $W1_LOG 2>/dev/null",
+                "grep -c 'SELinux DISABLED' $W1_LOG 2>/dev/null; tail -c 300 $W1_LOG 2>/dev/null; " +
+                "grep -o 'memstart probe: slide=0x[0-9a-f]*' $W1_LOG 2>/dev/null | tail -1; " +
+                // no offsets 可能在 w1.log 很靠前的位置，不能被 tail -c 300 截断窗口漏掉；
+                // 用明确标记对整个文件 grep，命中数 >0 才算（拒绝旧日志里的残留串误报）。
+                "echo NOOFF=$(grep -c 'no offsets for kernel' $W1_LOG 2>/dev/null)",
             15_000
         )
         val l = r.out.lines()
@@ -428,6 +608,8 @@ class GrindRunner(
             landed = (l.getOrNull(2)?.trim() ?: "0").toIntOrNull() ?: 0,
             tail = tail,
             fatal = isFatalStart(tail),
+            noOffsets = Regex("""NOOFF=(\d+)""").find(r.out)?.groupValues?.get(1)?.toIntOrNull()
+                ?.let { it > 0 } ?: false,
             // getenforce 与 boot_id 同时为空 = 这条合并命令压根没执行
             shellLost = enforce.isEmpty() && boot.isEmpty()
         )
@@ -448,7 +630,7 @@ class GrindRunner(
         ShizukuController.exec("sh -c ': > $W2_LOG'", 15_000)
         // 文档 fne_local.sh 明确只跑 1 轮：W2 拿到 root 后其 park 的 waiter
         // 不能被二次 PI 操作打扰，否则踢到 ghost 触发 panic。
-        val env = "$SYNC GL_W2_ROUNDS=1 GL_W2_CRED_ADJ=$adj"
+        val env = "${envPrefix()} GL_W2_ROUNDS=1 GL_W2_CRED_ADJ=$adj"
         log("[W2] 准备启动 cred 写入 …")
         val cmd = "( env $env $tmpE > $W2_LOG 2>&1 </dev/null ) >/dev/null 2>&1 &"
         val r = ShizukuController.exec(cmd, 15_000)
@@ -457,24 +639,55 @@ class GrindRunner(
         return true
     }
 
-    private enum class W2Result { ROOTED, KSU, LADDER, MISS, START_FAILED }
+    private enum class W2Result { ROOTED, KSU, LADDER, MISS, TIMEOUT, EXITED, START_FAILED }
 
+    private data class W2Probe(val count: Int?, val tail: String, val shellLost: Boolean)
+
+    /** 用单条命令同时取「e 进程数 + w2.log 尾部」，把轮询干扰降到最低。 */
+    private suspend fun w2Probe(): W2Probe {
+        val r = ShizukuController.exec(
+            "pidof e 2>/dev/null | wc -w; tail -c 8000 $W2_LOG 2>/dev/null", 15_000
+        )
+        if (ShizukuController.channelDead(r)) return W2Probe(null, "", true)
+        val lines = r.out.lines()
+        val count = lines.getOrNull(0)?.trim()?.toIntOrNull()
+        val tail = lines.drop(1).joinToString("\n")
+        return W2Probe(count, tail, shellLost = count == null && tail.isBlank())
+    }
+
+    /**
+     * 等 W2 出结果。
+     *
+     * 【2026-11-17 真机日志实证】老版本只按时间盲等 900s：W2 进程 30 秒内就
+     * 退出了（状态页显示残留 e 进程 0、SELinux 仍 Permissive），界面却一路
+     * 「轮询中 (660s)」，用户干等 15 分钟，最后才失败并重启设备。
+     * 现在每 15s 同时看三件事：w2.log 标记、命令通道、e 进程是否还活着；
+     * 连续两次（30s）确认进程已退出且无 root 标记，立刻以 EXITED 收尾；
+     * 总预算收窄到 420s（与 W1 一致），不会再出现 15 分钟静默。
+     */
     private suspend fun pollW2(): W2Result {
-        // 同样降低轮询频率：W2 也是时序敏感的竞态，原脚本期间主机零设备命令
-        repeat(60) { // 60 × 15s = 900s
+        val ticks = 28 // 28 × 15s = 420s
+        var deadTicks = 0
+        repeat(ticks) { i ->
             delay(15_000)
             if (!ShizukuController.isAvailable()) {
                 log("[W2] Shizuku 掉线 → 设备很可能已崩溃重启，停止本轮轮询")
                 return W2Result.MISS
             }
-            val w2log = readFileTail(W2_LOG, 8000)
-            // 与 W1 同理：exploit 没启动就别空转 900s，更不能因此 reboot
+            val probe = w2Probe()
+            val w2log = probe.tail
+            if (probe.shellLost) {
+                log("[W2] 命令通道没有返回任何内容，停止本轮轮询")
+                return W2Result.MISS
+            }
+            // 与 W1 同理：exploit 没启动就别空转，更不能因此 reboot
             if (isFatalStart(w2log)) {
                 log("[W2][错误] exploit 未能启动：${w2log.takeLast(160).trim()}")
                 return W2Result.START_FAILED
             }
             if (w2log.contains("child is root")) {
-                log("[W2] 命中 child is root → ROOTED")
+                log("[W2] 第二步成功：已获得临时 Root")
+                LogStore.setProgress("已获得临时 Root，正在加载 KernelSU")
                 return W2Result.ROOTED
             }
             if (w2log.contains("KernelSU helper reports ready") || w2log.contains("KSU LOADED")) {
@@ -485,10 +698,33 @@ class GrindRunner(
                 log("[W2] 命中 ladder（erase 触发但 uid 仍 2000）")
                 return W2Result.LADDER
             }
-            if (it % 4 == 0) log("[W2] 轮询中 (${it * 15}s)…")
+
+            // 进程是否还活着：解析不到就停，不误判成「已退出」。
+            val cnt = probe.count
+            if (cnt == null) {
+                log("[W2] 无法确认 e 进程数，停止轮询")
+                return W2Result.MISS
+            }
+            if (cnt == 0) {
+                deadTicks++
+                if (deadTicks >= 2) {
+                    val tail = w2log.replace('\n', ' ').takeLast(240).trim()
+                    log("[W2][结论] e 进程已连续 30s 不存在，w2.log 里也没有 root 标记")
+                    log("[W2][结论] w2.log 尾部：${tail.ifBlank { "（空，exploit 没有输出）" }}")
+                    return W2Result.EXITED
+                }
+            } else {
+                deadTicks = 0
+            }
+
+            val sec = (i + 1) * 15
+            if (i % 4 == 0) {
+                log("[W2] 轮询中 (${sec}s / 420s)…")
+                LogStore.setProgress("正在写入 root 权限（W2 ${sec}s / 420s）")
+            }
         }
-        log("[W2] 轮询 900s 超时 → MISS")
-        return W2Result.MISS
+        log("[W2][结论] 等满 420 秒仍无 root 标记 → 本轮失败")
+        return W2Result.TIMEOUT
     }
 
     // ------------------------------------------- HONOR 50 root channel (S2-S4)
@@ -497,9 +733,9 @@ class GrindRunner(
     private val RS_OUT = "/data/local/tmp/rs.out"
 
     /** chain_hook.sh 在 handoff 模式下把 root 搬进 FIFO 后写入此标志。 */
-    private suspend fun waitRootChannel(): Boolean {
-        log("[chan] 等待常驻 root shell 通道 (最长 90s)…")
-        repeat(30) {
+    private suspend fun waitRootChannel(maxTicks: Int = 30): Boolean {
+        log("[chan] 等待常驻 root shell 通道 (最长 ${maxTicks * 3}s)…")
+        repeat(maxTicks) {
             val r = ShizukuController.exec(
                 "grep -c 'ROOT SHELL CHANNEL UP' $RS_OUT 2>/dev/null", 15_000
             )
@@ -534,6 +770,15 @@ class GrindRunner(
         return false
     }
 
+    /**
+     * 模块已 Live 时补齐用户态。全部逻辑收拢在 KsuUserspace（Mutex 保护），
+     * 「一键临时 Root」和「安装管理器 + 模块」共用同一条路径，避免老版本里
+     * 多个协程同时「等待 su 就绪 1/12」、把日志刷成 130 KB 还什么都没补装。
+     * KSU 3.3.0 的 /system/bin/su 是 sucompat 虚拟入口，ksud 必须由
+     * `ksud install` 原子生成；手工 cp 会带错 SELinux 上下文。
+     */
+    private suspend fun ensureKsuUserspace(): Boolean = KsuUserspace.ensure(log)
+
     /** S2-S4 主流程；失败时明确提示设备可能仍停留在 Permissive。 */
     private suspend fun finishViaRootChannel(): Boolean {
         log("=== S2/S3/S4：HONOR 50 验证链路（root 通道 → ksud insmod → Enforcing）===")
@@ -542,16 +787,21 @@ class GrindRunner(
             waitKsu()
             return ksuLoaded()
         }
-        if (!ksuLoaded()) {
-            val done = deliver("$tmpKsu/ksu_lateload.sh", "KSUTRY_DONE", 120)
-            log("[chan] rs.out 尾部：${readFileTail(RS_OUT, 2400).replace('\n', ' ').takeLast(500).trim()}")
-            if (!done && !ksuLoaded()) {
-                log("[chan][错误] ksud insmod 未确认成功，设备可能仍为 Permissive")
-                log("[chan][提示] 请勿在此状态长时间使用；重启设备可恢复 Enforcing")
-                return false
-            }
-        } else {
-            log("[chan] 模块已 Live，跳过 insmod")
+        // 无论模块是否已 Live 都投递一次：ksu_lateload.sh 内部幂等，
+        // 已 Live 时跳过 insmod，但仍执行 ksud install + 重启管理器，
+        // 否则 su 入口永远缺失、管理器一直报「获取 Root 失败」。
+        val done = deliver("$tmpKsu/ksu_lateload.sh", "KSUTRY_DONE", 120)
+        val rsTail = readFileTail(RS_OUT, 2400)
+        log("[chan] rs.out 尾部：${rsTail.replace('\n', ' ').takeLast(500).trim()}")
+        if (rsTail.contains("KSU_READY")) {
+            log("[chan] 脚本自报 KSU_READY（模块 Live + ksud 用户态已安装）")
+        } else if (rsTail.contains("KSU_NOT_READY")) {
+            log("[chan][警告] 脚本自报 KSU_NOT_READY，检查上面的 install / stages rc")
+        }
+        if (!done && !ksuLoaded()) {
+            log("[chan][错误] ksud insmod 未确认成功，设备可能仍为 Permissive")
+            log("[chan][提示] 请勿在此状态长时间使用；重启设备可恢复 Enforcing")
+            return false
         }
 
         // 恢复 Enforcing 必须是最后一步：flip 会杀掉 kernel:s0 的通道 shell，
@@ -559,14 +809,36 @@ class GrindRunner(
         ShizukuController.exec("echo 'sh $tmpKsu/restore_enforce.sh' > $RS_IN", 20_000)
         delay(4_000)
 
+        // su 不带路径时 shell 会拼出 /system/bin/su，sucompat 的 stat/execve
+        // 重定同样能命中；两种写法都试，避免某些 shell 只认其中一种。
+        // /data/adb/ksud 属 root，App 的 shell(uid 2000) 无权直读，故经 su -c 查看，
+        // 避免产生误导性的「Permission denied」。
         val v = ShizukuController.exec(
-            "getenforce; /system/bin/su -c id 2>/dev/null; grep kernelsu /proc/modules",
+            "getenforce; su -c 'ls -l /data/adb/ksud' 2>&1; " +
+                "su -c id 2>&1; /system/bin/su -c id 2>&1; grep kernelsu /proc/modules",
             20_000
         )
         log("[verify] ${v.out.replace("\n", " | ").trim()}")
-        val ok = ksuLoaded() && v.out.contains("uid=0")
+        var ok = ksuLoaded() && v.out.contains("uid=0")
+        if (!ok) {
+            // 老版本在这里只打印「请点查看状态复核」就结束，接着用户点
+            // 「安装管理器」又开一个并发协程空等 12×5s，su 始终 code=127。
+            // 新版必须当场补装，不能把问题留给下一次点击。
+            log("[verify][警告] 未同时确认 KSU Live 与 uid=0 → 立即补装用户态")
+            if (!v.out.contains("/data/adb/ksud") || v.out.contains("No such file")) {
+                log("[verify][提示] /data/adb/ksud 缺失：需 ksud install 部署 sucompat 入口")
+            }
+            if (KsuUserspace.ensure(log)) {
+                val again = ShizukuController.exec(
+                    "getenforce; su -c id 2>&1; grep kernelsu /proc/modules", 20_000
+                )
+                log("[verify][复检] ${again.out.replace("\n", " | ").trim()}")
+                ok = again.out.contains("uid=0") && again.out.contains("kernelsu")
+            } else {
+                log("[verify][错误] 补装后 su 仍不可用；请确认设备端脚本是本 APK 的 ksu_lateload.sh")
+            }
+        }
         if (ok) log("[verify] ✔ Enforcing 下 root 仍可用，KSU 模块 Live")
-        else log("[verify][警告] 未同时确认 KSU Live 与 uid=0，请点「查看状态」复核")
         return ok
     }
 
@@ -594,8 +866,10 @@ class GrindRunner(
         LogStore.sync(force = true, reason = "$reason：抓取失败现场")
         val alive = ShizukuController.isAvailable()
         val boot1 = bootId()
-        // 设备已经崩掉/自重启/离线时，绝不要再发 reboot（那才是「突然关机」的元凶）
-        if (!alive || boot1 == null || (boot0 != null && boot1 != boot0)) {
+        // 设备已经崩掉/自重启/离线时，绝不要再发 reboot（那才是「突然关机」的元凶）。
+        // boot0 为空 = 起始时没能读到 boot_id，无法判断 boot 是否变化；此时保守
+        // 跳过 reboot（发 reboot 可能造成一次非预期重启），只等用户重连。
+        if (!alive || boot1 == null || boot0 == null || boot1 != boot0) {
             log("[$reason] 设备已在 W 阶段自重启/掉线，跳过冗余 reboot，等待开机")
             log("[提示] 设备重启后 Shizuku 会失效，请重新用无线调试启动 Shizuku 并授权本应用")
             waitForBootAndShizuku()

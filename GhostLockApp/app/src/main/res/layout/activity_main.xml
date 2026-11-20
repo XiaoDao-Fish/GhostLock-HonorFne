@@ -1,40 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Liquid Glass stage rebuilt on the HonorRoot design system.
+<!-- HonorRoot 3.0 stage.
+     One language borrowed from three references:
+     · compose-miuix-ui / KernelSU — grouped cards, quiet labels, big values
+     · ExtractKit — airy wash, oversized headline, few but large cards
+     · miuix-liquid-glass-nav — floating capsule bar with a travelling lens
      Every legacy view id is preserved so MainActivity keeps working. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/glass_bg"
+    android:background="@drawable/hr_bg"
     android:clipChildren="false">
-
-    <!-- Diffuse colour orbs, softly blurred at runtime on API 31 and above. -->
-    <View
-        android:id="@+id/orbBlue"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="-110dp"
-        android:layout_marginEnd="-110dp"
-        android:background="@drawable/glass_orb_blue" />
-
-    <View
-        android:id="@+id/orbPurple"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="-120dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/glass_orb_purple" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:clipChildren="false"
+        android:orientation="vertical"
         android:paddingStart="@dimen/ds_page_pad"
-        android:paddingTop="@dimen/ds_space_8"
+        android:paddingTop="@dimen/ds_space_2"
         android:paddingEnd="@dimen/ds_page_pad"
-        android:paddingBottom="@dimen/ds_space_4">
+        android:paddingBottom="@dimen/ds_space_1">
 
         <FrameLayout
             android:id="@+id/pageHost"
@@ -44,11 +29,12 @@
             android:clipChildren="false"
             android:clipToPadding="false">
 
-            <!-- HOME. One focal point: the clock. Everything else steps back. -->
+            <!-- ============================ HOME ============================ -->
             <ScrollView
                 android:id="@+id/pageHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 android:scrollbars="none">
 
                 <LinearLayout
@@ -57,11 +43,40 @@
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/ds_space_6">
 
+                    <!-- Header: product name + installed version -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_4"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/app_name"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tvHomeVersion"
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/about_version" />
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/homeClockCaption"
                         style="@style/HonorRoot.Text.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_5"
                         android:text="@string/home_clock_caption" />
 
                     <TextView
@@ -77,57 +92,43 @@
                         style="@style/HonorRoot.Text.Body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_2" />
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:textColor="@color/ds_on_surface_variant" />
 
                     <TextView
                         android:id="@+id/tvGreeting"
                         style="@style/HonorRoot.Text.Body"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_8"
-                        android:text="@string/home_greeting_morning" />
+                        android:layout_marginTop="@dimen/ds_space_4"
+                        android:text="@string/home_greeting_morning"
+                        android:textColor="@color/ds_on_surface_muted" />
 
+                    <!-- Hero: the one focal status -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_8"
-                        android:background="@drawable/glass_card"
-                        android:orientation="vertical"
-                        android:padding="@dimen/ds_card_pad">
-
-                        <TextView
-                            style="@style/HonorRoot.Text.Label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/home_device_caption" />
-
-                        <TextView
-                            android:id="@+id/tvDeviceModel"
-                            style="@style/HonorRoot.Text.Body"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ds_space_4"
-                            android:text="@string/home_device_model" />
-
-                        <TextView
-                            android:id="@+id/tvKernel"
-                            style="@style/HonorRoot.Text.Label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ds_space_2"
-                            android:letterSpacing="0"
-                            android:text="@string/home_kernel" />
+                        android:layout_marginTop="@dimen/ds_space_5"
+                        android:background="@drawable/hr_hero"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/ds_space_5"
-                            android:layout_marginBottom="@dimen/ds_space_5"
-                            android:background="@color/ds_outline_variant" />
+                            android:layout_width="4dp"
+                            android:layout_height="52dp"
+                            android:layout_marginStart="@dimen/ds_space_3"
+                            android:background="@drawable/hr_rule" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/ds_card_pad">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/ds_touch_min"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -142,76 +143,299 @@
                                 style="@style/HonorRoot.Text.Label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/ds_space_3"
-                                android:text="@string/home_label_root" />
+                                android:layout_marginStart="@dimen/ds_space_2"
+                                android:text="@string/home_root_caption" />
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="1dp"
                                 android:layout_weight="1" />
-
-                            <TextView
-                                android:id="@+id/tvRootState"
-                                style="@style/HonorRoot.Text.Title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:text="@string/home_root_pending"
-                                android:textColor="@color/glass_warn"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/ds_touch_min"
-                            android:layout_marginTop="@dimen/ds_space_2"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <View
-                                android:id="@+id/shizukuStateDot"
-                                android:layout_width="8dp"
-                                android:layout_height="8dp"
-                                android:background="@drawable/ds_status_dot"
-                                android:backgroundTint="@color/glass_warn" />
 
                             <TextView
                                 style="@style/HonorRoot.Text.Label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/ds_space_3"
-                                android:text="@string/home_label_shizuku" />
+                                android:text="@string/home_chain_a" />
+                        </LinearLayout>
 
-                            <View
+                        <TextView
+                            android:id="@+id/tvRootState"
+                            style="@style/HonorRoot.Text.Headline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_3"
+                            android:text="@string/home_root_pending"
+                            android:textColor="@color/glass_warn" />
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_1"
+                            android:text="@string/home_hero_hint" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Device group -->
+                    <TextView
+                        style="@style/HonorRoot.Text.Section"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ds_space_1"
+                        android:layout_marginTop="@dimen/ds_space_6"
+                        android:text="@string/home_section_device" />
+
+                    <LinearLayout
+                        android:id="@+id/cardDevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:background="@drawable/hr_card"
+                        android:orientation="vertical"
+                        android:padding="@dimen/ds_card_pad">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="@dimen/ds_badge"
+                                android:layout_height="@dimen/ds_badge"
+                                android:background="@drawable/hr_icon_badge">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/home_device_caption"
+                                    android:src="@drawable/ic_row_chip"
+                                    android:tint="@color/ds_primary" />
+                            </FrameLayout>
+
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="1dp"
-                                android:layout_weight="1" />
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ds_space_3"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_device_caption" />
+
+                                <TextView
+                                    android:id="@+id/tvDeviceModel"
+                                    style="@style/HonorRoot.Text.Title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="@string/home_device_model"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginTop="@dimen/ds_space_3"
+                            android:layout_marginBottom="@dimen/ds_space_3"
+                            android:background="@color/hr_divider" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="@dimen/ds_badge"
+                                android:layout_height="@dimen/ds_badge"
+                                android:background="@drawable/hr_icon_badge">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/home_kernel"
+                                    android:src="@drawable/ic_row_kernel"
+                                    android:tint="@color/ds_primary" />
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ds_space_3"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_kernel_caption" />
+
+                                <TextView
+                                    android:id="@+id/tvKernel"
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="monospace"
+                                    android:letterSpacing="0"
+                                    android:text="@string/home_kernel"
+                                    android:textColor="@color/ds_on_surface"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="46dp"
+                            android:layout_marginTop="@dimen/ds_space_3"
+                            android:layout_marginBottom="@dimen/ds_space_3"
+                            android:background="@color/hr_divider" />
+
+                        <!-- Shizuku row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="@dimen/ds_badge"
+                                android:layout_height="@dimen/ds_badge"
+                                android:background="@drawable/hr_icon_badge">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/home_label_shizuku"
+                                    android:src="@drawable/ic_row_shield"
+                                    android:tint="@color/ds_primary" />
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ds_space_3"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_label_shizuku"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:text="@string/home_shizuku_caption" />
+                            </LinearLayout>
 
                             <TextView
                                 android:id="@+id/tvShizukuState"
-                                style="@style/HonorRoot.Text.Title"
+                                style="@style/HonorRoot.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="end|center_vertical"
-                                android:minHeight="@dimen/ds_touch_min"
-                                android:paddingStart="@dimen/ds_space_2"
+                                android:gravity="center"
+                                android:minHeight="32dp"
                                 android:text="@string/home_shizuku_no"
-                                android:textColor="@color/glass_warn"
-                                android:textStyle="bold" />
+                                android:textColor="@color/glass_warn" />
+                        </LinearLayout>
+
+                        <!-- KernelSU row -->
+                        <LinearLayout
+                            android:id="@+id/llKsuVersion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_3"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="@dimen/ds_badge"
+                                android:layout_height="@dimen/ds_badge"
+                                android:background="@drawable/hr_icon_badge">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/home_label_ksu"
+                                    android:src="@drawable/ic_row_key"
+                                    android:tint="@color/ds_primary" />
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ds_space_3"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_label_ksu"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="1dp"
+                                    android:text="@string/home_ksu_caption" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvKsuVersion"
+                                style="@style/HonorRoot.Chip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:maxWidth="150dp"
+                                android:minHeight="32dp"
+                                android:text="@string/home_ksu_pending"
+                                android:textColor="@color/glass_warn" />
                         </LinearLayout>
 
                         <TextView
                             style="@style/HonorRoot.Text.Label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/ds_space_5"
-                            android:letterSpacing="0"
-                            android:text="@string/home_shizuku_hint" />
+                            android:layout_marginTop="@dimen/ds_space_3"
+                            android:text="@string/home_shizuku_hint"
+                            android:textColor="@color/ds_on_surface_muted" />
                     </LinearLayout>
+
+                    <!-- Sponsor entry, same target as the About page -->
+                    <android.widget.Button
+                        android:id="@+id/btnSponsorHome"
+                        style="@style/HonorRoot.Button.Tonal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ds_touch_min"
+                        android:layout_marginTop="@dimen/ds_space_4"
+                        android:stateListAnimator="@null"
+                        android:text="@string/about_sponsor" />
                 </LinearLayout>
             </ScrollView>
 
-            <!-- ROOT -->
+            <!-- ============================ ROOT ============================ -->
             <LinearLayout
                 android:id="@+id/pageRoot"
                 android:layout_width="match_parent"
@@ -219,136 +443,347 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <LinearLayout
+                <ScrollView
                     android:id="@+id/rootIntro"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/HonorRoot.Text.Headline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nav_root" />
-
-                    <TextView
-                        style="@style/HonorRoot.Text.Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_1"
-                        android:layout_marginBottom="@dimen/ds_space_8"
-                        android:letterSpacing="0"
-                        android:text="@string/root_intro_subtitle" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/glass_card"
                         android:orientation="vertical"
-                        android:padding="@dimen/ds_card_pad">
+                        android:paddingBottom="@dimen/ds_space_2">
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Headline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_2"
+                            android:text="@string/nav_root" />
 
                         <TextView
                             style="@style/HonorRoot.Text.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/root_check_caption" />
+                            android:layout_marginTop="@dimen/ds_space_1"
+                            android:text="@string/root_intro_subtitle" />
 
-                        <TextView
-                            android:id="@+id/tvCompat"
-                            style="@style/HonorRoot.Text.Title"
+                        <!-- Compatibility -->
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ds_space_4"
-                            android:text="@string/root_check_pending"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="@dimen/ds_space_5"
+                            android:background="@drawable/hr_card"
+                            android:orientation="vertical"
+                            android:padding="@dimen/ds_card_pad">
 
-                        <TextView
-                            android:id="@+id/tvCompatDetail"
-                            style="@style/HonorRoot.Text.Body"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <FrameLayout
+                                    android:layout_width="@dimen/ds_badge"
+                                    android:layout_height="@dimen/ds_badge"
+                                    android:background="@drawable/hr_icon_badge">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:contentDescription="@string/root_check_caption"
+                                        android:src="@drawable/ic_row_shield"
+                                        android:tint="@color/ds_primary" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/ds_space_3"
+                                    android:layout_weight="1"
+                                    android:text="@string/root_check_caption" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvCompat"
+                                style="@style/HonorRoot.Text.Title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_3"
+                                android:text="@string/root_check_pending" />
+
+                            <!-- KernelSU 面具版本提示：只在版本不正确时显示 -->
+                            <TextView
+                                android:id="@+id/tvKsuCompat"
+                                style="@style/HonorRoot.Text.Body"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_2"
+                                android:text="@string/root_ksu_bad"
+                                android:textColor="@color/ds_error"
+                                android:visibility="gone" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_3"
+                                android:orientation="horizontal">
+
+                                <android.widget.Button
+                                    android:id="@+id/btnRefreshCompat"
+                                    style="@style/HonorRoot.Button.Tonal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:stateListAnimator="@null"
+                                    android:text="@string/root_refresh" />
+
+                                <!-- 环境自检：不依赖内核白名单，先看 tracefs 能不能写 -->
+                                <android.widget.Button
+                                    android:id="@+id/btnEnvCheck"
+                                    style="@style/HonorRoot.Button.Tonal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="@dimen/ds_space_2"
+                                    android:stateListAnimator="@null"
+                                    android:text="@string/root_env_check" />
+                            </LinearLayout>
+
+                            <!-- 多管理器：与月虹 1.7.0 一致，提权目标可切换 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_3"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvManagerState"
+                                    style="@style/HonorRoot.Text.Label"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/mgr_none" />
+
+                                <android.widget.Button
+                                    android:id="@+id/btnPickManager"
+                                    style="@style/HonorRoot.Button.Mini"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/ds_touch_min"
+                                    android:stateListAnimator="@null"
+                                    android:text="@string/mgr_pick" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Self adapt: import a boot.img, build the profile on device -->
+                        <LinearLayout
+                            android:id="@+id/cardBootAdapt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ds_space_3"
-                            android:textColor="@color/ds_on_surface_muted" />
+                            android:background="@drawable/hr_card"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:padding="@dimen/ds_card_pad">
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/HonorRoot.Text.Title"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/boot_adapt_title" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="›"
+                                    android:textColor="@color/ds_on_surface_muted"
+                                    android:textSize="@dimen/ds_text_chevron" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/HonorRoot.Text.Label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_1"
+                                android:text="@string/boot_adapt_sub" />
+
+                            <TextView
+                                android:id="@+id/tvAdaptState"
+                                style="@style/HonorRoot.Text.Body"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_2"
+                                android:text="@string/boot_adapt_none"
+                                android:textColor="@color/ds_on_surface_muted" />
+
+                            <TextView
+                                android:id="@+id/tvAdaptHint"
+                                style="@style/HonorRoot.Text.Label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ds_space_1"
+                                android:text="@string/boot_adapt_hint"
+                                android:textColor="@color/ds_on_surface_muted"
+                                android:visibility="gone" />
+
+                            <!-- 全量包链接：下载 → 提取 boot.img → 现场适配 -->
+                            <EditText
+                                android:id="@+id/etOtaUrl"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="@dimen/ds_space_3"
+                                android:background="@drawable/hr_card"
+                                android:hint="@string/ota_url_hint"
+                                android:inputType="textUri"
+                                android:maxLines="1"
+                                android:paddingStart="@dimen/ds_space_2"
+                                android:paddingEnd="@dimen/ds_space_2"
+                                android:textColor="@color/ds_on_surface"
+                                android:textSize="@dimen/ds_text_body" />
+
+                            <android.widget.Button
+                                android:id="@+id/btnOtaAdapt"
+                                style="@style/HonorRoot.Button.Tonal"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="@dimen/ds_space_1"
+                                android:stateListAnimator="@null"
+                                android:text="@string/ota_adapt" />
+
+                            <ProgressBar
+                                android:id="@+id/pbAdapt"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/ds_progress_h"
+                                android:layout_marginTop="@dimen/ds_space_3"
+                                android:indeterminate="false"
+                                android:max="100"
+                                android:progress="0"
+                                android:progressBackgroundTint="@color/ds_outline_variant"
+                                android:progressTint="@color/ds_primary"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <!-- One big CTA. Greyed out while KSU version is wrong. -->
                         <android.widget.Button
-                            android:id="@+id/btnRefreshCompat"
-                            style="@style/HonorRoot.Button.Tonal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/ds_touch_min"
+                            android:id="@+id/btnStartRoot"
+                            style="@style/HonorRoot.Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ds_btn_primary_h"
                             android:layout_marginTop="@dimen/ds_space_5"
-                            android:paddingStart="@dimen/ds_space_4"
-                            android:paddingEnd="@dimen/ds_space_4"
                             android:stateListAnimator="@null"
-                            android:text="@string/root_refresh" />
+                            android:text="@string/root_start"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_2"
+                            android:orientation="horizontal">
+
+                            <android.widget.Button
+                                android:id="@+id/btnSponsorRoot"
+                                style="@style/HonorRoot.Button.Tonal"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/ds_touch_min"
+                                android:layout_marginEnd="@dimen/ds_space_1"
+                                android:layout_weight="1"
+                                android:stateListAnimator="@null"
+                                android:text="@string/about_sponsor" />
+
+                            <android.widget.Button
+                                android:id="@+id/btnShareLog"
+                                style="@style/HonorRoot.Button.Tonal"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/ds_touch_min"
+                                android:layout_marginStart="@dimen/ds_space_1"
+                                android:layout_weight="1"
+                                android:stateListAnimator="@null"
+                                android:text="@string/btn_share_log" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_2"
+                            android:text="@string/share_log_hint"
+                            android:textColor="@color/ds_on_surface_muted" />
                     </LinearLayout>
+                </ScrollView>
 
-                    <android.widget.Button
-                        android:id="@+id/btnStartRoot"
-                        style="@style/HonorRoot.Button.Primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ds_btn_primary_h"
-                        android:layout_marginTop="@dimen/ds_space_6"
-                        android:stateListAnimator="@null"
-                        android:text="@string/root_start"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
+                <!-- Terminal: always dark, one strong contrast anchor -->
                 <LinearLayout
                     android:id="@+id/rootLogPanel"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/ds_space_3"
                     android:layout_weight="1"
-                    android:background="@drawable/glass_panel"
+                    android:background="@drawable/hr_terminal"
                     android:orientation="vertical"
                     android:padding="@dimen/ds_space_4"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/tvStatus"
-                        style="@style/HonorRoot.Text.Label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:letterSpacing="0"
-                        android:text="@string/hint_waiting"
-                        android:textColor="@color/glass_warn" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_3"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <TextView
-                            style="@style/HonorRoot.Text.Title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/root_log_caption"
-                            android:textStyle="bold" />
-
                         <View
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:background="@drawable/ds_status_dot"
+                            android:backgroundTint="@color/hr_terminal_accent" />
+
+                        <TextView
+                            android:id="@+id/tvStatus"
+                            style="@style/HonorRoot.Text.Label"
                             android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ds_space_2"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/hint_waiting"
+                            android:textColor="@color/hr_terminal_accent" />
 
                         <android.widget.Button
                             android:id="@+id/btnClear"
-                            style="@style/HonorRoot.Button.Tonal"
+                            style="@style/HonorRoot.Button.Mini"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/ds_touch_min"
-                            android:paddingStart="@dimen/ds_space_4"
-                            android:paddingEnd="@dimen/ds_space_4"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="@dimen/ds_space_2"
                             android:stateListAnimator="@null"
                             android:text="@string/btn_clear" />
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/ds_space_3"
+                        android:background="@color/hr_terminal_stroke" />
+
                     <ScrollView
+                        android:id="@+id/logScroll"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginTop="@dimen/ds_space_3"
                         android:layout_weight="1"
-                        android:fillViewport="true">
+                        android:fillViewport="true"
+                        android:overScrollMode="never">
 
                         <TextView
                             android:id="@+id/tvLog"
@@ -356,198 +791,244 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/log_placeholder"
-                            android:textIsSelectable="true" />
+                            android:textColor="@color/hr_terminal_text" />
                     </ScrollView>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_3"
-                        android:orientation="horizontal">
-
-                        <android.widget.Button
-                            android:id="@+id/btnConnect"
-                            style="@style/HonorRoot.Button.Tonal"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/ds_touch_min"
-                            android:layout_marginEnd="@dimen/ds_space_1"
-                            android:layout_weight="1"
-                            android:stateListAnimator="@null"
-                            android:text="@string/btn_connect" />
-
-                        <android.widget.Button
-                            android:id="@+id/btnDeploy"
-                            style="@style/HonorRoot.Button.Tonal"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/ds_touch_min"
-                            android:layout_marginStart="@dimen/ds_space_1"
-                            android:layout_weight="1"
-                            android:stateListAnimator="@null"
-                            android:text="@string/btn_deploy" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_2"
-                        android:orientation="horizontal">
-
-                        <android.widget.Button
-                            android:id="@+id/btnStatus"
-                            style="@style/HonorRoot.Button.Tonal"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/ds_touch_min"
-                            android:layout_marginEnd="@dimen/ds_space_1"
-                            android:layout_weight="1"
-                            android:stateListAnimator="@null"
-                            android:text="@string/btn_status" />
-
-                        <android.widget.Button
-                            android:id="@+id/btnManagers"
-                            style="@style/HonorRoot.Button.Tonal"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/ds_touch_min"
-                            android:layout_marginStart="@dimen/ds_space_1"
-                            android:layout_weight="1"
-                            android:stateListAnimator="@null"
-                            android:text="@string/btn_managers" />
-                    </LinearLayout>
-
-                    <android.widget.Button
-                        android:id="@+id/btnRoot"
-                        style="@style/HonorRoot.Button.Tonal"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ds_touch_min"
-                        android:layout_marginTop="@dimen/ds_space_2"
-                        android:stateListAnimator="@null"
-                        android:text="@string/btn_root"
-                        android:textColor="@color/ds_primary" />
+                    <!-- 连接 Shizuku / 查看状态 / 部署物料 / 安装管理器 / 日志页 Root
+                         五个按钮已移除：连接 Shizuku 点首页状态行、状态启动时自动采集、
+                         物料由一键 Root 自动部署、管理器打开 App 自动检测并安装、
+                         Root 用上面引导页的大按钮。日志面板只保留状态行 + 清空 + 日志区。 -->
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- ABOUT -->
+            <!-- ============================ ABOUT ============================ -->
             <ScrollView
                 android:id="@+id/pageAbout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 android:scrollbars="none"
                 android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_space_2"
-                    android:background="@drawable/glass_card"
                     android:orientation="vertical"
-                    android:padding="@dimen/ds_space_6">
+                    android:paddingBottom="@dimen/ds_space_6">
 
-                    <TextView
-                        style="@style/HonorRoot.Text.Brand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name" />
-
-                    <TextView
-                        style="@style/HonorRoot.Text.Body"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_2"
-                        android:text="@string/about_subtitle" />
-
-                    <View
+                    <!-- Brand block -->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/ds_space_8"
-                        android:background="@color/ds_outline_variant" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_4"
+                        android:background="@drawable/hr_card"
+                        android:orientation="vertical"
+                        android:padding="@dimen/ds_space_5">
+
+                        <FrameLayout
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:background="@drawable/hr_badge">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="sans-serif"
+                                android:text="@string/about_badge_text"
+                                android:textColor="#FFFFFFFF"
+                                android:textSize="19sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Headline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_4"
+                            android:text="@string/app_name" />
+
+                        <TextView
+                            style="@style/HonorRoot.Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ds_space_1"
+                            android:text="@string/about_subtitle" />
+                    </LinearLayout>
 
                     <TextView
-                        style="@style/HonorRoot.Text.Label"
+                        style="@style/HonorRoot.Text.Section"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ds_space_1"
                         android:layout_marginTop="@dimen/ds_space_6"
-                        android:text="@string/about_version_caption" />
+                        android:text="@string/about_section_info" />
 
-                    <TextView
-                        style="@style/HonorRoot.Text.Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_2"
-                        android:text="@string/about_version" />
-
-                    <TextView
-                        style="@style/HonorRoot.Text.Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_8"
-                        android:text="@string/about_author_caption" />
-
-                    <TextView
-                        style="@style/HonorRoot.Text.Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_2"
-                        android:text="@string/about_author" />
-
-                    <TextView
-                        android:id="@+id/tvQq"
-                        style="@style/HonorRoot.Text.Label"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ds_touch_min"
-                        android:gravity="center_vertical"
-                        android:letterSpacing="0"
-                        android:text="@string/about_qq" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_space_2"
+                        android:background="@drawable/hr_card"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/ds_card_pad"
+                        android:paddingTop="@dimen/ds_space_2"
+                        android:paddingEnd="@dimen/ds_card_pad"
+                        android:paddingBottom="@dimen/ds_space_2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="@dimen/ds_row_h"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/HonorRoot.Text.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/about_version_caption"
+                                android:textColor="@color/ds_on_surface_variant" />
+
+                            <TextView
+                                android:id="@+id/tvAboutVersion"
+                                style="@style/HonorRoot.Text.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_version"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/hr_divider" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="@dimen/ds_row_h"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/HonorRoot.Text.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/about_author_caption"
+                                android:textColor="@color/ds_on_surface_variant" />
+
+                            <TextView
+                                style="@style/HonorRoot.Text.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/about_author"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/hr_divider" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="@dimen/ds_row_h"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvQq"
+                                style="@style/HonorRoot.Text.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/about_qq"
+                                android:textColor="@color/ds_on_surface_variant" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="›"
+                                android:textColor="@color/ds_on_surface_muted"
+                                android:textSize="@dimen/ds_text_chevron" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/hr_divider" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="@dimen/ds_row_h"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvGithub"
+                                style="@style/HonorRoot.Text.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/about_github"
+                                android:textColor="@color/ds_primary" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="›"
+                                android:textColor="@color/ds_on_surface_muted"
+                                android:textSize="@dimen/ds_text_chevron" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <android.widget.Button
                         android:id="@+id/btnAuthorHome"
                         style="@style/HonorRoot.Button.Tonal"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ds_touch_min"
-                        android:layout_marginTop="@dimen/ds_space_6"
+                        android:layout_height="@dimen/ds_btn_primary_h"
+                        android:layout_marginTop="@dimen/ds_space_4"
                         android:stateListAnimator="@null"
                         android:text="@string/about_home_btn" />
 
-                    <View
+                    <android.widget.Button
+                        android:id="@+id/btnSponsor"
+                        style="@style/HonorRoot.Button.Primary"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/ds_space_8"
-                        android:background="@color/ds_outline_variant" />
-
-                    <TextView
-                        style="@style/HonorRoot.Text.Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_6"
-                        android:text="@string/about_github_caption" />
-
-                    <TextView
-                        android:id="@+id/tvGithub"
-                        style="@style/HonorRoot.Text.Body"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/ds_btn_primary_h"
                         android:layout_marginTop="@dimen/ds_space_2"
-                        android:text="@string/about_github"
-                        android:textColor="@color/glass_accent" />
+                        android:stateListAnimator="@null"
+                        android:text="@string/about_sponsor" />
                 </LinearLayout>
             </ScrollView>
         </FrameLayout>
 
-        <!-- Floating capsule bar. Tap to switch, sliding frosted lens follows. -->
+        <!-- 悬浮圆胶囊底栏：左右留边露出两端半圆，lens 在其上滑动。 -->
         <FrameLayout
             android:id="@+id/tabBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_tabbar_h"
-            android:layout_marginTop="@dimen/ds_space_4"
-            android:background="@drawable/glass_pill"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/ds_tabbar_inset"
+            android:layout_marginEnd="@dimen/ds_tabbar_inset"
+            android:layout_marginTop="@dimen/ds_space_2"
+            android:layout_marginBottom="@dimen/ds_space_3"
+            android:background="@drawable/hr_nav_dock"
+            android:elevation="6dp"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:padding="@dimen/ds_space_1">
+            android:padding="4dp">
 
             <View
                 android:id="@+id/tabIndicator"
                 android:layout_width="100dp"
                 android:layout_height="@dimen/ds_lens_h"
                 android:layout_gravity="center_vertical|start"
-                android:background="@drawable/glass_lens" />
+                android:background="@drawable/hr_nav_lens" />
 
             <LinearLayout
                 android:id="@+id/tabRow"
@@ -561,23 +1042,25 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/ds_space_1">
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:id="@+id/navIconHome"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:contentDescription="@string/nav_home"
-                        android:src="@drawable/ic_nav_home" />
+                        android:src="@drawable/ic_nav_home"
+                        android:tint="@color/ds_primary" />
 
                     <TextView
+                        android:id="@+id/navLabelHome"
                         style="@style/HonorRoot.Text.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_1"
-                        android:letterSpacing="0"
+                        android:layout_marginTop="2dp"
                         android:text="@string/nav_home"
-                        android:textColor="@color/glass_text" />
+                        android:textColor="@color/ds_primary"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -585,25 +1068,26 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:alpha="0.52"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/ds_space_1">
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/nav_root"
-                        android:src="@drawable/ic_nav_target" />
+                        android:id="@+id/navIconRoot"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:contentDescription="@string/nav_root_tab"
+                        android:src="@drawable/ic_nav_target"
+                        android:tint="@color/ds_on_surface_muted" />
 
                     <TextView
+                        android:id="@+id/navLabelRoot"
                         style="@style/HonorRoot.Text.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_1"
-                        android:letterSpacing="0"
-                        android:text="@string/nav_root"
-                        android:textColor="@color/glass_text" />
+                        android:layout_marginTop="2dp"
+                        android:text="@string/nav_root_tab"
+                        android:textColor="@color/ds_on_surface_muted"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -611,25 +1095,26 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:alpha="0.52"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/ds_space_1">
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:id="@+id/navIconAbout"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:contentDescription="@string/nav_about"
-                        android:src="@drawable/ic_nav_info" />
+                        android:src="@drawable/ic_nav_info"
+                        android:tint="@color/ds_on_surface_muted" />
 
                     <TextView
+                        android:id="@+id/navLabelAbout"
                         style="@style/HonorRoot.Text.Label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ds_space_1"
-                        android:letterSpacing="0"
+                        android:layout_marginTop="2dp"
                         android:text="@string/nav_about"
-                        android:textColor="@color/glass_text" />
+                        android:textColor="@color/ds_on_surface_muted"
+                        android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

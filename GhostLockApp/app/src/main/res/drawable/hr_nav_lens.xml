@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- KernelSU 选中 lens：强调色 15% 透明填充 + 白色高光描边 + 顶部白光，
+     对应 FloatingBottomBar 里 accentColor.copy(0.15f) + pillHighlight + innerShadow。 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ksu_lens_fill" />
+            <corners android:radius="@dimen/ds_nav_lens_radius" />
+            <stroke android:width="1dp" android:color="@color/ksu_lens_stroke" />
+        </shape>
+    </item>
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="@color/ksu_glass_top"
+                android:endColor="#00000000" />
+            <corners android:radius="@dimen/ds_nav_lens_radius" />
+        </shape>
+    </item>
+</layer-list>

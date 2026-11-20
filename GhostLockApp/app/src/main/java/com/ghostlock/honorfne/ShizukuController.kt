@@ -101,6 +101,18 @@ object ShizukuController {
     fun probeOk(r: ExecResult): Boolean = r.code == 0 && r.out.contains("GL_SHELL_OK")
 
     /**
+     * 命令通道是否已断。
+     *
+     * exec() 把所有 Throwable（binder 未收到 / 权限被收回 / Shizuku 进程被杀）
+     * 统一吞成 `code = -1` 且 stdout 为空。调用方如果只判「输出里有没有预期内容」，
+     * 就会把「通道断了」误报成「文件不存在 / 命令没输出」这类假结论。
+     * 2026-11-14 的真机日志就是这么把通道掉线说成了
+     * 「/data/local/tmp/e 不存在或不可执行」。
+     */
+    fun channelDead(r: ExecResult): Boolean =
+        r.code == -1 || r.err.contains("binder haven't been received")
+
+    /**
      * Run a shell command as `shell` and capture stdout/stderr/exit code.
      * Equivalent to `adb shell <cmd>`.
      *
@@ -144,27 +156,133 @@ object ShizukuController {
         }
 
     /**
+     * 一次写文件的完整结果。模仿 MagicRoot 的错误报告：失败时把「为什么失败」
+     * 带回来（退出码 / stderr / 异常 / 目标路径），而不是只回一个干巴巴的 false。
+     */
+    data class WriteOutcome(
+        val ok: Boolean,
+        val code: Int = 0,
+        val err: String = "",
+        val bytes: Int = 0,
+        val dest: String = ""
+    ) {
+        /** 一行人话诊断，直接可写进日志。 */
+        fun diagnostic(): String = if (ok) {
+            "写入成功 ${bytes} B -> $dest"
+        } else {
+            val reason = err.trim().ifEmpty { "cat 退出码 $code（无 stderr）" }
+            "写入失败 $dest（${bytes} B, code=$code）: $reason"
+        }
+    }
+
+    /**
      * Stream raw bytes to a file at [dest] via `cat > dest`, running as `shell`.
      * Used to deploy the prebuilt binaries into /data/local/tmp (shell-writable).
+     *
+     * 保留原 Boolean 签名给其它调用点；真正需要诊断的链路 B 用 [writeFileDetailed]。
      */
     suspend fun writeFile(data: ByteArray, dest: String): Boolean =
+        writeFileDetailed(data, dest).ok
+
+    /**
+     * 带诊断的写文件：连 stderr、退出码、异常都带回来。
+     *
+     * 之前只 `waitFor() == 0` 并吞掉 Throwable，设备上报「写入失败」时日志里
+     * 没有任何原因（目录只读 / 文件被占 / 通道掉线都长一个样）。这里把
+     * `cat > dest` 的 stderr 和进程退出码一并捕获；写失败后再补一次目录/目标
+     * 状态探测，让日志能区分「目录只读」「目标是目录」「通道断了」等情形。
+     */
+    suspend fun writeFileDetailed(data: ByteArray, dest: String): WriteOutcome =
         withContext(Dispatchers.IO) {
+            var process: java.lang.Process? = null
+            // 两个独立任务（读 stderr、waitFor）各占一个线程；单线程池下
+            // readText() 阻塞会让 waitFor 永远排不上队，超时形同虚设。
+            val pool = java.util.concurrent.Executors.newFixedThreadPool(2)
             try {
-                val process =
-                    Shizuku.newProcess(arrayOf("sh", "-c", "cat > '$dest'"), null, null)
-                process.outputStream.use { os ->
-                    var off = 0
-                    while (off < data.size) {
-                        val remaining = data.size - off
+                // 先删再写：目标可能是上一次 root 会话留下的只读文件，也可能
+                // 是仍在执行的二进制（ETXTBSY）。直接 `cat >` 覆盖会让 sh 在
+                // 重定向阶段就退出，父进程只看到 EPIPE，真正的 errno 反而丢了。
+                val proc = Shizuku.newProcess(
+                    arrayOf("sh", "-c", "rm -rf '$dest' 2>/dev/null; cat > '$dest'"), null, null
+                )
+                process = proc
+                // stderr 必须从进程启动就开始读：cat 失败时它的报错在 sh 退出
+                // 前就写进管道，等写完再读只剩 EPIPE。
+                val futureErr = pool.submit(java.util.concurrent.Callable {
+                    proc.errorStream.bufferedReader().readText()
+                })
+
+                var written = 0
+                var writeError: Throwable? = null
+                val os = proc.outputStream
+                try {
+                    while (written < data.size) {
+                        val remaining = data.size - written
                         val n = if (1_000_000 < remaining) 1_000_000 else remaining
-                        os.write(data, off, n)
+                        os.write(data, written, n)
                         os.flush()
-                        off += n
+                        written += n
                     }
+                } catch (t: Throwable) {
+                    writeError = t
+                } finally {
+                    runCatching { os.close() }
                 }
-                process.waitFor() == 0
+
+                // waitFor 必须带超时：目标若是 FIFO/被 lock 的文件，cat 会永久阻塞，
+                // os.write 写满管道后也跟着卡死，整条提权协程无期限占住 IO 线程。
+                // exec() 有硬超时而这里曾没有，是通道假活时的死锁点。
+                val waitFuture = pool.submit(java.util.concurrent.Callable { proc.waitFor() })
+                val code = runCatching {
+                    waitFuture.get(20, java.util.concurrent.TimeUnit.SECONDS)
+                }.getOrDefault(-1)   // 超时 → -1，进入下面的失败诊断分支
+                val err = runCatching {
+                    futureErr.get(3, java.util.concurrent.TimeUnit.SECONDS)
+                }.getOrDefault("")
+
+                if (code == 0 && writeError == null && written == data.size) {
+                    return@withContext WriteOutcome(true, 0, "", data.size, dest)
+                }
+
+                // 目标 / 父目录现场 + 通道真探活。EPIPE 只说明 cat 退出了，
+                // 不代表 Shizuku 掉线；上一版把它一律当成「命令通道中断」，
+                // 让用户反复重连也修不好一个纯粹的文件占用问题。
+                val target = runCatching {
+                    exec(
+                        "if [ -d '$dest' ]; then echo IS_DIR; " +
+                            "elif [ -e '$dest' ] && [ ! -w '$dest' ]; then echo NOT_WRITABLE; " +
+                            "else echo OK; fi", 8_000
+                    ).out.trim()
+                }.getOrDefault("")
+                val parent = runCatching {
+                    exec(
+                        "d=\$(dirname '$dest'); if [ ! -d \"\$d\" ]; then echo PARENT_MISSING; " +
+                            "elif [ ! -w \"\$d\" ]; then echo PARENT_READONLY; else echo PARENT_OK; fi",
+                        8_000
+                    ).out.trim()
+                }.getOrDefault("")
+                val alive = runCatching { probeOk(shellProbe()) }.getOrDefault(false)
+                val reason = listOfNotNull(
+                    err.trim().ifEmpty { null },
+                    writeError?.let { "写入中断：${it.message ?: it.javaClass.simpleName}" },
+                    "目标=${target.ifEmpty { "未知" }}",
+                    parent.takeIf { it.isNotEmpty() && it != "PARENT_OK" },
+                    "命令通道=${if (alive) "正常" else "已断"}"
+                ).joinToString("；")
+                WriteOutcome(false, if (alive) -3 else -1, reason, written, dest)
             } catch (t: Throwable) {
-                false
+                // newProcess 本身失败：这时才需要怀疑通道，仍然实测一次再定性
+                val alive = runCatching { probeOk(shellProbe()) }.getOrDefault(false)
+                WriteOutcome(
+                    false,
+                    if (alive) -3 else -1,
+                    "${t.message ?: t.toString()}；命令通道=${if (alive) "正常" else "已断"}",
+                    0,
+                    dest
+                )
+            } finally {
+                pool.shutdownNow()
+                runCatching { process?.destroy() }
             }
         }
 }

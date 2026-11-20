@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Round badge backing the disclaimer shield: brand violet -> secondary blue. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:angle="135"
+        android:startColor="@color/ds_primary"
+        android:endColor="@color/ds_secondary"
+        android:type="linear" />
+</shape>

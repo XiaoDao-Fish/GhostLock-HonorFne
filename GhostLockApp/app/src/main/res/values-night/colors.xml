@@ -1,18 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Miuix-inspired dark palette. Names mirror values/colors.xml. -->
-    <color name="miuix_primary">#FF277AF7</color>
-    <color name="miuix_primary_pressed">#FF1B5FC4</color>
+    <color name="ic_launcher_background">#FF1F5FE0</color>
+
+    <!-- HonorRoot tokens, DARK. Same names as values/colors.xml. -->
+
+    <color name="ds_primary">#FF4F8BFF</color>
+    <color name="ds_primary_pressed">#FF3B6FD9</color>
+    <color name="ds_primary_container">#FF17233A</color>
+    <color name="ds_on_primary">#FFFFFFFF</color>
+    <color name="ds_secondary">#FF4F8BFF</color>
+    <color name="ds_tertiary">#FF3DCB9A</color>
+
+    <color name="ds_surface">#FF0C0E12</color>
+    <color name="ds_surface_1">#FF15181D</color>
+    <color name="ds_surface_2">#FF1E232A</color>
+    <color name="ds_outline">#FF2B313A</color>
+    <color name="ds_outline_variant">#FF22272E</color>
+
+    <color name="ds_on_surface">#FFF2F4F7</color>
+    <color name="ds_on_surface_variant">#FFB7BFCA</color>
+    <color name="ds_on_surface_muted">#FF8A929E</color>
+
+    <color name="ds_success">#FF45C97F</color>
+    <color name="ds_warning">#FFE0A44E</color>
+    <color name="ds_error">#FFF0736E</color>
+    <color name="ds_log">#FF8CE0A0</color>
+
+    <color name="glass_window">#FF0C0E12</color>
+    <color name="glass_fill">#FF15181D</color>
+    <color name="glass_panel">#FF15181D</color>
+    <color name="glass_nav">#FF12151A</color>
+    <color name="glass_tab_active">#FF1B2740</color>
+    <color name="glass_stroke">#FF2B313A</color>
+    <color name="glass_stroke_soft">#FF22272E</color>
+    <color name="glass_text">@color/ds_on_surface</color>
+    <color name="glass_text_dim">@color/ds_on_surface_variant</color>
+    <color name="glass_text_faint">@color/ds_on_surface_muted</color>
+    <color name="glass_ok">@color/ds_success</color>
+    <color name="glass_bad">@color/ds_error</color>
+    <color name="glass_warn">@color/ds_warning</color>
+    <color name="glass_disabled">#FF5A6270</color>
+    <color name="glass_accent">@color/ds_primary</color>
+    <color name="glass_log_text">@color/ds_log</color>
+
+    <color name="hr_bg_start">#FF0C0E12</color>
+    <color name="hr_bg_mid">#FF0C0E12</color>
+    <color name="hr_bg_end">#FF0C0E12</color>
+    <color name="hr_orb_blue">#00FFFFFF</color>
+    <color name="hr_orb_violet">#00FFFFFF</color>
+
+    <color name="hr_card_sheen">#00FFFFFF</color>
+    <color name="hr_card_sheen_end">#00FFFFFF</color>
+    <color name="hr_chip_bg">#FF1E232A</color>
+    <color name="hr_divider">#FF22272E</color>
+    <color name="hr_nav_stroke">#FF2B313A</color>
+    <color name="hr_nav_sheen">#00FFFFFF</color>
+    <color name="hr_lens_fill">#FF1B2740</color>
+    <color name="hr_lens_stroke">#FF2B3B57</color>
+    <color name="hr_hero_start">#FF15181D</color>
+    <color name="hr_hero_end">#FF15181D</color>
+    <color name="hr_hero_stroke">#FF2B313A</color>
+    <color name="hr_primary_sheen">#00FFFFFF</color>
+
+    <color name="hr_terminal_bg">#FF090B0F</color>
+    <color name="hr_terminal_head">#FF11151B</color>
+    <color name="hr_terminal_text">#FF8CE0A0</color>
+    <color name="hr_terminal_dim">#FF8D97A4</color>
+    <color name="hr_terminal_title">#FFE9EDF3</color>
+    <color name="hr_terminal_accent">#FF8FB6FF</color>
+    <color name="hr_terminal_stroke">#FF262B33</color>
+
+    <color name="miuix_primary">#FF4F8BFF</color>
+    <color name="miuix_primary_pressed">#FF3B6FD9</color>
     <color name="miuix_on_primary">#FFFFFFFF</color>
-    <color name="miuix_bg">#FF242424</color>
-    <color name="miuix_card">#FF2C2C2E</color>
-    <color name="miuix_tertiary">#FF2B3B54</color>
-    <color name="miuix_tertiary_pressed">#FF35507A</color>
-    <color name="miuix_text">#FFF2F2F2</color>
-    <color name="miuix_text_secondary">#80FFFFFF</color>
-    <color name="miuix_divider">#1FFFFFFF</color>
-    <color name="miuix_log_bg">#FF0E1013</color>
-    <color name="miuix_log_text">#FF7BE38B</color>
-    <color name="miuix_log_title">#FFE8EAED</color>
+    <color name="miuix_bg">#FF0C0E12</color>
+    <color name="miuix_card">#FF15181D</color>
+    <color name="miuix_tertiary">#FF17233A</color>
+    <color name="miuix_tertiary_pressed">#FF1F3050</color>
+    <color name="miuix_text">#FFF2F4F7</color>
+    <color name="miuix_text_secondary">#FFB7BFCA</color>
+    <color name="miuix_divider">#FF22272E</color>
+    <color name="miuix_log_bg">#FF090B0F</color>
+    <color name="miuix_log_text">#FF8CE0A0</color>
+    <color name="miuix_log_title">#FFE9EDF3</color>
     <color name="miuix_log_hint">#FFB9C0C8</color>
-    <color name="miuix_error">#FFF12522</color>
+    <color name="miuix_error">#FFF0736E</color>
+
+    <!-- KernelSU 3.3.0 悬浮底栏 + 液态玻璃：深色填充 #12151A / 40% 透明，
+         白色高光描边 + 双光源冷光带（对应 FloatingBottomBar 的 iosIndicatorSpecular）。 -->
+    <color name="ksu_glass_fill">#B312151A</color>
+    <color name="ksu_glass_stroke">#2EFFFFFF</color>
+    <color name="ksu_glass_sheen">#14FFFFFF</color>
+    <color name="ksu_glass_top">#1FFFFFFF</color>
+    <color name="ksu_lens_fill">#264F8BFF</color>
+    <color name="ksu_lens_stroke">#3DFFFFFF</color>
 </resources>

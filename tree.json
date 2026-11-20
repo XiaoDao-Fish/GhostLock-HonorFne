@@ -1,0 +1,2970 @@
+{
+  "sha": "7ca78cfeec03753fea7566752fd585a4ee773798",
+  "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/7ca78cfeec03753fea7566752fd585a4ee773798",
+  "tree": [
+    {
+      "path": ".gitattributes",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c397e9a775d5a7deba69f8a2192f25d013546bc",
+      "size": 817,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2c397e9a775d5a7deba69f8a2192f25d013546bc"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "531bfc95de95ba3357c0c1b1e7eb819d2fdd391a",
+      "size": 1682,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/531bfc95de95ba3357c0c1b1e7eb819d2fdd391a"
+    },
+    {
+      "path": "BUILD.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "784d068f09bc082a9a30b550fe3da77b7ec556a3",
+      "size": 15275,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/784d068f09bc082a9a30b550fe3da77b7ec556a3"
+    },
+    {
+      "path": "BUILD.zh-CN.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cedc2d147ec39b6eec0ebbf7da2927d2c9dc604",
+      "size": 14813,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3cedc2d147ec39b6eec0ebbf7da2927d2c9dc604"
+    },
+    {
+      "path": "CATEGORIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "185e5a2659097d624f0f6f2cef3ce357350ead99",
+      "size": 4199,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/185e5a2659097d624f0f6f2cef3ce357350ead99"
+    },
+    {
+      "path": "GhostLockApp",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2a8c7d4b7a3f05bfaf425bf8f2c25fcf131aba41",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2a8c7d4b7a3f05bfaf425bf8f2c25fcf131aba41"
+    },
+    {
+      "path": "GhostLockApp/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e0aaea80e0a1f8f52b2248f3d51c1d107a9533fe",
+      "size": 7905,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e0aaea80e0a1f8f52b2248f3d51c1d107a9533fe"
+    },
+    {
+      "path": "GhostLockApp/app",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "320068721e9a3987f85ad727cbc38027bad1690f",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/320068721e9a3987f85ad727cbc38027bad1690f"
+    },
+    {
+      "path": "GhostLockApp/app/build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c40d58d34e8a39aff73c3ae6bf941af0c252878",
+      "size": 1901,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2c40d58d34e8a39aff73c3ae6bf941af0c252878"
+    },
+    {
+      "path": "GhostLockApp/app/src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0245f3f41121c1681fa300bb0bb2f4882e42eba1",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/0245f3f41121c1681fa300bb0bb2f4882e42eba1"
+    },
+    {
+      "path": "GhostLockApp/app/src/main",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a8c0169e16ad79314723bdd42b9eb6ce1518c0ec",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/a8c0169e16ad79314723bdd42b9eb6ce1518c0ec"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/AndroidManifest.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4412c912483a03f0779628f6201fbef77525d29c",
+      "size": 2154,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/4412c912483a03f0779628f6201fbef77525d29c"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "673f200cd26911af4197ffa1cf89e2c8cc20e103",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/673f200cd26911af4197ffa1cf89e2c8cc20e103"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ghostlock",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3405ea543cbaf90527c0f3d7d95cef2f6e207b3c",
+      "size": 221104,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3405ea543cbaf90527c0f3d7d95cef2f6e207b3c"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2e9444be129f10b088108fa4ab65ef12ecd67366",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2e9444be129f10b088108fa4ab65ef12ecd67366"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/chain_hook.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3e753e0d3c8568354ce444ff1cf01c35c0aea1bb",
+      "size": 14434,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3e753e0d3c8568354ce444ff1cf01c35c0aea1bb"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/fne_syms.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7e7cffde8759a22475718dd4b9fb7cff25ec99ba",
+      "size": 11095147,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7e7cffde8759a22475718dd4b9fb7cff25ec99ba"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/kernelsu.ko",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b299ac7e126a7f91c8a89019620d8ab2387dacbd",
+      "size": 3935680,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b299ac7e126a7f91c8a89019620d8ab2387dacbd"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/kmsg_dumper",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6560bdbdb734622c92f9074ed8464d446928f8dc",
+      "size": 2221464,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6560bdbdb734622c92f9074ed8464d446928f8dc"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/ksu_lateload.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7cee15567342823eab2ead37fc4264794db84cfb",
+      "size": 2072,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7cee15567342823eab2ead37fc4264794db84cfb"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/ksu_rules",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6fc90b37b3e4a467d98bab1671015c56cf31a4b8",
+      "size": 914,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6fc90b37b3e4a467d98bab1671015c56cf31a4b8"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/ksud",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30425d97d8d61fc9a38cd25f9a5640ade115586d",
+      "size": 4892712,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/30425d97d8d61fc9a38cd25f9a5640ade115586d"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/load_ko",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea32d86c25ed8f9e57a99b2fbad26897596fcafd",
+      "size": 2222928,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ea32d86c25ed8f9e57a99b2fbad26897596fcafd"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/magiskpolicy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "254965e0eae2241d800a16802b4e6ae630f5d21b",
+      "size": 356584,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/254965e0eae2241d800a16802b4e6ae630f5d21b"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/ksu_fne/restore_enforce.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "539ee1225cac6480b8bc0d4e1bb3919f72955ca4",
+      "size": 714,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/539ee1225cac6480b8bc0d4e1bb3919f72955ca4"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/managers",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2287970674d637e0aee21bea4ac31bb5c06d0230",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2287970674d637e0aee21bea4ac31bb5c06d0230"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/managers/KernelSU-manager.apk",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73c25e5075f00f11781dc1032968cf9410116ce6",
+      "size": 10777987,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/73c25e5075f00f11781dc1032968cf9410116ce6"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/managers/LSPosed-zygisk.zip",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8991ce506e7d3c0d35e430f0332e42a345602b1c",
+      "size": 2462055,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8991ce506e7d3c0d35e430f0332e42a345602b1c"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/managers/ZygiskNext.zip",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3624978b27a02cc7b2e947973dce9d956b9df62",
+      "size": 6714344,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f3624978b27a02cc7b2e947973dce9d956b9df62"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "380abe808411d548df274a0b440e13b62e5c53ae",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/380abe808411d548df274a0b440e13b62e5c53ae"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c08248cfaef8f161257ab4eee81571f1f6b4143",
+      "size": 4329,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6c08248cfaef8f161257ab4eee81571f1f6b4143"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/apply_netfix_now.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ed2b381464f8e0df3d763eff1fa278e29e395b9",
+      "size": 1364,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/4ed2b381464f8e0df3d763eff1fa278e29e395b9"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/module.prop",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d17bdac8a70c7da524203ea169b8a71b09d4554",
+      "size": 273,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0d17bdac8a70c7da524203ea169b8a71b09d4554"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/post-fs-data.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d20ce47888b5610568fc23f2733aeeb7ff87a962",
+      "size": 2339,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d20ce47888b5610568fc23f2733aeeb7ff87a962"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/sepolicy.rule",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "03b6d22fd9a105112aba317c179261174f3366c6",
+      "size": 600,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/03b6d22fd9a105112aba317c179261174f3366c6"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/sepolicy.rule.network_fix",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b281ed250354e4da4279588f97b1664d05acd032",
+      "size": 507,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b281ed250354e4da4279588f97b1664d05acd032"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/service.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f121d972be0e7306a41cd13c04c0d213316b08be",
+      "size": 1791,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f121d972be0e7306a41cd13c04c0d213316b08be"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/assets/netfix_packet/zygisksu_sepolicy.rule.merged",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd2d33d83c0d776e5ad752b31048e75a81750821",
+      "size": 1373,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fd2d33d83c0d776e5ad752b31048e75a81750821"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7a7413771bf63e8459909e22f24944ea0054ec4c",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/7a7413771bf63e8459909e22f24944ea0054ec4c"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5278f3ade64c7d9b7a97c673c1b50225f754a008",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/5278f3ade64c7d9b7a97c673c1b50225f754a008"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9bd415198b1771fdb176dc20980dd719be4ffc45",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/9bd415198b1771fdb176dc20980dd719be4ffc45"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "87ab51a22eb275a3ce603dc565d6abb5f6c9189e",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/87ab51a22eb275a3ce603dc565d6abb5f6c9189e"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/AssetDeployer.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d5f2b923f1537296195e314b332b9d1f6cff01d2",
+      "size": 4908,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d5f2b923f1537296195e314b332b9d1f6cff01d2"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/BootNotifyReceiver.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a5432461d7a9324923dab717c6069550e853b468",
+      "size": 1782,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/a5432461d7a9324923dab717c6069550e853b468"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/GrindRunner.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "682be51622aba4b360df79a08bad4bb5aca9c584",
+      "size": 31603,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/682be51622aba4b360df79a08bad4bb5aca9c584"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/LogStore.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f36bf46f74838d9e834874205ee4d283df328ad",
+      "size": 10011,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/4f36bf46f74838d9e834874205ee4d283df328ad"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/MainActivity.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "801f529fab1745c387755008c6a5f094f4ed4243",
+      "size": 34693,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/801f529fab1745c387755008c6a5f094f4ed4243"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/RootUserService.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73c0fe9f37345a6bc15c5ed20e20fc2de6eaf001",
+      "size": 351,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/73c0fe9f37345a6bc15c5ed20e20fc2de6eaf001"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/java/com/ghostlock/honorfne/ShizukuController.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "46bf8380ae490654971fa2902afcbf5c8854cfd0",
+      "size": 7469,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/46bf8380ae490654971fa2902afcbf5c8854cfd0"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4b02152bf6703f85c9889677fcc78c46da214878",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/4b02152bf6703f85c9889677fcc78c46da214878"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7d296a83522bd99528d9ee96cbb8d7a050265005",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/7d296a83522bd99528d9ee96cbb8d7a050265005"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ds_btn_primary_pressed.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "92066428324662474bd08a9c7b1baa7cc17b2f90",
+      "size": 251,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/92066428324662474bd08a9c7b1baa7cc17b2f90"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ds_btn_primary_rest.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f36fbf672402a6c8f4b663134de895199994f4fb",
+      "size": 764,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f36fbf672402a6c8f4b663134de895199994f4fb"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ds_btn_tonal_pressed.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c06f173a82e30134e343a1a11ccc6e8adf56062d",
+      "size": 304,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c06f173a82e30134e343a1a11ccc6e8adf56062d"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ds_btn_tonal_rest.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e81674747c535317a89f91fd9ca654462d0df68",
+      "size": 801,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2e81674747c535317a89f91fd9ca654462d0df68"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ds_status_dot.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40a5e03885dafeb3f78945db748ba73f6bff6764",
+      "size": 230,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/40a5e03885dafeb3f78945db748ba73f6bff6764"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_bg.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3dcdb46cc14c921e29fbc171395b35424500f448",
+      "size": 332,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3dcdb46cc14c921e29fbc171395b35424500f448"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_btn.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95dc51b720006d227d7a34ac3abea3ed5ae8f504",
+      "size": 363,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/95dc51b720006d227d7a34ac3abea3ed5ae8f504"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_btn_primary.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f4d0298797cb3bd27cd26523661c42ed345066fa",
+      "size": 369,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f4d0298797cb3bd27cd26523661c42ed345066fa"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_card.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c763cde74cc2ec527e899641ce87790d3ead966a",
+      "size": 888,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c763cde74cc2ec527e899641ce87790d3ead966a"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_lens.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca2559efc19bfae09f57922d4ed31f7319ca899e",
+      "size": 1716,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ca2559efc19bfae09f57922d4ed31f7319ca899e"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_orb_blue.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47410d2b6adcf9f7226d99d4c9139d3f6ca2b9e0",
+      "size": 338,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/47410d2b6adcf9f7226d99d4c9139d3f6ca2b9e0"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_orb_purple.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98b12a637a6f0fa09c37b727ff3746a2a5095e33",
+      "size": 338,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/98b12a637a6f0fa09c37b727ff3746a2a5095e33"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_panel.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ae099184af02f26c1c4117bace707b8e7b9d63f",
+      "size": 804,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8ae099184af02f26c1c4117bace707b8e7b9d63f"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_pill.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61ec9189db73b1efe20d4542a40b816c73d5fad4",
+      "size": 793,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/61ec9189db73b1efe20d4542a40b816c73d5fad4"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/glass_tab_selected.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "59465c34a7e5e0facf695b2117a27cf495d6a6da",
+      "size": 790,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/59465c34a7e5e0facf695b2117a27cf495d6a6da"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ic_nav_home.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c2ede4f9e35f4737d242a7f511672d63adc0bbe6",
+      "size": 1046,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c2ede4f9e35f4737d242a7f511672d63adc0bbe6"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ic_nav_info.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1900cd171bf79298cda37ff83c8d7a4d9c7351d",
+      "size": 805,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d1900cd171bf79298cda37ff83c8d7a4d9c7351d"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/ic_nav_target.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "990024165aea1330bde407ba89eb71fd43686020",
+      "size": 938,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/990024165aea1330bde407ba89eb71fd43686020"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_button_ghost.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "abca1fb67b5785a16a62c6093eb93213e77480a2",
+      "size": 329,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/abca1fb67b5785a16a62c6093eb93213e77480a2"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_button_primary.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9bec9875c527d5627a548fc9a1a883c7e9ece200",
+      "size": 532,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/9bec9875c527d5627a548fc9a1a883c7e9ece200"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_button_secondary.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0409f43d646e6e773e078c74f1d90bcf5322f98a",
+      "size": 534,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0409f43d646e6e773e078c74f1d90bcf5322f98a"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_card.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d6e0d85ed561a034e72373c60282bb7068ba7590",
+      "size": 231,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d6e0d85ed561a034e72373c60282bb7068ba7590"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_dot.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f09ab8dcf9d9ccf5097fddd69ccc85e0560b9058",
+      "size": 261,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f09ab8dcf9d9ccf5097fddd69ccc85e0560b9058"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_log.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a313f5531db41f40557aad5e92f2a4bb76536245",
+      "size": 233,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/a313f5531db41f40557aad5e92f2a4bb76536245"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/drawable/miuix_status.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30693a5a9959a1642aea53ebdc1d35bb9b8eeeee",
+      "size": 235,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/30693a5a9959a1642aea53ebdc1d35bb9b8eeeee"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/layout",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "de266c266ef656c407acbe044afe298175556040",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/de266c266ef656c407acbe044afe298175556040"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/layout/activity_main.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ba6fd85edfc1c01a8c59eeed1d308b5b489601f5",
+      "size": 30611,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ba6fd85edfc1c01a8c59eeed1d308b5b489601f5"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-anydpi-v26",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5ca5235d6246253ebe60a8647172cf862a2636ef",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/5ca5235d6246253ebe60a8647172cf862a2636ef"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "be438580f7f9f25a62c9e3e448de0338b63a8e18",
+      "size": 268,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/be438580f7f9f25a62c9e3e448de0338b63a8e18"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "be438580f7f9f25a62c9e3e448de0338b63a8e18",
+      "size": 268,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/be438580f7f9f25a62c9e3e448de0338b63a8e18"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-hdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ed1b7021960cbc242887c9db2ebd25a193cf4726",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/ed1b7021960cbc242887c9db2ebd25a193cf4726"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2228780128af65c801b20d56cf04a70a7d75e460",
+      "size": 4449,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2228780128af65c801b20d56cf04a70a7d75e460"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c62a6da0f376d8f3363bfb89b3908e3bbfc9619",
+      "size": 12977,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2c62a6da0f376d8f3363bfb89b3908e3bbfc9619"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5120c8ac355432283ba55051747f5dd62ba51835",
+      "size": 3767,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5120c8ac355432283ba55051747f5dd62ba51835"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-mdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ac819d93690aac6bf79ecd67d8a242b2fc489c25",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/ac819d93690aac6bf79ecd67d8a242b2fc489c25"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fdd30c211990beb406cb6aa900a98822a44eb814",
+      "size": 2426,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fdd30c211990beb406cb6aa900a98822a44eb814"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f76ab34fbba97c0aac935fc3d1ba6c246b6fef1d",
+      "size": 6282,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f76ab34fbba97c0aac935fc3d1ba6c246b6fef1d"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0b605ebfe0a89dc1c6c660ef8880cf28544e3b9a",
+      "size": 2082,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0b605ebfe0a89dc1c6c660ef8880cf28544e3b9a"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xhdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "82d2a6990ff78bb02e9e6cc5fd4c28d96ae424cb",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/82d2a6990ff78bb02e9e6cc5fd4c28d96ae424cb"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c6b71c5e4eb21510276498367ac46b16c86e9eb2",
+      "size": 7467,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c6b71c5e4eb21510276498367ac46b16c86e9eb2"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34b59820c9fd3d909fe24d77f15967fdeccf3a03",
+      "size": 21421,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/34b59820c9fd3d909fe24d77f15967fdeccf3a03"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "890125a4cff9a13309594148a622486a0dbfcf35",
+      "size": 6305,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/890125a4cff9a13309594148a622486a0dbfcf35"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxhdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f27ef52753cac2975317313fb6d73d8a1af6c90b",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/f27ef52753cac2975317313fb6d73d8a1af6c90b"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9203a5812ca1a12f2282a2aec91b3c788a0cb099",
+      "size": 14890,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/9203a5812ca1a12f2282a2aec91b3c788a0cb099"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "918f12a22b5ca60aa8828c1cb592e377ddcad7d4",
+      "size": 43739,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/918f12a22b5ca60aa8828c1cb592e377ddcad7d4"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47d68b01cde24ef22134a48af98b99462c080510",
+      "size": 12214,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/47d68b01cde24ef22134a48af98b99462c080510"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxxhdpi",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "017b7224e70b4e1bf55e244f100d9942f136799c",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/017b7224e70b4e1bf55e244f100d9942f136799c"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "294e9595d0514d11ff371ba3ee8df31a67c937dc",
+      "size": 25475,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/294e9595d0514d11ff371ba3ee8df31a67c937dc"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e2887ff97b8fa5f3f25479057efed79a2530dece",
+      "size": 71990,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e2887ff97b8fa5f3f25479057efed79a2530dece"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d776e74af7bd8d5ac4191054ebcd1ca49318543f",
+      "size": 20951,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d776e74af7bd8d5ac4191054ebcd1ca49318543f"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values-night",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b6f232303aca4e7c63e18eda8168b3d727ddffb0",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/b6f232303aca4e7c63e18eda8168b3d727ddffb0"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values-night/colors.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4115df3233aca4eaeb42c28e1bef1875c645a978",
+      "size": 867,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/4115df3233aca4eaeb42c28e1bef1875c645a978"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "30a3b7415bf1a966ad048da3c668299378bb7e73",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/30a3b7415bf1a966ad048da3c668299378bb7e73"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values/colors.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "522dfbda8e523778dc83a6b6061c816da52b0a45",
+      "size": 3232,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/522dfbda8e523778dc83a6b6061c816da52b0a45"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values/dimens.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1941621729efe6e120a92d26e6d3562ad9ab3cb2",
+      "size": 1794,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1941621729efe6e120a92d26e6d3562ad9ab3cb2"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values/strings.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "390c6238d298366dac7404ed7327bacb01358a52",
+      "size": 3481,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/390c6238d298366dac7404ed7327bacb01358a52"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values/styles.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5c21b048d0e81a30e1385b9f36c315fa24c939a9",
+      "size": 3823,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5c21b048d0e81a30e1385b9f36c315fa24c939a9"
+    },
+    {
+      "path": "GhostLockApp/app/src/main/res/values/themes.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d9b165055c21e98b358e8c31ac6eeb3f064856bf",
+      "size": 580,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d9b165055c21e98b358e8c31ac6eeb3f064856bf"
+    },
+    {
+      "path": "GhostLockApp/build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df8870c74dcace4de743d297be1d34b58669933d",
+      "size": 222,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/df8870c74dcace4de743d297be1d34b58669933d"
+    },
+    {
+      "path": "GhostLockApp/build_debug.bat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "501ad7ce2a9c89ba6e3790dbbdec9735d7fecb01",
+      "size": 1851,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/501ad7ce2a9c89ba6e3790dbbdec9735d7fecb01"
+    },
+    {
+      "path": "GhostLockApp/build_minimal.bat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c4438727eaf84e3eed4f6a6001952765db1d387d",
+      "size": 3713,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c4438727eaf84e3eed4f6a6001952765db1d387d"
+    },
+    {
+      "path": "GhostLockApp/gradle.properties",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fb13c7092e31b921b6195a3d0a1dddc5ac6aba7c",
+      "size": 286,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fb13c7092e31b921b6195a3d0a1dddc5ac6aba7c"
+    },
+    {
+      "path": "GhostLockApp/gradle",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "59896c6c521e647462c281c276fb973d5ee6bdc2",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/59896c6c521e647462c281c276fb973d5ee6bdc2"
+    },
+    {
+      "path": "GhostLockApp/gradle/wrapper",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1be440bccdf8a602dcd4d39b4a816a4170a7bff9",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/1be440bccdf8a602dcd4d39b4a816a4170a7bff9"
+    },
+    {
+      "path": "GhostLockApp/gradle/wrapper/gradle-wrapper.jar",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6441136f3d4ba8a0da8d277868979cfbc8ad796",
+      "size": 43453,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e6441136f3d4ba8a0da8d277868979cfbc8ad796"
+    },
+    {
+      "path": "GhostLockApp/gradle/wrapper/gradle-wrapper.properties",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b82aa23a4f05d39d81870f8355ca43324f027298",
+      "size": 250,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b82aa23a4f05d39d81870f8355ca43324f027298"
+    },
+    {
+      "path": "GhostLockApp/gradlew",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "72d402323a2b317d6697354e2a1d9f9190ec29ec",
+      "size": 6389,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/72d402323a2b317d6697354e2a1d9f9190ec29ec"
+    },
+    {
+      "path": "GhostLockApp/gradlew.bat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ae980dac27db11485f73a67b58aae7a76fd7c2e",
+      "size": 2771,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6ae980dac27db11485f73a67b58aae7a76fd7c2e"
+    },
+    {
+      "path": "GhostLockApp/settings.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe15c42b50391450c9cdd591f83f82fa183b97d5",
+      "size": 1034,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fe15c42b50391450c9cdd591f83f82fa183b97d5"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "size": 11357,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7a91fe980dfbcacde31b01245c482ec65c4b4d7a",
+      "size": 9275,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7a91fe980dfbcacde31b01245c482ec65c4b4d7a"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96154f8150cf68837a7cfca51b1dbcc3d0f22563",
+      "size": 9058,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/96154f8150cf68837a7cfca51b1dbcc3d0f22563"
+    },
+    {
+      "path": "deploy",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2287970674d637e0aee21bea4ac31bb5c06d0230",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2287970674d637e0aee21bea4ac31bb5c06d0230"
+    },
+    {
+      "path": "deploy/KernelSU-manager.apk",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73c25e5075f00f11781dc1032968cf9410116ce6",
+      "size": 10777987,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/73c25e5075f00f11781dc1032968cf9410116ce6"
+    },
+    {
+      "path": "deploy/LSPosed-zygisk.zip",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8991ce506e7d3c0d35e430f0332e42a345602b1c",
+      "size": 2462055,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8991ce506e7d3c0d35e430f0332e42a345602b1c"
+    },
+    {
+      "path": "deploy/ZygiskNext.zip",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3624978b27a02cc7b2e947973dce9d956b9df62",
+      "size": 6714344,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f3624978b27a02cc7b2e947973dce9d956b9df62"
+    },
+    {
+      "path": "docs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d7825f3b20f5ede4a7ab8f80e99df1ef5ab63f82",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d7825f3b20f5ede4a7ab8f80e99df1ef5ab63f82"
+    },
+    {
+      "path": "docs/README_1.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd1bc7c27b8565cd142c827ebec70be79f7ab340",
+      "size": 13243,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fd1bc7c27b8565cd142c827ebec70be79f7ab340"
+    },
+    {
+      "path": "docs/README_original.zh-CN.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a374246e7cd524e5a9225a0def6713e50aff5bf9",
+      "size": 3653,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/a374246e7cd524e5a9225a0def6713e50aff5bf9"
+    },
+    {
+      "path": "docs/资料_分析说明.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f36b0c1f21346e221ea90e1b15e25bfb4b56a677",
+      "size": 131425,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f36b0c1f21346e221ea90e1b15e25bfb4b56a677"
+    },
+    {
+      "path": "docs/资料_桌面原理.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29d93e6b4a6c55fad2efc3780f69dd8649229091",
+      "size": 154918,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/29d93e6b4a6c55fad2efc3780f69dd8649229091"
+    },
+    {
+      "path": "hooks",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8584c6fc64d9afd0610ab2ef59b9644632cc8b4b",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/8584c6fc64d9afd0610ab2ef59b9644632cc8b4b"
+    },
+    {
+      "path": "hooks/launcher",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5fa689bc80239b29e5f167dee7c7e52a31b84de3",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/5fa689bc80239b29e5f167dee7c7e52a31b84de3"
+    },
+    {
+      "path": "hooks/launcher/app",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2c234553ba39742a12fa87b8e9aa38c687a916e2",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2c234553ba39742a12fa87b8e9aa38c687a916e2"
+    },
+    {
+      "path": "hooks/launcher/app/build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b60449ab4ed82258e54e96e082a07b51ea0416bc",
+      "size": 1610,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b60449ab4ed82258e54e96e082a07b51ea0416bc"
+    },
+    {
+      "path": "hooks/launcher/app/src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b21ecd30e840c4fbb6278163d9047b0f912c29a8",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/b21ecd30e840c4fbb6278163d9047b0f912c29a8"
+    },
+    {
+      "path": "hooks/launcher/app/src/main",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "19e73355259e5602757060351617311e2aff5ae5",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/19e73355259e5602757060351617311e2aff5ae5"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/AndroidManifest.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b795cbc5025bf3b516edea3652f623370017d227",
+      "size": 1305,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b795cbc5025bf3b516edea3652f623370017d227"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "eb609cb9cbb49e6c23460940be65d75220d94b4a",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/eb609cb9cbb49e6c23460940be65d75220d94b4a"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/assets/xposed_init",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd0cd65ad0bf50dbf8f38a75e0c06abd22e101a6",
+      "size": 33,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fd0cd65ad0bf50dbf8f38a75e0c06abd22e101a6"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b84a761b9bf4dbaf9f96502bbe563d5462e3e1d7",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/b84a761b9bf4dbaf9f96502bbe563d5462e3e1d7"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "008545b4021a6243a6d060c8f87f4cbcdac96fb4",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/008545b4021a6243a6d060c8f87f4cbcdac96fb4"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "29275cf4f5bbc11c2c58cb728fb09ae4875fe47d",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/29275cf4f5bbc11c2c58cb728fb09ae4875fe47d"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d3730184d2d628a0817e2280c80faa3eab22ff40",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d3730184d2d628a0817e2280c80faa3eab22ff40"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/HookEntry.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2f8a702dbba7f02cac052c94508ba8b231d9cca6",
+      "size": 6692,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2f8a702dbba7f02cac052c94508ba8b231d9cca6"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/Port.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef87f370fe7e570007a7f696812f61e0b78789ee",
+      "size": 9301,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ef87f370fe7e570007a7f696812f61e0b78789ee"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/aod",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a3a42896f4842e85ae3fe1d8989b0214187a16c1",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/a3a42896f4842e85ae3fe1d8989b0214187a16c1"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/aod/AodHooks.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "07a70b15191c0c6a95402a884eb689e6987a9ad7",
+      "size": 3543,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/07a70b15191c0c6a95402a884eb689e6987a9ad7"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/back",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ececb8441deed371ed2bc9cda8b80a7e7a79e9e3",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/ececb8441deed371ed2bc9cda8b80a7e7a79e9e3"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/back/IconBackAdaptiveIcon.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb5e28961057c63b857317524ff6b00b8552bf19",
+      "size": 3277,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/eb5e28961057c63b857317524ff6b00b8552bf19"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/back/IconBackSpringTune.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39d245774c96b7225ecb7c8d4b0843b5c2910bf7",
+      "size": 4025,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/39d245774c96b7225ecb7c8d4b0843b5c2910bf7"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/blur",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d7c7ed658c9103fd180c7463750f8c6f93b11cca",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d7c7ed658c9103fd180c7463750f8c6f93b11cca"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/blur/ForceBlur.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a0e45316cd6cb37f190b989a31518f72c38007d",
+      "size": 30782,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2a0e45316cd6cb37f190b989a31518f72c38007d"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/card",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "36c808ce2673eeddde882602b4fc395edf713e5d",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/36c808ce2673eeddde882602b4fc395edf713e5d"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/card/IconCardBlocker.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c0e042dd60fd00e01caf7cea2768454fc1c031ef",
+      "size": 2129,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c0e042dd60fd00e01caf7cea2768454fc1c031ef"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/click",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0edb13c3b0a216d9aed97422b86880bcc43cf937",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/0edb13c3b0a216d9aed97422b86880bcc43cf937"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/click/CardFolderIconHide.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d5cb40a5fbe94d8ae126a96f9222f9f686b19c7a",
+      "size": 4601,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d5cb40a5fbe94d8ae126a96f9222f9f686b19c7a"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/click/ParallelClick.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dfb88757a63f07be265eed14c9525a7fafdc1d8d",
+      "size": 11764,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/dfb88757a63f07be265eed14c9525a7fafdc1d8d"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/folder",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9314809bb1c90917a1f4e85e6efaea825715671a",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/9314809bb1c90917a1f4e85e6efaea825715671a"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/folder/FolderBgBlur.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5d6378e28fee98d35ea196dc33065ca3126e820",
+      "size": 6228,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e5d6378e28fee98d35ea196dc33065ca3126e820"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/folder/FolderOpenSpeed.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ed9b75758f4922c4097755ff2ba18abcfbda43f",
+      "size": 9482,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0ed9b75758f4922c4097755ff2ba18abcfbda43f"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/hiboard",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2d4205fad5b8929cc24ef37f96429c5a13cba15b",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2d4205fad5b8929cc24ef37f96429c5a13cba15b"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/hiboard/HiboardSink.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd499febcd640ee41e32c7ec753042c969b4f405",
+      "size": 4350,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fd499febcd640ee41e32c7ec753042c969b4f405"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/keep",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "cad24ee58a2e393db27f2ed68c1a3f2d88dce363",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/cad24ee58a2e393db27f2ed68c1a3f2d88dce363"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/keep/KeepHiboardReturn.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9364e0dc6f33910829db606876fd32f0ad2dea65",
+      "size": 21441,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/9364e0dc6f33910829db606876fd32f0ad2dea65"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/launch",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "16e4116977c979bc5a03c6a0203e1a6f13e30e13",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/16e4116977c979bc5a03c6a0203e1a6f13e30e13"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/launch/LaunchSpringTune.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "037b6839f422c5b5b0a9b5784b8b1c7ad1ef2ef4",
+      "size": 5768,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/037b6839f422c5b5b0a9b5784b8b1c7ad1ef2ef4"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/look",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a75a73773d7e5368a7cb9b8195c5c9e3b66490a1",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/a75a73773d7e5368a7cb9b8195c5c9e3b66490a1"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/look/IconNoLabel.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a6060c9bc16c458d98f8e6dd8636650c8263219b",
+      "size": 3400,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/a6060c9bc16c458d98f8e6dd8636650c8263219b"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/motion",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f293c28d33f4d2fbb55634a48443fe5a2de5fa76",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/f293c28d33f4d2fbb55634a48443fe5a2de5fa76"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/motion/CurveDemoSpring.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cb18f949b0275f4c75ca5932d34214aa8dd5728",
+      "size": 11134,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3cb18f949b0275f4c75ca5932d34214aa8dd5728"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/motion/MotionParams.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6a1ca8c85e5f49860ba17275448ba5a55d2e904c",
+      "size": 3686,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6a1ca8c85e5f49860ba17275448ba5a55d2e904c"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/motion/PhysicsAnimator.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1aa0677261e0b729f7bd2e876ab677af151a57b",
+      "size": 7998,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e1aa0677261e0b729f7bd2e876ab677af151a57b"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/motion/ScaleComposer.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8620166838567a7728cc9480f3b5246088a1377f",
+      "size": 11636,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8620166838567a7728cc9480f3b5246088a1377f"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/motion/SpringFactory.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8af2d9912120c74929e22315a096433907530dc1",
+      "size": 2294,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8af2d9912120c74929e22315a096433907530dc1"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/onestep",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4045f057b1edba34323ed29e00e45c99c5264753",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/4045f057b1edba34323ed29e00e45c99c5264753"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/onestep/OneStepLandscapeJumpEnd.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b0bceb9d1b9b78a4a32fed9633759efe0be9d985",
+      "size": 5767,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b0bceb9d1b9b78a4a32fed9633759efe0be9d985"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/onestep/OneStepThresholds.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff69f10985554db8410d74d8d4410974b682c8a6",
+      "size": 8266,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ff69f10985554db8410d74d8d4410974b682c8a6"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/press",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6af841e5cacbb1483a3a2668808db41db433e128",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/6af841e5cacbb1483a3a2668808db41db433e128"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/press/ForceIconPressScale.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99a5e2e8157a52c1328a1d8c775c08f9663c8b53",
+      "size": 4226,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/99a5e2e8157a52c1328a1d8c775c08f9663c8b53"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/press/ForceRecentsPressScale.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2da860369313ddd3da636da75729745d30c46f9",
+      "size": 2118,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d2da860369313ddd3da636da75729745d30c46f9"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/returnhome",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1c3ca69feffdc5a84d65a792ed7549f1a2b69480",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/1c3ca69feffdc5a84d65a792ed7549f1a2b69480"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/returnhome/MotionReturnHome.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52bec62a6121bfbd123dba2b2ce518452964ec32",
+      "size": 69570,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/52bec62a6121bfbd123dba2b2ce518452964ec32"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/swipe",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d6658c9399f443239fc6d193514340d8b478a1ed",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d6658c9399f443239fc6d193514340d8b478a1ed"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/swipe/DisableEnterRecentsAnim.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1d42d12ec6b2e99556fdaaf7acc284fbf307746d",
+      "size": 2365,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1d42d12ec6b2e99556fdaaf7acc284fbf307746d"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/swipe/WindowFollowScale.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7dddf18a6703516b115c81b68deaa519dc94b5fe",
+      "size": 69442,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7dddf18a6703516b115c81b68deaa519dc94b5fe"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c462172f7a5b8ccc6de7a74876a440d72b81d5cb",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/c462172f7a5b8ccc6de7a74876a440d72b81d5cb"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/CCGlobalSwipe.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "646115730476981a352568bd4504d2241009c174",
+      "size": 6004,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/646115730476981a352568bd4504d2241009c174"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/CapsuleReconcile.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "257a0f5909ee013386718fd20daa9e653c324e0e",
+      "size": 5563,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/257a0f5909ee013386718fd20daa9e653c324e0e"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/FreeformFx.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc31bbc63d07f25b2e741cae79e971f5e3c10615",
+      "size": 61822,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/bc31bbc63d07f25b2e741cae79e971f5e3c10615"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/NavHandleHooks.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d02fe85f22ac112e27ec7343127e8a92684c917",
+      "size": 5814,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7d02fe85f22ac112e27ec7343127e8a92684c917"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/RotationSuggest.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1feba57d9c96b3ece2e8ffb00ae59d26063a7877",
+      "size": 3162,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1feba57d9c96b3ece2e8ffb00ae59d26063a7877"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/StatusBarContinuity.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10315a02fff6c9d0beaf0a9053d57f2ae287bdb0",
+      "size": 118928,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/10315a02fff6c9d0beaf0a9053d57f2ae287bdb0"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/systemui/SystemUIHooks.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22e1f5f378fb12660e3d45e2437499f26a372414",
+      "size": 57049,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/22e1f5f378fb12660e3d45e2437499f26a372414"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/unlock",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "953dd6986371b1d66bce4adef33a2e230a0d49e6",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/953dd6986371b1d66bce4adef33a2e230a0d49e6"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/unlock/AdvUnlockAnim.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09d6a1e5a6c3f229c31ad7d668b2f2138e53c95b",
+      "size": 12872,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/09d6a1e5a6c3f229c31ad7d668b2f2138e53c95b"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/warm",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c5c7f860b3823664a1eea12c504f15f5c418bb03",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/c5c7f860b3823664a1eea12c504f15f5c418bb03"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/java/com/wxz/hnlauncherport/warm/StartupWarmup.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7e094488ebbeae01861811e5b787c9f0cc1249ca",
+      "size": 4811,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7e094488ebbeae01861811e5b787c9f0cc1249ca"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/kotlin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fa6cccd3d94747bb29d9dc01c9956287a7f4e3af",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/fa6cccd3d94747bb29d9dc01c9956287a7f4e3af"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/kotlin/com",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a5d43c03d08d327590641136c714483d1d85e263",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/a5d43c03d08d327590641136c714483d1d85e263"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/kotlin/com/wxz",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "146d007d8885db7e0476f081e5303c946001746f",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/146d007d8885db7e0476f081e5303c946001746f"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/kotlin/com/wxz/hnlauncherport",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6425ea78f5c26affb88c72f963e4c7ceafb0891a",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/6425ea78f5c26affb88c72f963e4c7ceafb0891a"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/kotlin/com/wxz/hnlauncherport/SettingsActivity.kt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2d0834ae5bb387c8e3cc421b41e1202f82bd662d",
+      "size": 51071,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2d0834ae5bb387c8e3cc421b41e1202f82bd662d"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fde7fe0c27f01b516ee11568a25a66317a290f11",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/fde7fe0c27f01b516ee11568a25a66317a290f11"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/drawable",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3a992a23d26e967b22108b7c6e0d227c573fde3c",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/3a992a23d26e967b22108b7c6e0d227c573fde3c"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ed446163e7493d820ae3bbe28faf2237ec3cdab",
+      "size": 1235,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5ed446163e7493d820ae3bbe28faf2237ec3cdab"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/mipmap-anydpi-v26",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "83a6ea1f3518a285fd61d218d80d677429860324",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/83a6ea1f3518a285fd61d218d80d677429860324"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ed0a2df70488dcb1594ccf43cc7dd1d3f498275",
+      "size": 268,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5ed0a2df70488dcb1594ccf43cc7dd1d3f498275"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ed0a2df70488dcb1594ccf43cc7dd1d3f498275",
+      "size": 268,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5ed0a2df70488dcb1594ccf43cc7dd1d3f498275"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/values-night",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d6009e126ded274f926ea3aaa3075d593aa15f8a",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d6009e126ded274f926ea3aaa3075d593aa15f8a"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/values-night/themes.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1db35fe64217406d4df64a3039a52626bf143591",
+      "size": 909,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1db35fe64217406d4df64a3039a52626bf143591"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/values",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "126eadec27f8a4e2bbfb8b17de15889df64e58f5",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/126eadec27f8a4e2bbfb8b17de15889df64e58f5"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/values/arrays.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61e10d3d2c17ad3f50bfb26c2dcdd44b393e05eb",
+      "size": 252,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/61e10d3d2c17ad3f50bfb26c2dcdd44b393e05eb"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/values/colors.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8945857ee7f24710805f7d5c5d09e06ddf163958",
+      "size": 220,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8945857ee7f24710805f7d5c5d09e06ddf163958"
+    },
+    {
+      "path": "hooks/launcher/app/src/main/res/values/themes.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f35877630a3c1a044017a5fbea36431de559e10f",
+      "size": 978,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f35877630a3c1a044017a5fbea36431de559e10f"
+    },
+    {
+      "path": "hooks/launcher/build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "020183f6cc39d247cb1ba26932dd788b7b95f5b0",
+      "size": 119,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/020183f6cc39d247cb1ba26932dd788b7b95f5b0"
+    },
+    {
+      "path": "hooks/launcher/build.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "328ad139ce38193e2019c2d3da8c24d89484248d",
+      "size": 479,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/328ad139ce38193e2019c2d3da8c24d89484248d"
+    },
+    {
+      "path": "hooks/launcher/debug.keystore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5585d55d3b51c1059b243876e8582c97bd635ce",
+      "size": 2660,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f5585d55d3b51c1059b243876e8582c97bd635ce"
+    },
+    {
+      "path": "hooks/launcher/gradle.properties",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f2e28c0655d17adb1aad1549f28c6dee75a8090",
+      "size": 136,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8f2e28c0655d17adb1aad1549f28c6dee75a8090"
+    },
+    {
+      "path": "hooks/launcher/gradle",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7292634656f17f00421dcb114fdabd1b2597af3d",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/7292634656f17f00421dcb114fdabd1b2597af3d"
+    },
+    {
+      "path": "hooks/launcher/gradle/libs.versions.toml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "087880a32b4672869348d8b32f43ad636547c826",
+      "size": 1414,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/087880a32b4672869348d8b32f43ad636547c826"
+    },
+    {
+      "path": "hooks/launcher/gradle/wrapper",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "950b66866110fb70bcadd3ec44ffcc9170f8b2c0",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/950b66866110fb70bcadd3ec44ffcc9170f8b2c0"
+    },
+    {
+      "path": "hooks/launcher/gradle/wrapper/gradle-wrapper.jar",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8bdaf60c75ab801e22807dde59e12a8735a34077",
+      "size": 45457,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8bdaf60c75ab801e22807dde59e12a8735a34077"
+    },
+    {
+      "path": "hooks/launcher/gradle/wrapper/gradle-wrapper.properties",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e6b0fb5336d11e908bdc59c8045610a2a3147ac",
+      "size": 369,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0e6b0fb5336d11e908bdc59c8045610a2a3147ac"
+    },
+    {
+      "path": "hooks/launcher/gradlew",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef07e0162b183eb9d19a2c9ba7035c283af9f8dd",
+      "size": 8728,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ef07e0162b183eb9d19a2c9ba7035c283af9f8dd"
+    },
+    {
+      "path": "hooks/launcher/gradlew.bat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5eed7ee8452842305a18a4eb967442683808226a",
+      "size": 2937,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5eed7ee8452842305a18a4eb967442683808226a"
+    },
+    {
+      "path": "hooks/launcher/out",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "01e1b8580651ceb6d0a11ff6f153a92cd3af6bf8",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/01e1b8580651ceb6d0a11ff6f153a92cd3af6bf8"
+    },
+    {
+      "path": "hooks/launcher/out/HnLauncherPort.apk",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "90c72f825ac913c712da13422c485642e7468600",
+      "size": 12274277,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/90c72f825ac913c712da13422c485642e7468600"
+    },
+    {
+      "path": "hooks/launcher/res",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "cf2bf5a11a58ec91b453ea953fa809065cf5c18c",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/cf2bf5a11a58ec91b453ea953fa809065cf5c18c"
+    },
+    {
+      "path": "hooks/launcher/res/drawable",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3a992a23d26e967b22108b7c6e0d227c573fde3c",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/3a992a23d26e967b22108b7c6e0d227c573fde3c"
+    },
+    {
+      "path": "hooks/launcher/res/drawable/ic_launcher_foreground.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ed446163e7493d820ae3bbe28faf2237ec3cdab",
+      "size": 1235,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5ed446163e7493d820ae3bbe28faf2237ec3cdab"
+    },
+    {
+      "path": "hooks/launcher/settings.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f3c1cbf1827de57225299b8fa4b4c7881a1fa69",
+      "size": 560,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1f3c1cbf1827de57225299b8fa4b4c7881a1fa69"
+    },
+    {
+      "path": "hooks/launcher/xposed-api",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "27e62b2780e21aa3d494773cf377fcb0857c81c1",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/27e62b2780e21aa3d494773cf377fcb0857c81c1"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/build.gradle.kts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "87888ec6fba437f12a1094bf45e0e8b7eefa795b",
+      "size": 191,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/87888ec6fba437f12a1094bf45e0e8b7eefa795b"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6491d84d514445feb3a1727eb0707dc992facdcb",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/6491d84d514445feb3a1727eb0707dc992facdcb"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "34e784024657779cdc62474a90d9f7d1da1aa7d7",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/34e784024657779cdc62474a90d9f7d1da1aa7d7"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c640a83840055b53a5db9114def1be95078ca672",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/c640a83840055b53a5db9114def1be95078ca672"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4ccd3a8d8c7822c2e5c6cbe78205032cb021c20d",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/4ccd3a8d8c7822c2e5c6cbe78205032cb021c20d"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "085ce58c529cf3f9b27db684c14bd90f6c97af41",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/085ce58c529cf3f9b27db684c14bd90f6c97af41"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f1d63ea4c96c2ad8cadf6fe8bbdd3f5bac7f7deb",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/f1d63ea4c96c2ad8cadf6fe8bbdd3f5bac7f7deb"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d45fbc1ac6bdb7d4568ebcacaac4ff24b8c0b32b",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d45fbc1ac6bdb7d4568ebcacaac4ff24b8c0b32b"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/IXposedHookLoadPackage.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7a735b4a7593ea0b1474b22ba3d499440581826",
+      "size": 230,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e7a735b4a7593ea0b1474b22ba3d499440581826"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/XC_MethodHook.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29396be9101d90421f628db02af68870e96ac77d",
+      "size": 1046,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/29396be9101d90421f628db02af68870e96ac77d"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/XC_MethodReplacement.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "276b9ae371351970c2b9e8c4ce80fa07b507a159",
+      "size": 843,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/276b9ae371351970c2b9e8c4ce80fa07b507a159"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/XposedBridge.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "896ec4f3e5b56018c476b8f3f984a5435bdaebab",
+      "size": 692,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/896ec4f3e5b56018c476b8f3f984a5435bdaebab"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/XposedHelpers.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5c892f1062e19297d9a82727145f2b20f6247dc5",
+      "size": 2629,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5c892f1062e19297d9a82727145f2b20f6247dc5"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/callbacks",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "eca60b3b0bb4fd0518cdd88c0c82e5c694f74c4a",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/eca60b3b0bb4fd0518cdd88c0c82e5c694f74c4a"
+    },
+    {
+      "path": "hooks/launcher/xposed-api/src/main/java/de/robv/android/xposed/callbacks/XC_LoadPackage.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30f22c4c1597d8e6bd65fd889fb52f84845e05c3",
+      "size": 336,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/30f22c4c1597d8e6bd65fd889fb52f84845e05c3"
+    },
+    {
+      "path": "root",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4ba34558661d822a5da7a7e5b7ca063dc3debb85",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/4ba34558661d822a5da7a7e5b7ca063dc3debb85"
+    },
+    {
+      "path": "root/exploit",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b8d49641ebe3461376a728e8d7f8bcbd0d869666",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/b8d49641ebe3461376a728e8d7f8bcbd0d869666"
+    },
+    {
+      "path": "root/exploit/.gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74db805528f89f074d54b1d407786746791a5840",
+      "size": 57,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/74db805528f89f074d54b1d407786746791a5840"
+    },
+    {
+      "path": "root/exploit/Makefile",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0977d21b8b77e7e5965287b2ba15bdeb065f3943",
+      "size": 775,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0977d21b8b77e7e5965287b2ba15bdeb065f3943"
+    },
+    {
+      "path": "root/exploit/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "67bebaeb19fea1a4938643b600a8ac997e785de9",
+      "size": 10759,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/67bebaeb19fea1a4938643b600a8ac997e785de9"
+    },
+    {
+      "path": "root/exploit/UPSTREAM.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "65be7a4c844a9b378c247d40853eadcd04ca28aa",
+      "size": 1120,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/65be7a4c844a9b378c247d40853eadcd04ca28aa"
+    },
+    {
+      "path": "root/exploit/assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d37d7ead4882089940ca0772b3c7076e94aff99e",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/d37d7ead4882089940ca0772b3c7076e94aff99e"
+    },
+    {
+      "path": "root/exploit/assets/screenshot.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4ab45655353529c64058f1b363c813f55ade87b",
+      "size": 651418,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b4ab45655353529c64058f1b363c813f55ade87b"
+    },
+    {
+      "path": "root/exploit/ghostlock",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3405ea543cbaf90527c0f3d7d95cef2f6e207b3c",
+      "size": 221104,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3405ea543cbaf90527c0f3d7d95cef2f6e207b3c"
+    },
+    {
+      "path": "root/exploit/src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "feb38ca39d72a192a0e70fb75708e96504665a42",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/feb38ca39d72a192a0e70fb75708e96504665a42"
+    },
+    {
+      "path": "root/exploit/src/core",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "af62215ce8cb509ab0b6d4a58242818b159687db",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/af62215ce8cb509ab0b6d4a58242818b159687db"
+    },
+    {
+      "path": "root/exploit/src/core/common.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e1c8213b0bb1234fd5e09083f144ee58b8446b4",
+      "size": 23147,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2e1c8213b0bb1234fd5e09083f144ee58b8446b4"
+    },
+    {
+      "path": "root/exploit/src/core/fops.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39682302cbe023dedab02814801b2f2de2affcce",
+      "size": 47360,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/39682302cbe023dedab02814801b2f2de2affcce"
+    },
+    {
+      "path": "root/exploit/src/core/kernelsnitch",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "08692164acfa6a1be2e58916e1e88121a3436611",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/08692164acfa6a1be2e58916e1e88121a3436611"
+    },
+    {
+      "path": "root/exploit/src/core/kernelsnitch/futex_hash.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "515f6b1eb38a1ea15bd9d0308b3dd7022cf8d508",
+      "size": 5852,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/515f6b1eb38a1ea15bd9d0308b3dd7022cf8d508"
+    },
+    {
+      "path": "root/exploit/src/core/kernelsnitch/kernelsnitch.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3bf3da298f31c9a9034acb92a7916569fad6a3c5",
+      "size": 22821,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3bf3da298f31c9a9034acb92a7916569fad6a3c5"
+    },
+    {
+      "path": "root/exploit/src/core/kernelsnitch/timeutils.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a8d580802cf8fa5e4dd29431aa2a3661da3a0202",
+      "size": 1762,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/a8d580802cf8fa5e4dd29431aa2a3661da3a0202"
+    },
+    {
+      "path": "root/exploit/src/core/kernelsnitch/utils.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1333033ec18fa17f3e7dd8e808f7a94906c2e7e7",
+      "size": 7700,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1333033ec18fa17f3e7dd8e808f7a94906c2e7e7"
+    },
+    {
+      "path": "root/exploit/src/core/main.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f15472a4078a8b35594797acd55e10700628719",
+      "size": 87289,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/9f15472a4078a8b35594797acd55e10700628719"
+    },
+    {
+      "path": "root/exploit/src/core/memstart.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9e2183180ac572d1f0cf06351f5e67d8e6d10f22",
+      "size": 18611,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/9e2183180ac572d1f0cf06351f5e67d8e6d10f22"
+    },
+    {
+      "path": "root/exploit/src/core/miniadb.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b2f92b9a099197b543340a94f5fdc44b7c915dec",
+      "size": 5423,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b2f92b9a099197b543340a94f5fdc44b7c915dec"
+    },
+    {
+      "path": "root/exploit/src/core/offset.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e949033091506e7669bc7cee281d84821683b6c9",
+      "size": 131,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e949033091506e7669bc7cee281d84821683b6c9"
+    },
+    {
+      "path": "root/exploit/src/core/pipe.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8d31fb53093f26b04b0cfa91c715e163908201e",
+      "size": 19737,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d8d31fb53093f26b04b0cfa91c715e163908201e"
+    },
+    {
+      "path": "root/exploit/src/core/pipe_physrw.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22952b3c65f3144ce638ef0c5168252588b281ad",
+      "size": 18893,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/22952b3c65f3144ce638ef0c5168252588b281ad"
+    },
+    {
+      "path": "root/exploit/src/core/root.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "923a2a5bbcd73f8b6707842bf0d591a2710bdf46",
+      "size": 16153,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/923a2a5bbcd73f8b6707842bf0d591a2710bdf46"
+    },
+    {
+      "path": "root/exploit/src/core/runtime_struct_offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "70e39a4679af43359633fb2a248dea39508b5c71",
+      "size": 7784,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/70e39a4679af43359633fb2a248dea39508b5c71"
+    },
+    {
+      "path": "root/exploit/src/core/slide.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1ddaf95eba8e7d69275a871746d9856195a6c83",
+      "size": 13388,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d1ddaf95eba8e7d69275a871746d9856195a6c83"
+    },
+    {
+      "path": "root/exploit/src/core/target.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f3b83f493fb3ebbd662dfee5213f877d68f7142",
+      "size": 9814,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1f3b83f493fb3ebbd662dfee5213f877d68f7142"
+    },
+    {
+      "path": "root/exploit/src/core/umh_root.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a990ebde1a135e268216373fd291a50a79647dfd",
+      "size": 11709,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/a990ebde1a135e268216373fd291a50a79647dfd"
+    },
+    {
+      "path": "root/exploit/src/core/util.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1df5412c6668ce440a0a2dd9ff21defd0ac9283b",
+      "size": 69928,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1df5412c6668ce440a0a2dd9ff21defd0ac9283b"
+    },
+    {
+      "path": "root/exploit/src/devices",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2173df38670854e09585cfed22d6067991a65403",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/2173df38670854e09585cfed22d6067991a65403"
+    },
+    {
+      "path": "root/exploit/src/devices/ace6t",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6c4b844fd9f9cfbc5024f0bc6ff026c900b67e9c",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/6c4b844fd9f9cfbc5024f0bc6ff026c900b67e9c"
+    },
+    {
+      "path": "root/exploit/src/devices/ace6t/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "012e243f20b95cd3098520232bd343d48eaa5b6e",
+      "size": 2329,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/012e243f20b95cd3098520232bd343d48eaa5b6e"
+    },
+    {
+      "path": "root/exploit/src/devices/cph2521",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1287faabeb668f15af7701c37d737a267251c3ab",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/1287faabeb668f15af7701c37d737a267251c3ab"
+    },
+    {
+      "path": "root/exploit/src/devices/cph2521/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f6edd2db6bba66b29af07d4c01232b14d1d8afdf",
+      "size": 1210,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f6edd2db6bba66b29af07d4c01232b14d1d8afdf"
+    },
+    {
+      "path": "root/exploit/src/devices/findx9pro",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "37a30d955b55e45dd5d7d10c0e4fa4f452a680cf",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/37a30d955b55e45dd5d7d10c0e4fa4f452a680cf"
+    },
+    {
+      "path": "root/exploit/src/devices/findx9pro/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a5967a7622ee1c9045aec440b788aa5e87f5b33",
+      "size": 1342,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0a5967a7622ee1c9045aec440b788aa5e87f5b33"
+    },
+    {
+      "path": "root/exploit/src/devices/findx9ultra",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "57bcdb8a96b42f5c1e41c70096d5465b259e263d",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/57bcdb8a96b42f5c1e41c70096d5465b259e263d"
+    },
+    {
+      "path": "root/exploit/src/devices/findx9ultra/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c4a3e5a72afd13df3e813ac15f6f8979939fa509",
+      "size": 1051,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c4a3e5a72afd13df3e813ac15f6f8979939fa509"
+    },
+    {
+      "path": "root/exploit/src/devices/fne",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3584568408f3e0a0d60a3fedaadccfc91e332417",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/3584568408f3e0a0d60a3fedaadccfc91e332417"
+    },
+    {
+      "path": "root/exploit/src/devices/fne/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c0e7a79e078b5083e465e9bb3a3320569f74cf27",
+      "size": 9806,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c0e7a79e078b5083e465e9bb3a3320569f74cf27"
+    },
+    {
+      "path": "root/exploit/src/devices/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8746613e7617866c2e4271080e9a423069caf715",
+      "size": 7518,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8746613e7617866c2e4271080e9a423069caf715"
+    },
+    {
+      "path": "root/exploit/src/devices/op13",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ce8abe44d68fea7cadca4a0bea01a24615a40da8",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/ce8abe44d68fea7cadca4a0bea01a24615a40da8"
+    },
+    {
+      "path": "root/exploit/src/devices/op13/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d4852b3fd4ff5b37d137b7c2a27780db8ac5e1dd",
+      "size": 1211,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d4852b3fd4ff5b37d137b7c2a27780db8ac5e1dd"
+    },
+    {
+      "path": "root/exploit/src/devices/op15",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4690e17722f491c4b72cb5496abfa6335b7ada47",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/4690e17722f491c4b72cb5496abfa6335b7ada47"
+    },
+    {
+      "path": "root/exploit/src/devices/op15/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bef19dc85c6a604e6b2aa5a12b94596bcdb46666",
+      "size": 2815,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/bef19dc85c6a604e6b2aa5a12b94596bcdb46666"
+    },
+    {
+      "path": "root/exploit/src/devices/pad4pro",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "25763e31da31b3a2ef3c6b63dde53be0cf585ac3",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/25763e31da31b3a2ef3c6b63dde53be0cf585ac3"
+    },
+    {
+      "path": "root/exploit/src/devices/pad4pro/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "980e86229e93f391ed0ff2964b42f15fbfe8a4f7",
+      "size": 1176,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/980e86229e93f391ed0ff2964b42f15fbfe8a4f7"
+    },
+    {
+      "path": "root/exploit/src/devices/pudding",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "01be36f9bfa7f729f27f4d8e886f91c4fded5365",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/01be36f9bfa7f729f27f4d8e886f91c4fded5365"
+    },
+    {
+      "path": "root/exploit/src/devices/pudding/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ba78d3be2b76b12b4695994f90b25e5fb75fd834",
+      "size": 2806,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ba78d3be2b76b12b4695994f90b25e5fb75fd834"
+    },
+    {
+      "path": "root/exploit/src/devices/vivot4",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4297e0b17925e06e34c0ddd11b8244f44dc642f2",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/4297e0b17925e06e34c0ddd11b8244f44dc642f2"
+    },
+    {
+      "path": "root/exploit/src/devices/vivot4/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c6783fc573de8f0aeeae85bb67da2133af4c6532",
+      "size": 1316,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c6783fc573de8f0aeeae85bb67da2133af4c6532"
+    },
+    {
+      "path": "root/exploit/src/devices/vivox200ultra",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e0b0d5351ab4e2b7aaa9441b6e04ccf20b175189",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/e0b0d5351ab4e2b7aaa9441b6e04ccf20b175189"
+    },
+    {
+      "path": "root/exploit/src/devices/vivox200ultra/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f40e044af4b076ecc8b555c207d81917bb3a5c5",
+      "size": 1353,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1f40e044af4b076ecc8b555c207d81917bb3a5c5"
+    },
+    {
+      "path": "root/exploit/src/devices/vivoxfold3pro",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "525525b8f706a72abcfd7d5c46dca6fdaba2caaa",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/525525b8f706a72abcfd7d5c46dca6fdaba2caaa"
+    },
+    {
+      "path": "root/exploit/src/devices/vivoxfold3pro/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78802c89186f9781213393f42ec45d000abf75ad",
+      "size": 1325,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/78802c89186f9781213393f42ec45d000abf75ad"
+    },
+    {
+      "path": "root/exploit/src/devices/xperia1iv",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "12969ce8cc8f4f6ca0f24910e2cd89024b5d4f20",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/12969ce8cc8f4f6ca0f24910e2cd89024b5d4f20"
+    },
+    {
+      "path": "root/exploit/src/devices/xperia1iv/offsets.h",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "055fe40f00e23207bbee89e3ad4ea1bbc4e0ba46",
+      "size": 1760,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/055fe40f00e23207bbee89e3ad4ea1bbc4e0ba46"
+    },
+    {
+      "path": "root/exploit/test_perf_memstart",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6cb81a3be936b100cbc6d73ab6be5b84130d24a8",
+      "size": 2229512,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6cb81a3be936b100cbc6d73ab6be5b84130d24a8"
+    },
+    {
+      "path": "root/exploit/test_perf_memstart.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8758e676b911b90b3e46c11a4edb8404ff99e0a",
+      "size": 19213,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b8758e676b911b90b3e46c11a4edb8404ff99e0a"
+    },
+    {
+      "path": "root/exploit/tools",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "61ae04bae06b74db542fad221bafabe1ca184197",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/61ae04bae06b74db542fad221bafabe1ca184197"
+    },
+    {
+      "path": "root/exploit/tools/check_feasibility.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e80b078aabdca1eaff258b56172b17659034ea5a",
+      "size": 13882,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e80b078aabdca1eaff258b56172b17659034ea5a"
+    },
+    {
+      "path": "root/exploit/tools/extract_btf.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "930b2fc362a87d12108b8ae6ca1af3464d6222a8",
+      "size": 10268,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/930b2fc362a87d12108b8ae6ca1af3464d6222a8"
+    },
+    {
+      "path": "root/exploit/tools/extract_target.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf48dde37e71456b5a952afff6fc375774b8f90d",
+      "size": 19079,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/bf48dde37e71456b5a952afff6fc375774b8f90d"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "61326cd72bde94383d2a2166478caeb929ce33ae",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/61326cd72bde94383d2a2166478caeb929ce33ae"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/GUIDE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e42b10f7bdfd2d6989ca92bd24d81c34eaa1f67c",
+      "size": 12602,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e42b10f7bdfd2d6989ca92bd24d81c34eaa1f67c"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/bootstrap.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5cedc37a656e365f53a63cd0eeef876843ae21de",
+      "size": 5353,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5cedc37a656e365f53a63cd0eeef876843ae21de"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/common.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1c38e2b7a631ccce56d04f54a547742ad299e3c2",
+      "size": 3430,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1c38e2b7a631ccce56d04f54a547742ad299e3c2"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/export_kallsyms.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3bb4dc154e027eca35f3f0a323d1db3d1e817483",
+      "size": 5001,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3bb4dc154e027eca35f3f0a323d1db3d1e817483"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/extract_kernel.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7486758b096c8184ae527d4a870621af5b50133e",
+      "size": 8119,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7486758b096c8184ae527d4a870621af5b50133e"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/find_kallsyms.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6deff2ee63b66c58b4c2b9ea2205572f1cfb74fa",
+      "size": 2771,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6deff2ee63b66c58b4c2b9ea2205572f1cfb74fa"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/kallsyms.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3386067b1379f0f450325d19560683a6f17f7b0d",
+      "size": 3501,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3386067b1379f0f450325d19560683a6f17f7b0d"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/preflight.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15505aa882af4d9b34d35e49d74b7eeb7dea12e4",
+      "size": 11669,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/15505aa882af4d9b34d35e49d74b7eeb7dea12e4"
+    },
+    {
+      "path": "root/exploit/tools/kallsyms/reconstruct_vmlinux.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bb683edc04d79b3d613df396debb931fd894c59b",
+      "size": 4580,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/bb683edc04d79b3d613df396debb931fd894c59b"
+    },
+    {
+      "path": "root/host-scripts",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "37aadbb75286be1e8f4b154071b3afdf600a5b4f",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/37aadbb75286be1e8f4b154071b3afdf600a5b4f"
+    },
+    {
+      "path": "root/host-scripts/activate_zygisk.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0342832f2a8ff52194e2304d9b9708c74e244c24",
+      "size": 22194,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0342832f2a8ff52194e2304d9b9708c74e244c24"
+    },
+    {
+      "path": "root/host-scripts/gl_cycle.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5235418a009fa338508667a7f5821fcd60d10d9",
+      "size": 2840,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f5235418a009fa338508667a7f5821fcd60d10d9"
+    },
+    {
+      "path": "root/host-scripts/gl_sweep.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "81f6dfa06966758dd2e43e3b3ccf84e9a0c0f6c4",
+      "size": 625,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/81f6dfa06966758dd2e43e3b3ccf84e9a0c0f6c4"
+    },
+    {
+      "path": "root/host-scripts/install_managers.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c12a520d115b33d7208627d840a8b8589ce2a422",
+      "size": 7883,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c12a520d115b33d7208627d840a8b8589ce2a422"
+    },
+    {
+      "path": "root/host-scripts/run_forever.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "034583c36e7418ade0c6262c8ad08dbf96fab9ce",
+      "size": 2630,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/034583c36e7418ade0c6262c8ad08dbf96fab9ce"
+    },
+    {
+      "path": "root/host-scripts/run_w2.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "077ba5198a1df740b0a75045cda35cce2f0a959a",
+      "size": 9470,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/077ba5198a1df740b0a75045cda35cce2f0a959a"
+    },
+    {
+      "path": "root/host-scripts/shift0_control.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f48193ff3528041428857fe6ae61f85727aed09b",
+      "size": 2603,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f48193ff3528041428857fe6ae61f85727aed09b"
+    },
+    {
+      "path": "root/host-scripts/shift24_grind.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "20eed4e9156cfbbdfa2ac1c90b7ade4e0c2d60b7",
+      "size": 3101,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/20eed4e9156cfbbdfa2ac1c90b7ade4e0c2d60b7"
+    },
+    {
+      "path": "root/host-scripts/uninstall.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "32b129029a2cf6c34608804af7e3cfc4b320255a",
+      "size": 3270,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/32b129029a2cf6c34608804af7e3cfc4b320255a"
+    },
+    {
+      "path": "root/host-scripts/wait_ksu.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "320dff1dd9305fad59244517d60f0eb20019d49c",
+      "size": 3258,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/320dff1dd9305fad59244517d60f0eb20019d49c"
+    },
+    {
+      "path": "root/ksu-late-load",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5ac7f427364b979baa008dc2bd66fea4e0998938",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/5ac7f427364b979baa008dc2bd66fea4e0998938"
+    },
+    {
+      "path": "root/ksu-late-load/build_inner.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f44dd8e78570081c61b9d329236116644725042c",
+      "size": 3668,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f44dd8e78570081c61b9d329236116644725042c"
+    },
+    {
+      "path": "root/ksu-late-load/chain_hook.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d9b93b3602bce6ce3ab9326c9381dcb623f9817",
+      "size": 12642,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7d9b93b3602bce6ce3ab9326c9381dcb623f9817"
+    },
+    {
+      "path": "root/ksu-late-load/empty_versions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a9e9178517b1e40a450822129314955fa9fbb66",
+      "size": 1809,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3a9e9178517b1e40a450822129314955fa9fbb66"
+    },
+    {
+      "path": "root/ksu-late-load/fne-5.4-compat.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5fd271a3f1d500cc122b0fc8c97be14261d2515b",
+      "size": 18245,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5fd271a3f1d500cc122b0fc8c97be14261d2515b"
+    },
+    {
+      "path": "root/ksu-late-load/fne_syms.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7e7cffde8759a22475718dd4b9fb7cff25ec99ba",
+      "size": 11095147,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7e7cffde8759a22475718dd4b9fb7cff25ec99ba"
+    },
+    {
+      "path": "root/ksu-late-load/gen_compat.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "789dab956fde0c9810a351332ede4184ebcda187",
+      "size": 16470,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/789dab956fde0c9810a351332ede4184ebcda187"
+    },
+    {
+      "path": "root/ksu-late-load/init-bootid.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0245e172b0b71e3800fa2213dcb9e3680f0a6e47",
+      "size": 2855,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0245e172b0b71e3800fa2213dcb9e3680f0a6e47"
+    },
+    {
+      "path": "root/ksu-late-load/kallsyms_names",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "340d7a83809ffef28d658deddf66721a9c3c7ec3",
+      "size": 7065834,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/340d7a83809ffef28d658deddf66721a9c3c7ec3"
+    },
+    {
+      "path": "root/ksu-late-load/kernel.config",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "37cacb200c922a8f50f7f967b8d1d0e734d422db",
+      "size": 211119,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/37cacb200c922a8f50f7f967b8d1d0e734d422db"
+    },
+    {
+      "path": "root/ksu-late-load/kernelsu.ko",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b299ac7e126a7f91c8a89019620d8ab2387dacbd",
+      "size": 3935680,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b299ac7e126a7f91c8a89019620d8ab2387dacbd"
+    },
+    {
+      "path": "root/ksu-late-load/kmsg_dumper",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6560bdbdb734622c92f9074ed8464d446928f8dc",
+      "size": 2221464,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6560bdbdb734622c92f9074ed8464d446928f8dc"
+    },
+    {
+      "path": "root/ksu-late-load/ksu_ko_build.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e70f0a0e1de761d69f4c4a51d9fd92a97076ce34",
+      "size": 3137,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/e70f0a0e1de761d69f4c4a51d9fd92a97076ce34"
+    },
+    {
+      "path": "root/ksu-late-load/ksu_rules",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6fc90b37b3e4a467d98bab1671015c56cf31a4b8",
+      "size": 914,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6fc90b37b3e4a467d98bab1671015c56cf31a4b8"
+    },
+    {
+      "path": "root/ksu-late-load/ksud",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30425d97d8d61fc9a38cd25f9a5640ade115586d",
+      "size": 4892712,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/30425d97d8d61fc9a38cd25f9a5640ade115586d"
+    },
+    {
+      "path": "root/ksu-late-load/load_ko",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea32d86c25ed8f9e57a99b2fbad26897596fcafd",
+      "size": 2222928,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/ea32d86c25ed8f9e57a99b2fbad26897596fcafd"
+    },
+    {
+      "path": "root/ksu-late-load/magiskpolicy",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "254965e0eae2241d800a16802b4e6ae630f5d21b",
+      "size": 356584,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/254965e0eae2241d800a16802b4e6ae630f5d21b"
+    },
+    {
+      "path": "root/ksu-late-load/probe",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "16e75baca9fa046f2531887f00104508f4baf009",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/16e75baca9fa046f2531887f00104508f4baf009"
+    },
+    {
+      "path": "root/ksu-late-load/probe/Makefile",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3c7544eb9edc8e9550549083b472405b02ed20e6",
+      "size": 17,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/3c7544eb9edc8e9550549083b472405b02ed20e6"
+    },
+    {
+      "path": "root/ksu-late-load/probe/probe.c",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "36ab1341ad5ab747ed93e1a4589f66846f2539d2",
+      "size": 7458,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/36ab1341ad5ab747ed93e1a4589f66846f2539d2"
+    },
+    {
+      "path": "root/ksu-late-load/probe_build.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7af6c80c5f99e4b92010f716c7461317f5920be4",
+      "size": 1303,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/7af6c80c5f99e4b92010f716c7461317f5920be4"
+    },
+    {
+      "path": "root/ksu-late-load/probe_inner.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d7e9fa883cc0d28b29081a62d59d95e726204a9b",
+      "size": 1519,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d7e9fa883cc0d28b29081a62d59d95e726204a9b"
+    },
+    {
+      "path": "root/ksu-late-load/probe_read.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b876d9dd0ea7c23f7f4d4cb07da8fe533a972d5e",
+      "size": 6036,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b876d9dd0ea7c23f7f4d4cb07da8fe533a972d5e"
+    },
+    {
+      "path": "root/ksu-late-load/selinux-hide-backup.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b94a4223296866e1e77e1e5565f3954e50a8b7ad",
+      "size": 3506,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b94a4223296866e1e77e1e5565f3954e50a8b7ad"
+    },
+    {
+      "path": "root/ksu-late-load/sepolicy-dyn-len.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c1be9ae30d1ca85134a32d50180f1477afb1b1c7",
+      "size": 2365,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c1be9ae30d1ca85134a32d50180f1477afb1b1c7"
+    },
+    {
+      "path": "root/ksu-modules",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b672e5fd0748ee5c1e0918ce94066c7832b37464",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/b672e5fd0748ee5c1e0918ce94066c7832b37464"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "380abe808411d548df274a0b440e13b62e5c53ae",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/380abe808411d548df274a0b440e13b62e5c53ae"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c08248cfaef8f161257ab4eee81571f1f6b4143",
+      "size": 4329,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/6c08248cfaef8f161257ab4eee81571f1f6b4143"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/apply_netfix_now.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ed2b381464f8e0df3d763eff1fa278e29e395b9",
+      "size": 1364,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/4ed2b381464f8e0df3d763eff1fa278e29e395b9"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/module.prop",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d17bdac8a70c7da524203ea169b8a71b09d4554",
+      "size": 273,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/0d17bdac8a70c7da524203ea169b8a71b09d4554"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/post-fs-data.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d20ce47888b5610568fc23f2733aeeb7ff87a962",
+      "size": 2339,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/d20ce47888b5610568fc23f2733aeeb7ff87a962"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/sepolicy.rule",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "03b6d22fd9a105112aba317c179261174f3366c6",
+      "size": 600,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/03b6d22fd9a105112aba317c179261174f3366c6"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/sepolicy.rule.network_fix",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b281ed250354e4da4279588f97b1664d05acd032",
+      "size": 507,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b281ed250354e4da4279588f97b1664d05acd032"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/service.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f121d972be0e7306a41cd13c04c0d213316b08be",
+      "size": 1791,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/f121d972be0e7306a41cd13c04c0d213316b08be"
+    },
+    {
+      "path": "root/ksu-modules/netfix_packet/zygisksu_sepolicy.rule.merged",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd2d33d83c0d776e5ad752b31048e75a81750821",
+      "size": 1373,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/fd2d33d83c0d776e5ad752b31048e75a81750821"
+    },
+    {
+      "path": "root/tools",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0acc936308a5020ce3b59c631f52b1b8c0a294e7",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/0acc936308a5020ce3b59c631f52b1b8c0a294e7"
+    },
+    {
+      "path": "root/tools/clearctrl",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "88e3314247a005e8fafe5d09508bf81f76892598",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/88e3314247a005e8fafe5d09508bf81f76892598"
+    },
+    {
+      "path": "root/tools/clearctrl/ClearCtrl.java",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "310b91e33adbc055c890cf5721061c4a1a8f5ab7",
+      "size": 2075,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/310b91e33adbc055c890cf5721061c4a1a8f5ab7"
+    },
+    {
+      "path": "root/tools/clearctrl/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a54661718b12e4e8b071728593305881cc5af9e",
+      "size": 2582,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/1a54661718b12e4e8b071728593305881cc5af9e"
+    },
+    {
+      "path": "root/tools/clearctrl/build.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bb10d4935e6e765d9c4356191999714bd3f39ab4",
+      "size": 566,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/bb10d4935e6e765d9c4356191999714bd3f39ab4"
+    },
+    {
+      "path": "root/tools/clearctrl/clearctrl.jar",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f1d9dda84eadd3caff698a2b616dc600ab27c00",
+      "size": 1704,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/8f1d9dda84eadd3caff698a2b616dc600ab27c00"
+    },
+    {
+      "path": "root/tools/clearctrl/run.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2d0e24cde1a194371cab367ab2790568828b8423",
+      "size": 663,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/2d0e24cde1a194371cab367ab2790568828b8423"
+    },
+    {
+      "path": "run_root.bat",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c932fb796c4e6237e6aa1893695f56c22eb48849",
+      "size": 9645,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/c932fb796c4e6237e6aa1893695f56c22eb48849"
+    },
+    {
+      "path": "run_root.command",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31c865c75c33df4905444dfc5bbb3034636d1e53",
+      "size": 9903,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/31c865c75c33df4905444dfc5bbb3034636d1e53"
+    },
+    {
+      "path": "tools",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a2eee50af923aa0d34af98f1c4657bd932e3eeeb",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/a2eee50af923aa0d34af98f1c4657bd932e3eeeb"
+    },
+    {
+      "path": "tools/GhostLock-HonorFne-ThirdParty.apk",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b00ad90317f5571c835e0b4cd9d5b561a2fb3e0a",
+      "size": 11683199,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/b00ad90317f5571c835e0b4cd9d5b561a2fb3e0a"
+    },
+    {
+      "path": "tools/kernel-offsets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "703da8ec6d0188104776fd7c1bef0a673af8dd9e",
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/trees/703da8ec6d0188104776fd7c1bef0a673af8dd9e"
+    },
+    {
+      "path": "tools/kernel-offsets/assemble_inc.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31b6074f37541a2b0a95935eeb28bf27d9fc7364",
+      "size": 5739,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/31b6074f37541a2b0a95935eeb28bf27d9fc7364"
+    },
+    {
+      "path": "tools/kernel-offsets/extract_offsets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "622b4896d9bc319896a4791d01a7e01ee48905ed",
+      "size": 9772,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/622b4896d9bc319896a4791d01a7e01ee48905ed"
+    },
+    {
+      "path": "tools/kernel-offsets/rebuild_boot.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5d936146d22193333bd461fff8e1718b8b968bc9",
+      "size": 4937,
+      "url": "https://api.github.com/repos/XiaoDao-Fish/GhostLock-HonorFne/git/blobs/5d936146d22193333bd461fff8e1718b8b968bc9"
+    }
+  ],
+  "truncated": false
+}

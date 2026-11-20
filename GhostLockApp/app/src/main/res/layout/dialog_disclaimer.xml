@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 免责声明弹窗：不透明玻璃卡片 + 盾牌徽标 + 勾选同意 + 确认按钮。
+     必须先勾「我已阅读并同意条款」，确认按钮才从灰色变可点；
+     内容偏长，外层 ScrollView 保证小屏 / 大字号下按钮不被挤出屏幕。 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrim"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8A0A0D14"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ds_space_5"
+            android:layout_marginEnd="@dimen/ds_space_5"
+            android:background="@drawable/hr_dialog"
+            android:orientation="vertical"
+            android:padding="@dimen/ds_space_5">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/hr_badge"
+                    android:contentDescription="@string/disclaimer_title"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_disclaimer_shield" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/HonorRoot.Text.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_space_4"
+                android:gravity="center"
+                android:text="@string/disclaimer_title" />
+
+            <TextView
+                android:id="@+id/tvBody"
+                style="@style/HonorRoot.Text.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_space_4"
+                android:lineSpacingExtra="6dp"
+                android:text="@string/disclaimer_body" />
+
+            <TextView
+                android:id="@+id/tvAgree"
+                style="@style/HonorRoot.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_space_4"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="@string/disclaimer_agree"
+                android:textColor="@color/ds_on_surface_muted" />
+
+            <CheckBox
+                android:id="@+id/cbAgree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_space_4"
+                android:buttonTint="@color/ds_primary"
+                android:minHeight="@dimen/ds_touch_min"
+                android:text="@string/disclaimer_cb"
+                android:textColor="@color/ds_on_surface"
+                android:textSize="@dimen/ds_text_body" />
+
+            <android.widget.Button
+                android:id="@+id/btnAgree"
+                style="@style/HonorRoot.Button.Primary.Gate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_space_2"
+                android:ellipsize="none"
+                android:enabled="false"
+                android:maxLines="3"
+                android:minHeight="@dimen/ds_btn_primary_h"
+                android:stateListAnimator="@null"
+                android:text="@string/disclaimer_btn" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

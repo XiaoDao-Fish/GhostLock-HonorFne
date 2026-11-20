@@ -11,8 +11,8 @@ android {
         applicationId = "com.ghostlock.honorfne"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.0"
+        versionCode = 48
+        versionName = "3.2"
     }
 
     buildTypes {
@@ -28,6 +28,7 @@ android {
     // 不再需要 AIDL：改用 Shizuku.newProcess 直接在 shell 权限下执行命令。
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {
