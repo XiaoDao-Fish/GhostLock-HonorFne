@@ -9,17 +9,22 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 
-/**
- * On boot, reminds the user that Shizuku dropped across the reboot and must be
- * re-enabled (wireless debugging) before the app can grind again. We cannot
- * auto-grant or auto-start Shizuku; this is just a nudge.
- */
+   
+                                                                               
+                                                                            
+                                                          
+   
 class BootNotifyReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) return
 
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= 33 &&
+            androidx.core.content.ContextCompat.checkSelfPermission(
+                context, android.Manifest.permission.POST_NOTIFICATIONS
+            ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) return
         val channelId = "ghostlock_boot"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nm.createNotificationChannel(

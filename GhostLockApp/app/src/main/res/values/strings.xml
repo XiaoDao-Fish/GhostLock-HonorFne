@@ -3,7 +3,7 @@
     <string name="app_name">HonorRoot</string>
     <string name="subtitle">荣耀 70 / 荣耀 50 临时 Root · Shizuku 启动</string>
 
-    <!-- legacy actions, still wired to MainActivity -->
+                                                        
     <string name="btn_connect">连接 Shizuku</string>
     <string name="btn_deploy">部署物料</string>
     <string name="btn_root">一键临时 Root</string>
@@ -16,14 +16,14 @@
     <string name="hint_waiting">等待操作…</string>
     <string name="log_placeholder">— 日志将显示在此 —</string>
 
-    <!-- navigation -->
+                       
     <string name="nav_home">首页</string>
     <string name="nav_root">提权</string>
-    <!-- 底部栏中间 tab 用「工具」，与 MagicRoot 一致；页面大标题仍用 nav_root「提权」 -->
+                                                                
     <string name="nav_root_tab">工具</string>
     <string name="nav_about">关于</string>
 
-    <!-- home -->
+                 
     <string name="home_clock_caption">北京时间</string>
     <string name="home_greeting_morning">早起的鸟儿临时root可以一次成功哦用户!</string>
     <string name="home_greeting_noon">中午好啊用户 要临时root了吗 祝你成功!</string>
@@ -44,7 +44,7 @@
     <string name="home_ksu_ok">KernelSU v3.3.0 ✔</string>
     <string name="home_ksu_bad">Ksu 面具版本不正确</string>
 
-    <!-- root page -->
+                      
     <string name="root_intro_subtitle">HonorRoot · 临时权限提升</string>
     <string name="root_check_caption">机型与内核兼容性检测</string>
     <string name="root_check_pending">正在检测机型与内核版本…</string>
@@ -57,7 +57,7 @@
     <string name="btn_download_ksu">下载正确版本</string>
     <string name="root_log_caption">实时日志</string>
 
-    <!-- 自助适配：导入 boot.img 现场生成 profile -->
+                                          
     <string name="boot_adapt_title">导入 boot.img（自助适配）</string>
     <string name="boot_adapt_sub">用你自己的 boot.img 现场生成 profile 再提权</string>
     <string name="boot_adapt_none">未导入 · 内核没收录也能自己适配</string>
@@ -69,7 +69,7 @@
     <string name="boot_adapt_hint">长按可清除已生成的 profile</string>
     <string name="boot_adapt_deleted">已清除自助适配 profile</string>
 
-    <!-- about page -->
+                       
     <string name="about_subtitle">零特权提权链路</string>
     <string name="about_version_caption">当前版本</string>
     <string name="about_version">2.6.7</string>
@@ -80,18 +80,18 @@
     <string name="about_home_btn">作者主页</string>
     <string name="about_sponsor">赞助作者</string>
     <string name="btn_share_log">分享日志到QQ群</string>
-    <string name="share_log_hint">点上方按钮打开QQ，自己选择群聊把日志发给作者排障（交流群 1132352830）</string>
+    <string name="share_log_hint">点上方按钮打开QQ，自己选择群聊把一个 zip 日志包发给作者排障（主日志 + 调试日志 + 清单，交流群 1132352830）</string>
     <string name="sponsor_hint">点击任意位置关闭</string>
     <string name="about_github_caption">GitHub 项目</string>
 
-    <!-- 免责声明弹窗 -->
+                   
     <string name="disclaimer_title">免责声明</string>
     <string name="disclaimer_body">本程序是临时Root软件,执行会有一定风险,使用可能会导致无限重启,系统无法正常启动等情况,后续后果将您自己承担,开发者只支持开发程序和提供技术支持.\n\n本程序开源免费,请勿上当受骗,如您被骗请立即维权!</string>
     <string name="disclaimer_agree">如果您点击了临时 Root 按钮，视为您同意并认真观看过此内容</string>
     <string name="disclaimer_cb">我已阅读并同意条款</string>
     <string name="disclaimer_btn">我认真观看了以上文本\n手机出现以上症状跟开发者无关</string>
 
-    <!-- 3.0 UI: eyebrows, section headers, hero copy -->
+                                                         
     <string name="home_badge_temp">临时 ROOT</string>
     <string name="home_root_caption">临时 ROOT 状态</string>
     <string name="home_chain_a">SHIZUKU 链路</string>
@@ -100,22 +100,20 @@
     <string name="home_kernel_caption">内核版本</string>
     <string name="home_shizuku_caption">shell 权限来源</string>
     <string name="home_ksu_caption">面具版本 3.3.0</string>
-    <string name="root_eyebrow">HONORROOT · 提权</string>
-    <string name="about_eyebrow">HONORROOT · 关于</string>
     <string name="about_section_info">信息</string>
     <string name="about_badge_text">HR</string>
     <string name="root_env_check">环境自检</string>
 
-    <!-- 月虹式多管理器：跟随用户选择的目标管理器 -->
+                                 
     <string name="mgr_title">Root 管理器</string>
     <string name="mgr_pick">选择管理器</string>
     <string name="mgr_none">未扫描 · 点右侧选择</string>
-    <string name="mgr_chosen">当前：%1$s（%2$s）</string>
+    <string name="mgr_current">当前：%1$s</string>
     <string name="mgr_tp_title">%1$s 与内置模块不配套</string>
     <string name="mgr_tp_msg">内置 kernelsu.ko 只信任 KernelSU 官方签名（c37106…d2d6）。这个分支在内核编译期写死了自己的签名，配官方模块会被 is_manager_apk() 拒绝。\n\n提权本身仍然可用：su 由 ksud 的 allow_shell 提供，不依赖管理器界面。但这个 App 打开后会显示「内核未加载」，无法管理模块和授权。\n\n该分支的数据目录是 %1$s。要用它管理 root，必须换成该分支自己编译的 kernelsu.ko。\n\n仍然切换吗？</string>
     <string name="mgr_tp_switch">仍然切换</string>
 
-    <!-- 全量包链接 → boot.img → 自助适配 → 提权 -->
+                                         
     <string name="ota_url_hint">粘贴 https 全量包链接（OTA ZIP / boot.img）</string>
     <string name="ota_adapt">下载并适配</string>
 </resources>

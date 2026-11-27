@@ -7,27 +7,27 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 
-/**
- * 自助适配：用户自己导入 boot.img，在本机现场生成 ExtractKit 的 336 B `device.cfg`。
- *
- * 这是把 ExtractKit 标定页（选 boot.img → 解 kallsyms / BTF → 算 call site →
- * 出 profile）搬进 HonorRoot 的最小闭环，产出的东西和内置 `cfg.bin` 里的
- * profile **完全同格式**，payload 侧不需要任何改动：
- *
- * ```
- * boot.img → 切 kernel Image → 内核版本串
- *          → BTF（有就用）拿 struct 偏移，没有就反汇编 kmem_cache_create 的 sizeof
- *          → kallsyms（BASE_RELATIVE）拿 root_user / init_user_ns / init_groups …
- *          → 三处 bl kmem_cache_alloc 的返址低 21 位（call site）
- *          → emitCfgBlob() → 336 B → filesDir/adapt/<kernelKey>.cfg
- * ```
- *
- * 落盘策略：一条内核一份文件（key 由 [EngineCatalog.kernelKey] 归一化），
- * 所以同一个 APK 可以攒多台设备的适配结果，换机不会互相覆盖。
- */
+   
+                                                                
+  
+                                                                   
+                                                     
+                                      
+  
+      
+                                    
+                                                                   
+                                                                               
+                                                         
+                                                                    
+      
+  
+                                                      
+                                   
+   
 object SelfAdapt {
 
-    /** 表示「用本机导入的 profile」，替代 EngineCatalog 里的内置 profile 下标。 */
+                                                               
     const val CUSTOM_PROFILE = -1
 
     private const val DIR = "adapt"
@@ -39,7 +39,7 @@ object SelfAdapt {
         val source: String,
         val savedAt: Long,
     ) {
-        /** 给界面用的一句短标签。 */
+                          
         fun label(): String = release.ifBlank { key }
     }
 
@@ -47,12 +47,12 @@ object SelfAdapt {
         val ok: Boolean,
         val adapted: Adapted? = null,
         val sameKernel: Boolean = false,
-        /** 内置 payload 是否有这颗内核的分支（5.10 / 5.15 / 6.1 / 6.6 / 6.12 / 6.18）。 */
+                                                                            
         val familySupported: Boolean = true,
         val message: String = "",
     )
 
-    /** 仓库里带分支专用 payload 的内核家族（其余走通用 6.x 版，可能被分支守卫拒绝）。 */
+                                                         
     private val PAYLOAD_FAMILIES = setOf("5.10", "5.15", "6.1", "6.6", "6.12", "6.18")
 
     fun family(kernel: String?): String =
@@ -60,7 +60,7 @@ object SelfAdapt {
 
     fun familySupported(kernel: String?): Boolean = family(kernel) in PAYLOAD_FAMILIES
 
-    // ------------------------------------------------------------ 存取
+    
 
     fun dir(ctx: Context): File = File(ctx.filesDir, DIR).apply { mkdirs() }
 
@@ -68,21 +68,21 @@ object SelfAdapt {
 
     private fun metaFile(ctx: Context, key: String): File = File(dir(ctx), "$key.meta")
 
-    /** 已有的适配结果（按保存时间倒序）。 */
+                            
     fun list(ctx: Context): List<Adapted> =
         dir(ctx).listFiles { f -> f.isFile && f.name.endsWith(".meta") }
             ?.mapNotNull { runCatching { parseMeta(it.readText()) }.getOrNull() }
             ?.sortedByDescending { it.savedAt }
             ?: emptyList()
 
-    /** 本机内核命中的适配结果；没导入过或不匹配返回 null。 */
+                                       
     fun match(ctx: Context, kernel: String?): Adapted? {
         val key = EngineCatalog.kernelKey(kernel)
         if (key.isEmpty()) return null
         return list(ctx).firstOrNull { it.key == key && cfgFile(ctx, it.key).isFile }
     }
 
-    /** 取某条适配结果的 336 B cfg；magic 不对当没有。 */
+                                          
     fun cfgFor(ctx: Context, key: String): ByteArray? {
         val f = cfgFile(ctx, key)
         if (!f.isFile) return null
@@ -123,14 +123,14 @@ object SelfAdapt {
         )
     }
 
-    // ------------------------------------------------------------ 解析
+    
 
-    /**
-     * 解析用户选的 boot.img 并落盘。
-     *
-     * @param deviceKernel 当前设备的 `uname -r`，只用于告诉用户「这份 profile 是不是本机的」，
-     *                     不影响落盘（别人的 boot.img 也能先存下来）。
-     */
+       
+                           
+      
+                                                                       
+                                                      
+       
     suspend fun analyze(
         ctx: Context,
         uri: Uri,
@@ -158,8 +158,8 @@ object SelfAdapt {
             if (payload == null || payload.isEmpty()) return@withContext fail("切不出 kernel 段")
             onProgress("kernel 段：${payload.size / 1024 / 1024} MiB")
 
-            // 内核常常是压缩的（荣耀 5.15 的镜像是 legacy LZ4：26 MiB → 58 MiB），
-            // 先还原成裸 Image；认不出格式就明说，不拿压缩字节去扫符号表。
+            
+            
             val raw = BootImage.toRawImage(payload) { onProgress(it) }
                 ?: return@withContext fail("kernel 段既不是裸 Image，也不是 LZ4/gzip（zstd/bzip2 暂不支持）")
             val image = raw.image
@@ -170,9 +170,9 @@ object SelfAdapt {
             val release = BootImage.kernelRelease(image)
             if (release.isNullOrBlank()) return@withContext fail("镜像里找不到内核版本串")
             onProgress("内核：$release")
-            // NTH-AN00 / 5.4.295-g0fb2656b2b50 这类内核原版 ghostlock 已逐字收录，
-            // 不需要也绝不应该现场做 profile：旧版解析器在这颗 5.4 镜像的旧 kallsyms
-            // 布局上还会报「没找到 offsets/base」，用户白等几分钟。直接给出正解。
+            
+            
+            
             if (EngineCatalog.GHOSTLOCK_KERNELS.contains(release)) {
                 return@withContext fail(
                     "$release 已由链路 A（原版 ghostlock）原生收录，无需自助适配；" +
@@ -180,7 +180,7 @@ object SelfAdapt {
                 )
             }
 
-            // ---- 结构偏移：有 BTF 用 BTF，没有就反汇编
+            
             var offsets: CfgGen.Offsets? = null
             var source = "code"
             onProgress("找内嵌 BTF…")
@@ -197,7 +197,7 @@ object SelfAdapt {
                 onProgress("镜像没有内嵌 BTF（这代内核裁掉了），改用指令挖掘")
             }
 
-            // ---- kallsyms
+            
             onProgress("扫描 kallsyms（约 5~20 秒）…")
             val found = KallsymsFinder.find(image) { msg -> onProgress(msg) }
                 ?: return@withContext fail("扫不到符号表（这版内核的 kallsyms 布局还没适配）")
@@ -217,7 +217,7 @@ object SelfAdapt {
             val off = offsets ?: return@withContext fail("结构偏移为空")
             off.pretty().lineSequence().filter { it.isNotBlank() }.forEach(onProgress)
 
-            // ---- call site
+            
             onProgress("反汇编 call site…")
             val call = CallSiteFinder.find(image, syms, found.relativeBase)
             if (call == null) {
@@ -233,9 +233,9 @@ object SelfAdapt {
                 return@withContext fail("缺必需符号：${missing.joinToString()}")
             }
 
-            // 【2026-11-20 修正】5.15.104 的日志：自助适配给出 k_itimer size=0x0、
-            // cred size=0xb0，check READY 但主链 sizes 实测 0xe8/0xe8 → cred 站点
-            // 与尺寸窗口全落空，连续 4 次 `cred leak failed`。这类 cfg 必须拒绝落盘。
+            
+            
+            
             if (off.itimerSize == 0 || off.credSize == 0) {
                 return@withContext fail(
                     "结构偏移不完整（k_itimer=${off.itimerSize} cred=${off.credSize}）：" +
@@ -244,9 +244,9 @@ object SelfAdapt {
             }
             val taskBytes = runCatching { Btf.parse(BootImage.extractBtf(image)!!).sizeOf("task_struct") }
                 .getOrNull() ?: 0x12C0
-            // 运行时 cred_jar 的 objsize 会被编译选项/对齐抬高（0xb0 → 0xe8），
-            // payload 的 cred 尺寸窗口以 cfg 的 CRED_REQ/CRED_ALLOC 为准；
-            // 现场读 slab 值比 BTF 的 sizeof 更贴近真实 kmem 记录。
+            
+            
+            
             val liveCred = liveSlabObjSize()
             val credReq = liveCred ?: off.credSize
             if (liveCred != null && liveCred != off.credSize) {
@@ -302,7 +302,7 @@ object SelfAdapt {
 
     private fun fail(msg: String) = Outcome(ok = false, message = msg)
 
-    /** 现场 cred_jar objsize：优先 sysfs，回落 /proc/slabinfo 第三列。 */
+                                                              
     private suspend fun liveSlabObjSize(): Int? {
         val r = ShizukuController.exec(
             "cat /sys/kernel/slab/cred_jar/object_size 2>/dev/null; " +

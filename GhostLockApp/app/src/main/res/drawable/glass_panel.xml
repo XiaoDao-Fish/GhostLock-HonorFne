@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 主面板底 -->
+                 
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/ds_surface_1" />
@@ -8,7 +8,7 @@
             <stroke android:width="1dp" android:color="@color/ds_outline_variant" />
         </shape>
     </item>
-    <!-- 顶部玻璃高光 -->
+                   
     <item
         android:left="1dp"
         android:top="1dp"
@@ -23,7 +23,7 @@
             <corners android:radius="23dp" />
         </shape>
     </item>
-    <!-- 左上霓虹青微光 -->
+                    
     <item
         android:left="1dp"
         android:top="1dp"

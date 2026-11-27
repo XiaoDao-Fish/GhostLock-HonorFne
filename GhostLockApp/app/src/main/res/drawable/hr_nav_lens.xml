@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- KernelSU 选中 lens：强调色 15% 透明填充 + 白色高光描边 + 顶部白光，
-     对应 FloatingBottomBar 里 accentColor.copy(0.15f) + pillHighlight + innerShadow。 -->
+                                                   
+                                                                                      
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">

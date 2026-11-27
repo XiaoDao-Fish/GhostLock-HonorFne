@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+                                                              
+                                                          
+                                                                       
+    <uses-sdk tools:overrideLibrary="top.yukonga.miuix.kmp.blur" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 
@@ -24,12 +31,12 @@
             </intent-filter>
         </activity>
 
-        <!--
-          REQUIRED by Shizuku: its server delivers the binder to this app through
-          this ContentProvider (authority = <applicationId>.shizuku). Without it
-          the app cannot acquire the binder, will NOT appear in Shizuku's
-          "应用管理" authorization list, and can never request permission.
-        -->
+            
+                                                                                 
+                                                                                
+                                                                         
+                                                                      
+           
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"
@@ -38,9 +45,9 @@
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
-        <!-- 「分享日志」：把 ghostlock_latest.log 作为附件发给 QQ，让用户自己选群聊。
-             target 34 下 file:// 会抛 FileUriExposedException，必须经 FileProvider
-             发 content:// URI；authority 与 Shizuku 的那个分开。 -->
+                                                              
+                                                                            
+                                                            
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -51,7 +58,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Legacy stub retained for compatibility; unused at runtime. -->
+                                                                           
         <service
             android:name=".RootUserService"
             android:exported="false" />

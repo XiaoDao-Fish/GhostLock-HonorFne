@@ -1,47 +1,71 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
     namespace = "com.ghostlock.honorfne"
-    compileSdk = 34
+    compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         applicationId = "com.ghostlock.honorfne"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 48
-        versionName = "3.2"
+        
+        
+        minSdk = 31
+        targetSdk = 37
+        versionCode = 59
+        versionName = "4.10"
     }
 
     buildTypes {
+        
+        
+        
+        
+        
+        
+        
+        
+        
         release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         debug {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
-    // 不再需要 AIDL：改用 Shizuku.newProcess 直接在 shell 权限下执行命令。
+    
     buildFeatures {
-        viewBinding = true
+        
+        
+        
+        viewBinding = false
         buildConfig = true
+        
+        compose = true
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    // Prebuilt binaries (kernelsu.ko, ksud, ... ) must NOT be compressed or
-    // aapt would try to align/strip them. Keep assets uncompressed.
+    
+    
     androidResources {
         noCompress += listOf("ko", "zip", "apk", "bin")
     }
@@ -53,17 +77,40 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
+}
+
 dependencies {
-    // Shizuku API: lets this app obtain `shell` (uid 2000) privilege, which is
-    // exactly what `adb shell` provides. The exploit self-escalates to root.
-    // provider is REQUIRED for Shizuku (not Sui): it delivers the binder to us.
+    
+    
+    
     implementation("rikka.shizuku:api:11.0.2")
     implementation("rikka.shizuku:provider:11.0.2")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    
+    
+    
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+    
+    implementation(platform("androidx.compose:compose-bom:2026.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.foundation:foundation")
+    
+    implementation("androidx.compose.material:material-icons-core")
+    implementation("androidx.activity:activity-compose:1.13.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.11.0")
+
+    
+    
+    implementation("top.yukonga.miuix.kmp:miuix-ui-android:0.9.3")
+    implementation("top.yukonga.miuix.kmp:miuix-blur-android:0.9.3")
+    implementation("top.yukonga.miuix.kmp:miuix-icons-android:0.9.3")
 }

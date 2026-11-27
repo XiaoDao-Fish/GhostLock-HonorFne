@@ -1,19 +1,19 @@
 package com.ghostlock.honorfne
 
-/**
- * 移植自 ExtractKit 的 `ConfigGen`（只取「从 boot.img 现场生成 profile」用到的那一小块）：
- * 结构偏移、符号清单、`device.cfg` 的 336 字节二进制编码。
- *
- * 内置 75 条 profile 那张大表没有搬过来 —— HonorRoot 用的是离线的
- * `assets/extractkit/cfg.bin`（由 tools/gen_extractkit_assets.py 从 ConfigGen 生成，
- * 字节布局完全一致）。这里只补上「本机导入 boot.img 现场生成」这一条新路径，
- * 两条路径最终产出同一份 336 B 格式，payload 端无需任何改动。
- *
- * 字段顺序必须与 payload/src/runtime_cfg.h 的 load_device_cfg() 一一对应。
- */
+   
+                                                                    
+                                        
+  
+                                                
+                                                                               
+                                             
+                                        
+  
+                                                              
+   
 object CfgGen {
 
-    /** 从 kallsyms 里取的结构偏移。 */
+                              
     data class Offsets(
         val itimerSize: Int,
         val itimerNode: Int,
@@ -43,7 +43,7 @@ object CfgGen {
         private fun hex(v: Int) = "0x" + Integer.toHexString(v)
     }
 
-    /** 现场能算的 call site / 尺寸，其余取默认（与 ExtractKit 的默认值一致）。 */
+                                                           
     data class Measured(
         val evCacheAlloc: Int = 269,
         val evCacheFree: Int = 272,
@@ -66,7 +66,7 @@ object CfgGen {
         val selinuxSidKernel: Int = 1,
     )
 
-    /** 需要从 kallsyms 里拿到的符号（panic_on_warn 为条件必需）。 */
+                                                    
     val REQUIRED_SYMBOLS = listOf(
         "do_timer_create",
         "selinux_state",
@@ -77,10 +77,10 @@ object CfgGen {
         "init_groups",
     )
 
-    /** 真正决定「能不能拼出一份能跑的 cfg」的符号。 */
+                                   
     val CORE_SYMBOLS = REQUIRED_SYMBOLS - "panic_on_warn"
 
-    /** 拼 fake cred 绕不开的锚点（5.10 没有 ucounts）。 */
+                                               
     val ANCHOR_SYMBOLS = listOf("root_user", "init_user_ns", "init_groups")
 
     fun offsetsFromBtf(btf: Btf): Offsets {
@@ -106,10 +106,10 @@ object CfgGen {
         )
     }
 
-    /**
-     * 没有 BTF 的镜像用指令挖偏移（原样移植 ConfigGen.offsetsFromCode）：
-     * 三处 `kmem_cache_create` 的 sizeof 参数 + `exit_creds` 清 cred 的 STR XZR。
-     */
+       
+                                                        
+                                                                          
+       
     fun offsetsFromCode(image: ByteArray, syms: Map<String, Long>, base: Long): Offsets? {
         fun fileOff(name: String): Int? {
             val a = syms[name] ?: return null
@@ -203,7 +203,7 @@ object CfgGen {
         )
     }
 
-    /** 生成 payload 运行时读的 device.cfg（336 字节），与 ExtractKit 逐字节一致。 */
+                                                                  
     fun emitCfgBlob(syms: Map<String, Long>, off: Offsets, m: Measured): ByteArray {
         require(ANCHOR_SYMBOLS.all { (syms[it] ?: 0L) != 0L }) { "kallsyms 缺 cred 锚点符号" }
         val timerSym = syms["do_timer_create"] ?: 0L
@@ -263,7 +263,7 @@ object CfgGen {
         return out.toByteArray()
     }
 
-    /** 是否为一份合法的 device.cfg（payload 认的 magic + 336 B）。 */
+                                                         
     fun isCfg(blob: ByteArray?): Boolean {
         if (blob == null || blob.size != 336) return false
         return String(blob.copyOfRange(0, 8), Charsets.US_ASCII) == "EXKCFG01"

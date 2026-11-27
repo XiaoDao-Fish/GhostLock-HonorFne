@@ -4,8 +4,8 @@
     <style name="HonorRoot.Text" />
     <style name="HonorRoot.Button" />
 
-    <!-- Bold, tight type. No wide tracking, no thin display weights:
-         this is a tool, the numbers have to look machined. -->
+                                                                     
+                                                               
 
     <style name="HonorRoot.Text.Display">
         <item name="android:fontFamily">sans-serif-black</item>

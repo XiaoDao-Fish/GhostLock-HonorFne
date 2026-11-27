@@ -2,7 +2,7 @@
 <resources>
     <color name="ic_launcher_background">#FF1F5FE0</color>
 
-    <!-- HonorRoot tokens, DARK. Same names as values/colors.xml. -->
+                                                                     
 
     <color name="ds_primary">#FF4F8BFF</color>
     <color name="ds_primary_pressed">#FF3B6FD9</color>
@@ -86,8 +86,8 @@
     <color name="miuix_log_hint">#FFB9C0C8</color>
     <color name="miuix_error">#FFF0736E</color>
 
-    <!-- KernelSU 3.3.0 悬浮底栏 + 液态玻璃：深色填充 #12151A / 40% 透明，
-         白色高光描边 + 双光源冷光带（对应 FloatingBottomBar 的 iosIndicatorSpecular）。 -->
+                                                          
+                                                                          
     <color name="ksu_glass_fill">#B312151A</color>
     <color name="ksu_glass_stroke">#2EFFFFFF</color>
     <color name="ksu_glass_sheen">#14FFFFFF</color>

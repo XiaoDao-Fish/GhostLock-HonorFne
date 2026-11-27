@@ -1,14 +1,14 @@
 package com.ghostlock.honorfne
 
-// 移植自 ExtractKit（com.extractkit.app）：只改包名，算法与常量保持原样。
 
-/**
- * 最小 BTF 读取器（Kotlin 版）。
- *
- * 与 tools/gen-config.py 里那份 Python 实现一一对应：同样的 kind 变长规则、
- * 同样的 BFS 成员查找（真实内核里 k_itimer.it 是匿名 union，必须下探）。
- * 数据源是设备上的 /sys/kernel/btf/vmlinux，不用 PC。
- */
+
+   
+                        
+  
+                                                         
+                                                  
+                                          
+   
 class Btf private constructor(private val raw: ByteArray) {
 
     data class Member(val name: String, val typeId: Int, val byteOffset: Int)
@@ -83,7 +83,7 @@ class Btf private constructor(private val raw: ByteArray) {
 
             val members = ArrayList<Member>()
             when (kind) {
-                4, 5 -> {                       // struct / union
+                4, 5 -> {                       
                     for (m in 0 until vlen) {
                         if (off + 12 > typesEnd) break
                         val mo = u32(raw, off)
@@ -94,13 +94,13 @@ class Btf private constructor(private val raw: ByteArray) {
                         members.add(Member(name(mo), mt, bitOff / 8))
                     }
                 }
-                6, 13 -> off += vlen * 8   // enum / func_proto
-                15, 19 -> off += vlen * 12 // datasec / enum64
-                1 -> off += 4              // int
-                3 -> off += 12             // array
-                14 -> off += 4             // var
-                17 -> off += 4             // decl_tag
-                else -> Unit               // ptr/fwd/typedef/volatile/const/...
+                6, 13 -> off += vlen * 8   
+                15, 19 -> off += vlen * 12 
+                1 -> off += 4              
+                3 -> off += 12             
+                14 -> off += 4             
+                17 -> off += 4             
+                else -> Unit               
             }
             result.add(Type(id, name(nameOff), kind, sizeOrType, members))
             id++
@@ -108,16 +108,16 @@ class Btf private constructor(private val raw: ByteArray) {
         types.addAll(result)
     }
 
-    /** id 是 1 起连续分配的，直接按下标取，别线性扫（vmlinux 有十万级类型）。 */
+                                                     
     private fun typeById(id: Int): Type? = types.getOrNull(id - 1)
 
     fun struct(name: String): Type? =
         types.firstOrNull { (it.kind == 4 || it.kind == 5) && it.name == name }
 
-    /**
-     * 按名字取成员字节偏移。BFS 逐层下探（最浅命中优先），
-     * 这样 k_itimer → it(匿名 union) → cpu → node 能取到 0x78。
-     */
+       
+                                   
+                                                        
+       
     fun memberOffset(structName: String, member: String): Int? {
         val root = struct(structName) ?: return null
         var frontier = listOf(root.id to 0)

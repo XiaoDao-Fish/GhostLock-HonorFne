@@ -5,21 +5,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-/**
- * 链路 B：ExtractKit 的 CVE-2026-98260 静态 payload + KernelSU late-load。
- *
- * 与链路 A（GrindRunner / GhostLock）是完全不同的漏洞原语，所以不能靠给它
- * 的白名单加字符串来「适配」。这里按内核查 EngineCatalog 生成的 336 B
- * device.cfg，把它和 payload 一起下发到 /data/local/tmp/extract-kit，然后
- *   自检 check → 主链 fake → ksud late-load → su -c id 验证 uid=0
- *
- * 关键约束（来自 ExtractKit 官方实现，踩过坑）：
- *  - 环境变量必须贴在 ./payload 前面：`VAR=x cd dir && ./bin` 只给 cd 设了变量。
- *  - 成功后 exploit 进程必须驻留（页上承载着活着的 cred），绝不能 kill；
- *    所以这里和 W1/W2 一样用后台 nohup 式启动，stdout 全部脱离 Shizuku 管道。
- *  - 同一次开机只允许成功一次（UAF 是一次性资源），用 boot_id 守卫。
- *  - 唯一成功判据是 shell 域 `su -c id` 真的返回 uid=0，命中日志标记不算。
- */
+   
+                                                                    
+  
+                                                   
+                                               
+                                                              
+                                                            
+  
+                                
+                                                               
+                                                 
+                                                         
+                                            
+                                                     
+   
 class ExtractKitRunner(
     private val context: Context,
     private val profileIdx: Int,
@@ -27,19 +27,19 @@ class ExtractKitRunner(
     private val log: (String) -> Unit,
     private val status: (String) -> Unit
 ) {
-    /** 本次开机的 boot_id，用于「同一次开机不重复跑同一个必败的自检」。 */
+                                               
     private var bootId: String = ""
 
-    /**
-     * 同开机失败闩的键。
-     *
-     * 内置 profile 按序号；自助适配 profile 按 **cfg 内容 hash**——用户重导
-     * boot.img 生成新 cfg 后 key 变化，闩自动解除；同一份 cfg 重跑则命中。
-     * 2026-11-20 MAG-AN00 日志：27 分钟内点了 3 次自助适配，每次都重下
-     * 2.3 MB 物料 + 跑 check + 主链，而 cred 站点/task 事件这类内核属性
-     * 由 cfg 决定，没换 cfg 就不会变。cfg 读不到时返回 null（不设闩）。
-     */
-    /** 本次链路的内核串；reportCheckFailure 里算闩键要用。由 run() 赋值。 */
+       
+                
+      
+                                                          
+                                                     
+                                                    
+                                                       
+                                                 
+       
+                                                         
     private var runningKernel = ""
 
     private fun latchKey(kernel: String): String? {
@@ -65,21 +65,21 @@ class ExtractKitRunner(
         )
     }
 
-    /**
-     * 内置 profile 是否只有结构偏移（offsets-only）。
-     *
-     * 判据是 device.cfg 第 1 个 u64（字节 12..19）＝ staticTimer：payload 的
-     * load_device_cfg() 一旦发现 timer/low21 为 0，就强制 g_offsets_only=1、
-     * fake_stage=0。此后 calibrate_base() 的两条 call_site 通路（列扫描、
-     * 逐样本反推）都以 STATIC_TIMER_SITE 为前提，全部被跳过，只剩
-     * 「order-1 页 + slab 页配对」兜底；而那条兜底把记录里的 struct page*
-     * 当 pfn 左移 12 位，还把直映射区间写死在 39 位 VA 的
-     * 0xffffffc000000000..0xffffffd000000000，只会打印 candidates=0。
-     *
-     * 所以这类 profile 的 check 必然 NOT_READY，fake 主链也已被 payload
-     * 自己关掉 —— 跑一轮就是白等 + 错归因（DNP-AN00 / 6.1.157 / #23 实证，
-     * 2026-11-18：recs=1379~3414、timer_allocs=512 都正常，唯独 base=0）。
-     */
+       
+                                         
+      
+                                                                 
+                                                                   
+                                                             
+                                              
+                                                       
+                                         
+                                                                
+      
+                                                           
+                                                         
+                                                                 
+       
     private fun builtinOffsetsOnly(): Boolean {
         if (profileIdx < 0 || profileIdx == SelfAdapt.CUSTOM_PROFILE) return false
         val cfg = EngineCatalog.cfgFor(context, profileIdx) ?: return false
@@ -87,11 +87,11 @@ class ExtractKitRunner(
             .order(java.nio.ByteOrder.LITTLE_ENDIAN).long == 0L
     }
 
-    /**
-     * 旧版自助适配可能存下 k_itimer / cred 尺寸为 0 的 cfg：自检照样 READY，
-     * 但主链 cred 扫描窗口是空的（5.15.104 实证连续 4 次 cred leak failed）。
-     * 新版 SelfAdapt 已拒绝生成这种 cfg，这里拦住历史残留。
-     */
+       
+                                                         
+                                                            
+                                         
+       
     private fun staleCustomCfg(kernel: String): String? {
         if (profileIdx != SelfAdapt.CUSTOM_PROFILE) return null
         val cfg = SelfAdapt.cfgFor(context, EngineCatalog.kernelKey(kernel)) ?: return null
@@ -104,7 +104,7 @@ class ExtractKitRunner(
         }
     }
 
-    /** 与 ExtractEngine 的 PER_FAMILY 回落规则一致：5.x 用分支专用版，6.x 用通用版。 */
+                                                                   
     private fun pickPayload(kernel: String): String {
         val family = SelfAdapt.family(kernel)
         return when (family) {
@@ -144,10 +144,10 @@ class ExtractKitRunner(
         }
 
         status("ExtractKit 链：98260 → KernelSU late-load")
-        // 结构性死路挡在开工之前：这批 profile 没有内核 text 符号，自检一定
-        // base=0，fake 主链也已被 payload 自己关掉（fake_stage=0，见
-        // builtinOffsetsOnly 的注释）。以前照跑，用户只看到「tracefs 权限被拒」
-        // 这种错归因，还会反复重试、每次都重下 9 MB 物料。
+        
+        
+        
+        
         if (builtinOffsetsOnly()) {
             log("==== 链路 B：ExtractKit CVE-2026-98260（profile #$profileIdx $profileLabel）====")
             log("[ek] 内核：$kernel")
@@ -175,7 +175,7 @@ class ExtractKitRunner(
             status("自助适配 profile 残缺，请重新导入 boot.img")
             return@withContext
         }
-        // 进入提权链路就把前置条件结论清掉，之后由本链路写入真正的失败/成功结论。
+        
         LogStore.clearFatalIfStartsWith("Shizuku")
         LogStore.setProgress("正在提权，结果出来后会写在这里")
         val who = if (profileIdx == SelfAdapt.CUSTOM_PROFILE) "自助适配 profile"
@@ -190,10 +190,10 @@ class ExtractKitRunner(
         ).out.trim()
         val prefs = context.getSharedPreferences("extractkit", Context.MODE_PRIVATE)
         bootId = boot
-        // 同一次开机 + 同一份 cfg，结论不会因为再点一次而改变（内核、cfg、事件
-        // 集合都没动）。WKL-AN20 12 分钟点 4 次、MAG-AN00 27 分钟点 3 次，每次
-        // 都要重下 2.3 MB 物料 + 跑 check + 主链，纯属空转。自助适配 profile 也
-        // 设闩，键里带 cfg 内容 hash：重导 boot.img 生成新 cfg 后自动解除。
+        
+        
+        
+        
         val latchLabel = if (profileIdx == SelfAdapt.CUSTOM_PROFILE) "自助适配 profile"
                          else "profile #$profileIdx"
         val latchK = latchKey(kernel)
@@ -227,14 +227,14 @@ class ExtractKitRunner(
             return@withContext
         }
 
-        // payload 硬编码 /sys/kernel/tracing，先探一次写入能力。
-        //
-        // 【2026-11-17 MAG-AN00 实证】这个探针不能当成死刑判决：同一台机器、
-        // 同一颗 5.15.180，早先几次 payload check 都是 5 秒 READY 并进了主链，
-        // 而 2.6.4 因为探针写 enable 被拒就直接中止。原因是两者不等价——探针只
-        // 测「shell 直接写 enable/trigger」，payload 走的是 trigger +
-        // enable_event 另一套开法。所以探针只作诊断，最终以 payload 的 check
-        // 为准：它 READY 就继续，它 NOT_READY 才写结论。
+        
+        
+        
+        
+        
+        
+        
+        
         val tf = EnvProbe.tracefs()
         tf.detail.forEach { log("[ek][tracefs] ${it.take(150)}") }
         log("[ek][tracefs] ${tf.summary}")
@@ -245,9 +245,9 @@ class ExtractKitRunner(
             )
         }
 
-        // 内核级「结构性不可用」记录（见 reportCheckFailure 的 kmemBlocked）。
-        // 只在预检仍不可写时拦：哪天系统/内核更新让 shell 真能写 enable/trigger
-        // （tf.usable=true），立刻清除并照常尝试，避免一次误判永久挡住用户。
+        
+        
+        
         val deadKey = deadKernelKey(kernel)
         val dead = prefs.getString(deadKey, null)
         if (dead != null) {
@@ -273,8 +273,8 @@ class ExtractKitRunner(
         log("[ek] 选用 payload：$payload")
 
         if (!selfCheck(payload, quick = !tf.usable, tfNote = tf.summary.takeIf { !tf.usable })) {
-            // 具体原因已由 reportCheckFailure() 写进致命问题，这里不再用
-            // 「探测不到内核基址」这类没有证据的泛化结论覆盖它。
+            
+            
             log("[ek][中止] 只读自检未通过，不会硬上主链（官方 chain_uid0 同款约束）")
             status("自检未通过，已中止")
             return@withContext
@@ -290,10 +290,10 @@ class ExtractKitRunner(
             log("[ek][失败] ${res.reason}")
             LogStore.setFatal("本轮未成功：${res.reason}", LogStore.RANK_RESULT)
             status("未拿到 root：${res.reason}")
-            // 2026-11-20：check READY 但主链失败也要设同开机闩。MAG-AN00 的日志里
-            // 用户同一次开机点了 4 次，每次都重下 2.3 MB 物料 + 跑 check + 主链，
-            // 而 cred 站点/task 分配事件这类内核属性重跑不会变。键与自检失败闩相同
-            // （自助适配按 cfg hash），重启或重导 boot.img 后自动解除。
+            
+            
+            
+            
             val k = latchKey(kernel)
             if (k != null && boot.isNotBlank()) {
                 prefs.edit().putString(k, "$boot|${res.reason}").apply()
@@ -301,12 +301,12 @@ class ExtractKitRunner(
         }
     }
 
-    /** 部署 payload + device.cfg，并确保目标根管理器已安装。 */
+                                                
     private suspend fun deploy(kernel: String): Boolean = withContext(Dispatchers.IO) {
         log("[ek][deploy] 下发 payload 与 device.cfg 到 $WORK …")
 
-        // 工作目录预检（借鉴 MagicRoot ensureWorkDirWritable）：目录只读是这类
-        // 部署静默失败的头号原因。先探一次，只读就轮换目录重建，仍不行则写明原因。
+        
+        
         if (!ensureWorkDirWritable()) {
             LogStore.setFatal("提权下发失败：$WORK 目录不可写，且自动重建未成功")
             return@withContext false
@@ -326,7 +326,7 @@ class ExtractKitRunner(
                 ShizukuController.exec("chmod 755 $WORK/$p", 15_000)
                 log("[ek][deploy] $p (${data.size} bytes) ✔")
             } else {
-                // 诊断写全：退出码 / stderr / 目标与父目录状态，不再是一句「写入失败」
+                
                 log("[ek][deploy][错误] ${outcome.diagnostic()}")
                 if (ShizukuController.channelDead(
                         ShizukuController.ExecResult(outcome.code, "", outcome.err)
@@ -340,8 +340,8 @@ class ExtractKitRunner(
             }
         }
 
-        // 自助适配：device.cfg 用用户导入的 boot.img 现场生成的那份；
-        // 否则从内置 cfg.bin 里按下标取。
+        
+        
         val cfg: ByteArray?
         val cfgFrom: String
         if (profileIdx == SelfAdapt.CUSTOM_PROFILE) {
@@ -362,9 +362,9 @@ class ExtractKitRunner(
             LogStore.setFatal("提权下发失败：device.cfg 写入失败，详见日志诊断")
             return@withContext false
         }
-        // payload 先读 $WORK/device.cfg，再读 /data/local/tmp/device.cfg。
-        // 回退路径在公共 sticky 目录里，可能被上一次 root 会话占用；主路径
-        // 已就绪就不该因为副本写不进去而整链失败。
+        
+        
+        
         val w2 = ShizukuController.writeFileDetailed(cfg, CFG_FALLBACK)
         if (w2.ok) {
             log("[ek][deploy] device.cfg ${cfg.size} B 已写 $CFG 与 $CFG_FALLBACK（来源：$cfgFrom）")
@@ -372,13 +372,13 @@ class ExtractKitRunner(
             log("[ek][deploy][警告] 备用 cfg 写入失败（主路径已就绪，继续）：${w2.diagnostic()}")
         }
 
-        // ksu_stage.sh 由 payload 自行落地，但它要从目标管理器 APK 里找 libksud.so
-        // 才能 late-load；管理器没装会「提权成功但管理器不工作」。
-        //
-        // 【2026-11-20 修正】这里必须用与内置 kernelsu.ko 配套的**官方**包，
-        // 不能用工作台选择：7kimisu / SukiSU-Ultra / BakaSU 的 libksud.so 是
-        // 各自分支编译的，部署成 /data/adb/ksud 后与官方模块协议不匹配，
-        // 结果是「payload 提权成功、su 却起不来」。第三方包只负责最后被拉起展示。
+        
+        
+        
+        
+        
+        
+        
         val mgrPkg = ManagerCatalog.OFFICIAL_PKG
         val chosen = ManagerSelection.selected(context)
         log("[ek][deploy] ksud 来源管理器：$mgrPkg（与内置 kernelsu.ko 配套）")
@@ -405,7 +405,7 @@ class ExtractKitRunner(
             log("[ek][deploy] 管理器已安装：$mgrPkg")
         }
 
-        // 关键文件复检：`cat` 返回 0 不代表真的落地（Shizuku 静默失效时会空转）。
+        
         val check = ShizukuController.exec(
             "test -s $CFG && test -x $WORK/cve-2026-98260-uid0 && echo EK_DEPLOY_OK",
             20_000
@@ -414,7 +414,7 @@ class ExtractKitRunner(
         if (ok) {
             log("[ek][deploy] 完成并校验通过 ✔")
         } else {
-            // 复检失败时把每个文件的实际状态都列出来，便于定位是哪个没落地
+            
             val stat = ShizukuController.exec(
                 "ls -l $CFG $CFG_FALLBACK $WORK/cve-2026-98260-uid0 2>&1; " +
                     "echo ---; getenforce 2>&1", 15_000
@@ -426,13 +426,13 @@ class ExtractKitRunner(
         return@withContext ok
     }
 
-    /**
-     * 工作目录预检 + 只读自愈（借鉴 MagicRoot ensureWorkDirWritable）。
-     * /data/local/tmp/extract-kit 若被前一次残留搞成只读，`cat >` 会静默失败，
-     * 这正是日志里反复「写入 XXX 失败」却查不到原因的根源。
-     */
+       
+                                                         
+                                                             
+                                    
+       
     private suspend fun ensureWorkDirWritable(): Boolean {
-        // 命令通道先探活：通道断时不要误判成目录问题
+        
         val probe = ShizukuController.shellProbe()
         if (!ShizukuController.probeOk(probe)) {
             log("[ek][deploy][错误] 命令通道探测失败（code=${probe.code} err=${probe.err.trim()}）")
@@ -441,9 +441,9 @@ class ExtractKitRunner(
         val mk = ShizukuController.exec("mkdir -p $WORK/fam /data/local/tmp/managers 2>&1", 15_000)
         log("[ek][deploy] 目录准备 code=${mk.code} ${mk.out.trim().take(120)}")
 
-        // 只判目录可写不够：真机日志里目录是 WRITABLE，但同名 payload 可能是
-        // 上一次 root 会话留下的只读文件、或仍在执行的二进制，`cat >` 会在
-        // 重定向阶段退出（父进程只看到 EPIPE）。所以直接对目标文件真写一次。
+        
+        
+        
         suspend fun state(): String = ShizukuController.exec(
             "if [ ! -d '$WORK' ]; then echo MISSING; " +
                 "elif [ ! -w '$WORK' ]; then echo READONLY; " +
@@ -479,14 +479,14 @@ class ExtractKitRunner(
         return false
     }
 
-    /**
-     * 只读自检：chmod/ld_device_cfg/tracefs 可用性，不改内核数据。
-     *
-     * [quick] 用于 tracefs 预检失败的情况：预算收到 25s（正常 90s）。这样做是
-     * 为了既不让「探针误判但 check 能过」的机器被错误拦下（MAG-AN00 的 check
-     * 只要 5 秒），也不让真正跑不了的机器再等满 90 秒。
-     * [tfNote] 只是诊断：失败时附在结论后面，不作为判定依据。
-     */
+       
+                                                   
+      
+                                                       
+                                                     
+                                   
+                                       
+       
     private suspend fun selfCheck(
         payload: String,
         quick: Boolean = false,
@@ -494,17 +494,17 @@ class ExtractKitRunner(
     ): Boolean {
         val budget = if (quick) 25 else 90
         log("[ek][check] 只读自检 ./$payload check（出现结论立即返回，最长 ${budget}s）…")
-        // 记录 payload 自有日志的当前长度：它每次运行都会 append 到
-        // /data/local/tmp/cve-2026-98260.log，而 stdout 那份（check.log）会被
-        // 我们自己的 grep 白名单过滤掉关键行（2.6.6 就漏掉了整段 [base]）。
-        // 先存偏移，跑完只取本轮增量，判因不再依赖白名单和 tail -40。
+        
+        
+        
+        
         ShizukuController.exec(
             "rm -f $WORK/check.log; " +
                 "stat -c %s /data/local/tmp/cve-2026-98260.log 2>/dev/null > $WORK/.logoff; " +
                 "[ -s $WORK/.logoff ] || echo 0 > $WORK/.logoff; " +
-                // 这条 payload 的编译期默认管理器写死成 com.sukisu.ultra（源码
-                // g_mgr_env 的初值），自检阶段也会打印它；显式传官方包名，
-                // 避免日志里出现一个与本机模块不配套的第三方包名。
+                
+                
+                
                 "( cd $WORK && EXTRACTKIT_MGR=${ManagerCatalog.OFFICIAL_PKG} " +
                 "./$payload check > $WORK/check.log 2>&1 </dev/null ) " +
                 ">/dev/null 2>&1 &",
@@ -519,8 +519,8 @@ class ExtractKitRunner(
                 log("[ek][check] ✔ 自检通过（[check] READY，${elapsed(started)}s）")
                 return true
             }
-            // payload 自己都在第一行承认写不了 tracefs，不用再等它把几十个事件
-            // 逐个试一遍（6.1.157 上这一步就要 90 秒）。
+            
+            
             if (out.contains("[check] tracefs=no")) {
                 log("[ek][check] payload 自报 tracefs 不可写（${elapsed(started)}s），立即收尾")
                 return reportCheckFailure(tfNote)
@@ -536,14 +536,14 @@ class ExtractKitRunner(
 
     private fun elapsed(start: Long): Long = (System.currentTimeMillis() - start) / 1000
 
-    /**
-     * 取 payload 自有日志里「本轮」的增量。
-     *
-     * payload 的 logf() 同时写 stdout 和 /data/local/tmp/cve-2026-98260.log
-     * （0644，shell 可读）。stdout 那份会经过我们的 grep 白名单与 tail -40，
-     * 2.6.6 的日志里整段 [base] 因此消失，用户只看到「自检未输出 READY」。
-     * 这里按 selfCheck 事前记下的偏移取增量，拿到的是一份不过滤的完整记录。
-     */
+       
+                              
+      
+                                                                       
+                                                          
+                                                   
+                                               
+       
     private suspend fun payloadLogDelta(): String? {
         val off = ShizukuController.exec("cat $WORK/.logoff 2>/dev/null", 8_000)
             .out.trim().toLongOrNull() ?: return null
@@ -556,12 +556,12 @@ class ExtractKitRunner(
         return out
     }
 
-    /**
-     * 从 payload 日志里挑出真正有信息量的行，并据此判定首因。
-     *
-     * 优先用 payload 自有日志的本轮增量（完整、不过滤）；取不到才回落到
-     * grep check.log 的白名单方式。
-     */
+       
+                                       
+      
+                                            
+                             
+       
     private suspend fun reportCheckFailure(tfNote: String? = null): Boolean {
         val delta = payloadLogDelta()
         val lines: List<String>
@@ -586,26 +586,26 @@ class ExtractKitRunner(
         }
         lines.takeLast(45).forEach { log("[ek][check] ${it.take(170)}") }
         val all = lines.joinToString("\n")
-        // payload 自己打印的计数，直接拿来判因，别靠猜。
+        
         fun num(re: Regex): Int? = re.find(all)?.groupValues?.get(1)?.toIntOrNull()
         val enableOk = num(Regex("""\[trace\] enable ok=(\d+)"""))
         val enableFail = num(Regex("""\[trace\] enable fail=(\d+)"""))
         val enableTotal = if (enableOk != null && enableFail != null) enableOk + enableFail else null
         val recs = num(Regex("""\[base\] recs=(\d+)"""))
-        // 事件候选数：payload 只认 kmem_cache_alloc* / kmem_cache_free / mm_page_*，
-        // 新内核改了事件名时这个数会塌到个位数，直接决定「有没有记录可解析」。
+        
+        
         val evCand = num(Regex("""\[trace\] kmem 事件候选 (\d+) 个"""))
-        val baseZero = all.contains("[check] base=0")      // payload 打的是 base=0，不是 0x0
+        val baseZero = all.contains("[check] base=0")      
         val layFallback = all.contains("读不到 events/kmem/*/format")
-        // 内置 profile 早期已挡掉（builtinOffsetsOnly），能走到这里的只可能是自助
-        // 适配 profile：同样要能说清「是 cfg 缺 text 符号，而不是 tracefs 被拒」。
+        
+        
         val cfgNoTimer = builtinOffsetsOnly()
-        // 【2026-11-20 WKL-AN20 / 6.18.21 实证】payload 侧 enable 只成功 1 次、
-        // 5 次被拒，recs=0。那 1 次成功的是 sched_switch 的 enable（与 kmem 无关），
-        // 4 个 kmem 事件的 trigger/enable_event 全被拒。App 侧预检同样 enable=deny、
-        // trigger=deny，目录是 drwxr-xr-x root readtracefs——shell 能读目录，
-        // 但写事件开关要 root。这不是 cfg 能修的问题，换 profile、重导 boot.img
-        // 都不会变，属于结构性不可用。
+        
+        
+        
+        
+        
+        
         val kmemBlocked = enableOk != null && enableFail != null &&
             enableFail >= 5 && enableOk <= 1 && recs == 0
         val cause = when {
@@ -614,8 +614,8 @@ class ExtractKitRunner(
             kmemBlocked -> "kmem 事件开启只成功 $enableOk/$enableTotal 次（$enableFail 次被拒），" +
                 "唯一成功的不是 kmem 事件；该内核把 events/kmem 的 enable/trigger 限制为 root-only，" +
                 "payload 以 uid 2000 无法开启，链路 B 在本机不可用"
-            // holder 的 self_enable=0 是「事件规则装上了但事件本身没开」，这种
-            // 情况下 rss_stat 永不触发，enable_event 规则一条都不会生效 → recs=0。
+            
+            
             baseZero && recs == 0 && all.contains("self_enable=0") ->
                 "kmem 事件没能真正打开（holder self_enable=0），payload 抓不到任何记录（base=0）"
             baseZero && recs == 0 -> "已装 ${enableOk ?: "?"} 条开事件规则，但一条记录都没抓到（base=0" +
@@ -624,8 +624,8 @@ class ExtractKitRunner(
                 else "") + "）"
             baseZero && (recs ?: 0) > 0 -> "抓到 $recs 条记录却解析不出基址（base=0" +
                 when {
-                    // 记录抓到了、事件也开了，唯一缺的是 cfg 里的 do_timer_create：
-                    // 说明问题在 profile 符号，不在权限，重试/换网络都没用。
+                    
+                    
                     cfgNoTimer -> "，device.cfg 没有内核 text 符号，call_site 校准无路可走"
                     layFallback -> "，事件 format 读不到、按固定偏移解析失败"
                     else -> ""
@@ -639,21 +639,21 @@ class ExtractKitRunner(
             else -> "自检未输出 READY"
         }
         log("[ek][check][结论] $cause")
-        // 头部只留结论 + 一条短证据：探针那段完整权限矩阵已经写进正文，
-        // 全塞进致命问题会把头部撑成五行，反而看不到真正的首因。
+        
+        
         val short = tfNote?.let {
             "；tracefs 直写 enable=deny（预检），payload 侧已开事件 ${enableOk ?: "?"} 个"
         } ?: ""
         val prefs = context.getSharedPreferences("extractkit", Context.MODE_PRIVATE)
-        // 闩：同一次开机 + 同一份 cfg 不再重复跑（结果不可能变）。自助适配按
-        // cfg 内容 hash 建键，重导 boot.img 后自动失效。
+        
+        
         val k = latchKey(runningKernel)
         if (bootId.isNotBlank() && k != null) {
             prefs.edit().putString(k, "$bootId|$cause").apply()
         }
-        // 结构性不可用再记一笔**不绑 boot**的：换一次开机、重导一次 boot.img
-        // 都改不了内核的 tracefs 权限，用户却会因此重跑一整轮（2.3 MB 物料 +
-        // 25 s check）。下一次进入链路 B 时若预检仍不可写，直接给结论。
+        
+        
+        
         if (kmemBlocked && runningKernel.isNotBlank()) {
             prefs.edit().putString(deadKernelKey(runningKernel), cause).apply()
             log("[ek][判定] 已按内核记下「链路 B 结构性不可用」；重导 boot.img 不会解除，需系统/内核更新")
@@ -666,22 +666,22 @@ class ExtractKitRunner(
         return false
     }
 
-    /** 内核级「链路 B 结构性不可用」记录的键；与 boot_id / cfg 无关。 */
+                                                   
     private fun deadKernelKey(kernel: String): String =
         "dead_kernel_${kernel.trim().hashCode()}"
 
-    /** 主链结果：失败必须带得出原因，不能只写「未拿到 root」。 */
+                                         
     private data class FakeOutcome(val ok: Boolean, val reason: String)
 
     private data class FakeProbe(val count: Int?, val tail: String, val boot: String, val lost: Boolean)
 
-    /**
-     * 一次命令同时取「payload 进程数 + 当前 boot_id + 日志尾」。
-     *
-     * boot_id 是关键：主链把内核打崩重启时，fake.log 随 /data/local/tmp 一起
-     * 消失，旧实现只会看到空字符串，然后一路空转到 420 秒（W2 踩过同一个坑）。
-     * 现在只要 boot_id 变了就立刻收尾，并把「内核崩溃重启」作为结论。
-     */
+       
+                                               
+      
+                                                           
+                                               
+                                           
+       
     private suspend fun fakeProbe(): FakeProbe {
         val r = ShizukuController.exec(
             "pidof 'cve-2026-98260-' 2>/dev/null | wc -w; " +
@@ -698,21 +698,21 @@ class ExtractKitRunner(
         return FakeProbe(count, tail, boot, lost)
     }
 
-    /**
-     * 主链；后台驻留，轮询日志，最后只认 su -c id 的 uid=0。
-     *
-     * 【2026-11-17 MAG-AN00 实证】23:33:48 启动主链后设备直接重启（boot_id
-     * 7662dccc → 9f10553a），日志里再没有任何一行结论，用户只看到「正在提权」
-     * 停在那里。现在每 10 秒同时看三件事：boot_id、payload 进程数、日志尾；
-     * 连续两次（20 秒）确认进程没了就判 EXITED；boot_id 变了直接判 REBOOTED。
-     */
+       
+                                          
+      
+                                                           
+                                                    
+                                                   
+                                                        
+       
     private suspend fun runFake(payload: String, bootAtStart: String): FakeOutcome {
         log("[ek][fake] 启动主链（成功后进程驻留，最长观察 420s）…")
         ShizukuController.exec(
             "rm -f $WORK/fake.log; " +
-                // EXTRACTKIT_MGR 决定 payload 从哪个 APK 取 libksud.so 与收尾拉起谁。
-                // 必须与内置 kernelsu.ko 配套（官方 3.3.0）；传第三方的包名会让它
-                // 部署一个协议不匹配的 ksud，提权成功也拿不到 su。
+                
+                
+                
                 "( cd $WORK && EXTRACTKIT_MGR=${ManagerCatalog.OFFICIAL_PKG} ./$payload fake " +
                 "> $WORK/fake.log 2>&1 </dev/null ) >/dev/null 2>&1 &",
             15_000
@@ -744,8 +744,8 @@ class ExtractKitRunner(
                 log("[ek][fake] 命中成功标记（${(ticks * 10)}s），继续确认 uid=0 …")
             }
             if (markerSeen && isRooted()) return FakeOutcome(true, "uid=0 已确认")
-            // payload 打印 done 说明它已经走完全部分支；若那时 uid 还不是 0，
-            // 后面不会再有新动作，继续等只是把 420 秒耗满（W2 踩过的坑）。
+            
+            
             if (s.contains("[+] done")) {
                 doneSeen++
                 if (doneSeen >= 2 && !isRooted()) {
@@ -759,10 +759,10 @@ class ExtractKitRunner(
                 log("[ek][fake][中止] payload 分支守卫拒绝运行（选错内核分支）")
                 return FakeOutcome(false, "payload 分支守卫拒绝运行（profile 与内核不匹配）")
             }
-            // 【2026-11-20 修正】payload 自己已经打印终态失败时，不会再有后续动作；
-            // 但它可能故意 park 着不退出（cred 泄漏失败后驻留页），旧代码只认
-            // 「进程消失 / done 两次」，于是白等 420 秒。日志里 5.15.104 连续
-            // 4 次 attempt 全是 `[-] cred leak failed`，60s 就能定论。
+            
+            
+            
+            
             if (!markerSeen) {
                 val terminal = when {
                     s.contains("[-] cred leak failed") -> credFailDetail()
@@ -776,8 +776,8 @@ class ExtractKitRunner(
                     return FakeOutcome(false, terminal)
                 }
             }
-            // 进程没了：连续三次确认（30 秒）再下结论，与 W2 的判据保持一致，
-            // 避开 fork 间隙与进程刚 exec 的短暂空窗。
+            
+            
             val cnt = probe.count
             if (cnt == 0) {
                 deadTicks++
@@ -807,30 +807,30 @@ class ExtractKitRunner(
         else FakeOutcome(false, "等满 420 秒仍无 root 标记")
     }
 
-    /**
-     * cred 泄漏失败的精确判因（2026-11-20 荣耀平板 GT2 Pro / CGL-W60 实证）。
-     *
-     * 该机 profile #10 的 event id 配置是默认 (269,272,...)，但这颗 6.1.157
-     * 内核实际 kmem_cache_alloc 的 id 是 258。payload 对未知 id 有形状兜底，
-     * timer 分配(req=0x108)认出来了，但 cred 记录 req 读成 0 → 被归类成 FREE
-     * (type=272) → cred 扫描 matches=0 → R=0 → `[-] cred leak failed`。
-     * 旧判因只说「站点/尺寸与 profile 不符」，没点出事件 id 错配这个首因。
-     *
-     * 这里从 payload 自己的 fake.log 读 `[base] sample ... id=N` 拿实际 id，
-     * 与 device.cfg 末尾 5 个 u32 里的 ev[0]（偏移 316）对比，给出可行动结论。
-     */
+       
+                                                            
+      
+                                                                
+                                                             
+                                                             
+                                                                     
+                                                
+      
+                                                                  
+                                                          
+       
     private suspend fun credFailDetail(): String {
         val diag = ShizukuController.exec(
             "grep -E '^\\[base\\] sample|^\\[cred\\] sizes|^\\[trace\\] kmem 事件候选' " +
                 "$WORK/fake.log 2>/dev/null | tail -n 8",
             10_000
         ).out
-        // payload 打印 `id=258`（内核实际 event id），ev=269 只是它自己的内部类型。
+        
         val actualId = Regex("""\bid=(\d+)""").find(diag)?.groupValues?.get(1)?.toIntOrNull()
         val cfgEv0 = runCatching {
             val c = EngineCatalog.cfgFor(context, profileIdx) ?: return@runCatching null
             if (c.size < 336) return@runCatching null
-            // ev[0] 是 cfg 末尾 5 个 u32 的第一个，位于字节 316（38×8+12+4=316）。
+            
             (c[316].toInt() and 0xFF) or
                 ((c[317].toInt() and 0xFF) shl 8) or
                 ((c[318].toInt() and 0xFF) shl 16) or
@@ -849,18 +849,18 @@ class ExtractKitRunner(
         }
     }
 
-    /**
-     * 2026-11-20：child task not leaked 的精确判因。
-     *
-     * 旧文案写「UAF 抢占窗口未命中」是错的：MAG-AN00 / 5.15.180 的日志显示
-     * cred 已经找到（R 非空），但 [cred] cred site 0x7277c != 0x400f0 且
-     * site-hit total=0——cfg 标定的 cred 站点不符，只能靠尺寸软匹配拿 cred；
-     * 更关键的是 [base] cache sizes 里根本没有 task_struct 的 objsize(0x1200)，
-     * 说明 fork 时的 task_struct 分配事件压根没进 trace（kmem_cache_alloc_node
-     * enable=-1），scan_task_allocs 因此返回 0 → g_child_task=0 → park。
-     *
-     * 这是「trace 事件覆盖不全 + 站点标定不符」，不是窗口竞争，多试几次不会变。
-     */
+       
+                                              
+      
+                                                     
+                                                              
+                                                          
+                                                                    
+                                                                  
+                                                                  
+      
+                                                
+       
     private suspend fun taskFailDetail(): String {
         val diag = ShizukuController.exec(
             "grep -E 'cred site|site-hit|cache sizes|task_struct objsize|kmem_cache_alloc_node enable' " +

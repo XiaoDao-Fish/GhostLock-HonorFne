@@ -15,8 +15,8 @@ allow zygote zygote capability sys_chroot
 allow zygote nsfs file { open read }
 type unshare_lock_file file_type
 allow zygote unshare_lock_file file { read write lock }
-# --- network fix (2026-10-16): KSU mid-boot policy reload leaves netdev/secmark SIDs unlabeled ---
-# CIL classes: packet(send recv relabelto forward_in forward_out) netif(ingress egress) peer(recv)
+
+
 allow domain unlabeled packet send
 allow domain unlabeled packet recv
 allow domain unlabeled packet forward_in

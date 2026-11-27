@@ -4,8 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="ic_launcher_background">#FF1F5FE0</color>
 
-    <!-- HonorRoot tokens, LIGHT. Flat engineering-console palette:
-         one deep blue accent, neutral paper, hairline borders, no gradients. -->
+                                                                   
+                                                                                 
 
     <color name="ds_primary">#FF1F5FE0</color>
     <color name="ds_primary_pressed">#FF1749B0</color>
@@ -89,8 +89,8 @@
     <color name="miuix_log_hint">#FFB9C0C8</color>
     <color name="miuix_error">#FFC62828</color>
 
-    <!-- KernelSU 3.3.0 悬浮底栏 + 液态玻璃（纯 XML 近似，不用 AGSL/RenderEffect）。
-         底栏半透明填充 + 白色高光描边 + 斜向冷光带；选中 lens 强调色 15% 透明。 -->
+                                                                   
+                                                         
     <color name="ksu_glass_fill">#66FFFFFF</color>
     <color name="ksu_glass_stroke">#66FFFFFF</color>
     <color name="ksu_glass_sheen">#14FFFFFF</color>

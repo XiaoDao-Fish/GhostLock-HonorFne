@@ -13,18 +13,18 @@ import java.net.URL
 import java.util.zip.GZIPInputStream
 import java.util.zip.ZipFile
 
-/**
- * 全量包链接 → boot.img（移植月虹 1.7.0 的远程 OTA 取包思路，离线实现）。
- *
- * 月虹用服务端签名接口解析 ota_url，再对远程 ZIP 做区间读取、取 payload.bin。
- * 本项目没有那套服务端配置，所以改为用户直接粘链接：
- *  - https 链接、512 MiB 上限、跟随跳转但拒绝跳到明文 http；
- *  - 链接直接是 boot.img → 原样保存；
- *  - 链接是 OTA ZIP → 优先取 boot.img 条目；
- *  - ZIP 里只有 payload.bin → 解析 Android payload 头/最小 protobuf manifest，
- *    提取 boot 分区的 REPLACE / REPLACE_GZ 操作（XZ/Brotli/ZSTD 需要设备侧
- *    解压器，明确报错并提示先提取 boot.img，绝不静默拿错镜像去适配）。
- */
+   
+                                                  
+  
+                                                     
+                            
+                                           
+                            
+                                    
+                                                                      
+                                                              
+                                           
+   
 object OtaBootImporter {
     data class Result(val ok: Boolean, val file: File? = null, val message: String = "", val bytes: Long = 0)
 
@@ -117,7 +117,7 @@ object OtaBootImporter {
             }
         }
 
-    /** ZIP 里优先 boot.img；只有 payload.bin 时再走 payload 解析。 */
+                                                          
     private fun extractFromZip(zip: File, onProgress: (Int, String) -> Unit): File? {
         ZipFile(zip).use { zf ->
             val entries = zf.entries().toList()
@@ -149,15 +149,15 @@ object OtaBootImporter {
         }
     }
 
-    /**
-     * payload.bin：CrAU + major(8) + manifest_size(8) + signature_size(4) + manifest(pb)。
-     * 只解 boot 分区的 REPLACE(1) / REPLACE_GZ(3)；其它压缩方式明确失败。
-     */
+       
+                                                                                         
+                                                         
+       
     private fun extractBootFromPayload(payload: File, onProgress: (Int, String) -> Unit): File? {
         val all = payload.readBytes()
         if (all.size < 24 || !all.copyOfRange(0, 4).contentEquals("CrAU".toByteArray())) return null
-        // manifestSize 是 u64，直接 toInt() 会截断成负/溢出值；先按 Long 校验
-        // 范围再收窄，避免绕过下面的边界检查。
+        
+        
         val manifestSizeL = le64(all, 12)
         val sigSize = le32(all, 20).toLong() and 0xffffffffL
         if (manifestSizeL <= 0 || manifestSizeL > Int.MAX_VALUE) return null
@@ -168,13 +168,13 @@ object OtaBootImporter {
         val bootPartition = fields[1].orEmpty().mapNotNull { parsePartition(it) }.firstOrNull { it.name == "boot" }
             ?: return null
         for (op in bootPartition.operations) {
-            if (op.type == 4L || op.type == 5L) continue // ZERO / DISCARD 不产生数据
+            if (op.type == 4L || op.type == 5L) continue 
             if (op.type != 1L && op.type != 3L) {
                 onProgress(98, "boot 分区使用了当前不支持的压缩方式（type=${op.type}）")
                 return null
             }
-            // dataOffset/dataLength 来自 payload manifest（不可信）；全程用 Long 算，
-            // 防止 start+len 溢出绕过边界检查，再确认可安全收窄为 Int。
+            
+            
             val start = dataBase + op.dataOffset
             val end = start + op.dataLength
             if (start < 0 || op.dataLength <= 0 || end < start ||
@@ -214,7 +214,7 @@ object OtaBootImporter {
         return Partition(name, ops)
     }
 
-    /** 最小 protobuf 解析：返回 field number → 原始 value 字节（varint / bytes）。 */
+                                                                        
     private fun parsePb(data: ByteArray, from: Int, size: Int): Map<Int, List<ByteArray>> {
         val out = HashMap<Int, MutableList<ByteArray>>()
         var p = from
@@ -226,9 +226,10 @@ object OtaBootImporter {
             val wire = (tag.first and 7).toInt()
             when (wire) {
                 0 -> {
+                    val vStart = p
                     val v = varint(data, p) ?: break
                     p = v.second
-                    out.getOrPut(field) { ArrayList() }.add(data.copyOfRange(v.first.toInt(), v.second).let { it })
+                    out.getOrPut(field) { ArrayList() }.add(data.copyOfRange(vStart, v.second))
                 }
                 2 -> {
                     val len = varint(data, p) ?: break

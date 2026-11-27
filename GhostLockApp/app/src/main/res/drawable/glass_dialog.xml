@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Frosted modal card: opaque-enough dark base for legibility, top sheen,
-     light hairline stroke. Matches the app's Liquid Glass language. -->
+                                                                           
+                                                                        
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">

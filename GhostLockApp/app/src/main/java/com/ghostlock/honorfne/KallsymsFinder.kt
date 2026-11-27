@@ -1,30 +1,30 @@
 package com.ghostlock.honorfne
 
-// 移植自 ExtractKit（com.extractkit.app）：只改包名，算法与常量保持原样。
+
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-/**
- * 从 arm64 kernel Image 里还原 kallsyms（Kotlin 版，算法与 tools/find-kallsyms.py 一致）。
- *
- * 支持两种布局：
- *
- * **A. 6.4+（新）**
- *   num_syms u32 | names | markers | token_table | token_index | offsets | relative_base u64
- *
- * **B. 6.1 / 5.15（旧）**
- *   offsets | relative_base | num_syms | pad | names | markers | … | token_table | token_index
- *   注意两点差异：offsets 在 names 之前；token_table 不紧跟 markers（中间夹着别的东西），
- *   只能靠"256 个可打印串 + token_index 逐项对得上"来定位。
- *
- * 锚点统一用 markers（从 0 起、步长稳定的升序 u32 数组）。
- *
- * 真实镜像验证：
- *   - 6.6.118-android15-8-g554929766a0d：111075 个符号，与源码常量逐位一致
- *   - 6.1.157-android14-11-g19a495a97bff：106614 个符号，
- *     `_text` = base+0、`posix_cpu_timer_del` = base+0x88c948（与固件 JSON 一致）
- */
+   
+                                                                             
+  
+          
+  
+                 
+                                                                                             
+  
+                       
+                                                                                               
+                                                                 
+                                           
+  
+                                       
+  
+          
+                                                             
+                                                     
+                                                                          
+   
 object KallsymsFinder {
 
     data class Result(
@@ -56,16 +56,16 @@ object KallsymsFinder {
         for ((markersOff, mCount) in markerCandidates) {
             val markers = IntArray(mCount) { buf.getInt(markersOff + 4 * it) }
 
-            // A. 6.4+ 布局
+            
             modernLayout(buf, image, markersOff, markers, onProgress)?.let { return it }
-            // B. 旧布局（offsets/base 在 names 前，token 表要扫描定位）
+            
             onProgress("新布局不匹配，尝试旧布局（6.1/5.15）…")
             legacyLayout(buf, image, markersOff, markers, onProgress)?.let { return it }
         }
         return null
     }
 
-    // ------------------------------------------------------------ 布局 A（6.4+）
+    
 
     private fun modernLayout(
         buf: ByteBuffer,
@@ -106,7 +106,7 @@ object KallsymsFinder {
         return Result(symbols, count, base, markersOff, namesStart)
     }
 
-    // ------------------------------------------------------- 布局 B（6.1/5.15）
+    
 
     private fun legacyLayout(
         buf: ByteBuffer,
@@ -117,13 +117,13 @@ object KallsymsFinder {
     ): Result? {
         val mCount = markers.size
 
-        // 1) token 表：从 markers 之后扫描，用 token_index 逐项校验
+        
         onProgress("旧布局：扫描 token 表（从 0x${(markersOff + 4 * mCount).toString(16)} 起）")
         val tokens = scanTokenTable(buf, image, markersOff + 4 * mCount) ?: run {
             onProgress("旧布局：没找到 token 表")
             return null
         }
-        // 2) names 起点：走 256 条要正好等于 markers[1]
+        
         val namesStart = findNamesStart(image, tokens, markersOff, markers[1]) ?: run {
             onProgress("旧布局：没找到 names 起点")
             return null
@@ -138,9 +138,9 @@ object KallsymsFinder {
             return null
         }
 
-        // 3) offsets 数组 + relative_base：在 names 之前回溯定位
-        //    判据：base 是 4 KiB 对齐的内核 VA，且 base - 4*count 处 offsets[0] == 0
-        //    （符号 0 就是 _text，偏移必为 0），再抽样检查单调性
+        
+        
+        
         onProgress("旧布局：回溯定位 offsets/base…")
         val located = findOffsetsAndBase(buf, namesStart, count) ?: run {
             onProgress("旧布局：没找到 offsets/base")
@@ -158,7 +158,7 @@ object KallsymsFinder {
         return Result(symbols, count, base, markersOff, namesStart)
     }
 
-    /** 在 markers 之后窗口内找 token 表：256 个可打印 NUL 串，且后面的 u16[256] 与各项起点一致。 */
+                                                                         
     private fun scanTokenTable(buf: ByteBuffer, image: ByteArray, from: Int): Array<ByteArray>? {
         val end = minOf(from + TOKEN_SCAN_WINDOW, image.size - 1024)
         var p = maxOf(0, from)
@@ -167,7 +167,7 @@ object KallsymsFinder {
             if (parsed != null) {
                 val tokens = parsed.first
                 val tableEnd = parsed.second
-                // token_index 可能带 0..6 字节对齐
+                
                 for (delta in 0..32) {
                     val ti = tableEnd + delta
                     if (ti + 512 > image.size) continue
@@ -179,7 +179,7 @@ object KallsymsFinder {
                         if (v < prev) { ok = false; break }
                         prev = v
                     }
-                    // 逐项与真实起点比对（强校验）
+                    
                     if (ok) {
                         var startsOk = 0
                         var q = p
@@ -199,11 +199,11 @@ object KallsymsFinder {
         return null
     }
 
-    /**
-     * 在 names 之前回溯找 `kallsyms_offsets` + `kallsyms_relative_base`。
-     * 不同厂商内核里这两段和 names 之间的距离不一样（6.6.89 上中间还夹了 300 KB 别的数据），
-     * 所以只能靠结构特征定位：base 是页对齐内核 VA、offsets[0] == 0、整体单调。
-     */
+       
+                                                                   
+                                                             
+                                                       
+       
     private fun findOffsetsAndBase(
         buf: ByteBuffer,
         namesStart: Int,
@@ -217,8 +217,8 @@ object KallsymsFinder {
             val base = buf.getLong(off)
             if (plausibleBase(base)) {
                 checked++
-                // 老内核的 offsets 数组末尾和 relative_base 之间可能有 0~64 B 填充，
-                // 所以不要假设正好紧贴，往前后各试几档。
+                
+                
                 for (delta in 0..64 step 4) {
                     val oo = off - 4 * count - delta
                     if (oo < 0) break
@@ -233,7 +233,7 @@ object KallsymsFinder {
         return null
     }
 
-    /** 抽样检查 offsets 升序（允许末尾出现负偏移）。 */
+                                      
     private fun looksMonotonic(buf: ByteBuffer, off: Int, count: Int): Boolean {
         if (count < 16) return false
         val step = maxOf(1, count / 64)
@@ -259,7 +259,7 @@ object KallsymsFinder {
         return u >= 0xFFFFFF8000000000uL && (base and 0xFFF) == 0L
     }
 
-    /** 结构自检：_text 应等于 base（旧布局）或至少落在 base 附近。 */
+                                                 
     private fun sanityOk(symbols: Map<String, Long>, base: Long): Boolean {
         val text = symbols["_text"] ?: symbols["_stext"] ?: return true
         return text == base || (text - base) in 0..0x200000
@@ -295,7 +295,7 @@ object KallsymsFinder {
         return symbols
     }
 
-    // ---------------------------------------------------------------- 各阶段
+    
 
     private fun findMarkers(buf: ByteBuffer, size: Int): List<Pair<Int, Int>> {
         val out = ArrayList<Pair<Int, Int>>()
@@ -324,7 +324,7 @@ object KallsymsFinder {
         return out
     }
 
-    /** 256 个 NUL 结尾的可打印 token；返回 tokens 与 table 结束位置。 */
+                                                         
     private fun parseTokens(img: ByteArray, start: Int): Pair<Array<ByteArray>, Int>? {
         if (start <= 0 || start >= img.size) return null
         val tokens = Array(256) { ByteArray(0) }
@@ -362,10 +362,10 @@ object KallsymsFinder {
         return null
     }
 
-    /**
-     * names 起点：窗口里找「第一条记录解出来像标识符」，再从该点走 256 条，
-     * 位置必须正好等于 markers[1]（markers 记的是记录起点）。
-     */
+       
+                                               
+                                            
+       
     private fun findNamesStart(
         img: ByteArray,
         tokens: Array<ByteArray>,
@@ -395,7 +395,7 @@ object KallsymsFinder {
         return null
     }
 
-    /** 返回 (记录数, 每第 256 条记录的起始偏移)。末尾允许 ≤4 字节对齐填充。 */
+                                                    
     private fun walkNames(buf: ByteBuffer, start: Int, markersOff: Int, mCount: Int): Pair<Int, IntArray> {
         val positions = IntArray(mCount) { -1 }
         var q = start
@@ -404,7 +404,7 @@ object KallsymsFinder {
             val hdr = readRecordHeader(buf, q)
             val len = hdr.second
             if (len !in 1..512) {
-                // 末尾允许 ≤8 字节对齐填充（6.6.89 上是 5 字节）
+                
                 if (markersOff - q <= 8) break
                 return -1 to positions
             }
@@ -415,7 +415,7 @@ object KallsymsFinder {
         return count to positions
     }
 
-    /** 记录头：byte len，若最高位则再读一字节拼成 14 位长度。返回 (名字起点, 长度)。 */
+                                                          
     private fun readRecordHeader(buf: ByteBuffer, q: Int): Pair<Int, Int> {
         var pos = q
         var len = buf.get(pos).toInt() and 0xFF

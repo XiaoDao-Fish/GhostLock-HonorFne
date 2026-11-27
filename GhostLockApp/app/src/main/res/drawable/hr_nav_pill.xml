@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Floating capsule bar: thicker glass than the cards, with a specular
-     band across the top-left corner (dual-light model). -->
+                                                                        
+                                                            
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">

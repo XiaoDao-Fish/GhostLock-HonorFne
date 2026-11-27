@@ -66,14 +66,33 @@ PGT-AN10                            5.15.180-android13-8-g49611f0c0136
 YAG-W10                             5.15.180-android13-8-g69dabf204ec1
 —                                   5.15.123-android13-8-gf1f05f80aabb
 -----------------------------------------------------------------------------------------------------------
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.168-android12-9-g804a21a522f0
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.198-android12-9-gae8854726f00
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.198-android12-9-gc42b584f520f
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.198-android12-9-gc68223d35014
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.198-android12-9-ge28f4cc48488
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-g17b3438a8cf3
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-g3f72b82cd79b
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-g465fb5c2ecc8
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-g516fa23f87fc
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-g994df2e00710
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-ga3ff7ae30334
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.209-android12-9-gff94831502de
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.226-android12-9-g9bf3dab43973
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.226-android12-9-gd118e0c61d77
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.236-android12-9-ga88335e8db40
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.236-android12-9-gd1575ab10b30
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.236-android12-9-gd671cf8c2b02
+AGT-AN00（荣耀80GT） / REA-AN00（荣耀90）   5.10.236-android12-9-gf6010a2c8c91
 ALT-AN00                            5.10.252-android12-9-g839eb53a56c3
+REA-NX9（荣耀90国际版）                    5.10.236-android12-9-00006-g71f3aedc8b92
 —                                   5.10.66-android12-9-gc55fd18209d0
 -----------------------------------------------------------------------------------------------------------
-NTH-AN00（荣耀 Magic5 Pro）             5.4.295-qgki-g0fb2656b2b50
+FNE-AN00 / NTH-AN00（荣耀 70 / 荣耀 50）  5.4.289-qgki-g7fd5b29213eb
+NTH-AN00（荣耀50） / FNE-AN00 / LSA-AN00 / TNA-AN00 5.4.295-qgki-g0fb2656b2b50
+NTH-AN00（荣耀50） / FNE-AN00 / LSA-AN00 / TNA-AN00 / ADT-AN00（X40GT竞速版） 5.4.289-qgki-gf6cb1f712a6e
 —                                   5.4.289-qgki-g2312a84fef60
-—                                   5.4.289-qgki-g7fd5b29213eb
 —                                   5.4.289-qgki-gc1fab518d5f6
-—                                   5.4.289-qgki-gf6cb1f712a6e
 —                                   5.4.295-qgki-g0fe5dd3dbc93
 —                                   5.4.295-qgki-g165910d83a3a
 —                                   5.4.295-qgki-g351930777161

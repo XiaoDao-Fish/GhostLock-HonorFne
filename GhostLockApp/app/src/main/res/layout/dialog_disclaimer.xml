@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 免责声明弹窗：不透明玻璃卡片 + 盾牌徽标 + 勾选同意 + 确认按钮。
-     必须先勾「我已阅读并同意条款」，确认按钮才从灰色变可点；
-     内容偏长，外层 ScrollView 保证小屏 / 大字号下按钮不被挤出屏幕。 -->
+                                         
+                                 
+                                                
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrim"
     android:layout_width="match_parent"
